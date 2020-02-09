@@ -4,10 +4,10 @@ const initialState = {
   team: {
     one: {
       id: 1,
-      firstname: 'Niko',
+      firstname: 'Francis Niko',
       lastname: 'Cruz',
-      role: 'Project Manager',
-      about: 'CSC 648 Student'
+      role: 'Project Manager and Back-End Team Lead',
+      about: 'Yo! I’m Niko and Im a junior at SFSU'
     },
     two: {
       id: 2,

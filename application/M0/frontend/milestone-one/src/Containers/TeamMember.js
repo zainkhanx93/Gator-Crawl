@@ -20,6 +20,7 @@ class TeamMember extends React.Component {
         return (
           <div className="profile">
             <p>{team.one.firstname} {team.one.lastname}</p>
+            <p>{team.one.role}</p>
             <p>{team.one.about}</p>
             <hr />
             <Link to="/team">Back to our team page.</Link>
@@ -29,6 +30,7 @@ class TeamMember extends React.Component {
         return (
           <div className="profile">
             <p>{team.two.firstname} {team.two.lastname}</p>
+            <p>{team.two.role}</p>
             <p>{team.two.about}</p>
             <hr />
             <Link to="/team">Back to our team page.</Link>
@@ -38,6 +40,7 @@ class TeamMember extends React.Component {
         return (
           <div className="profile">
             <p>{team.three.firstname} {team.three.lastname}</p>
+            <p>{team.three.role}</p>
             <p>{team.three.about}</p>
             <hr />
             <Link to="/team">Back to our team page.</Link>
@@ -47,6 +50,7 @@ class TeamMember extends React.Component {
         return (
           <div className="profile">
             <p>{team.four.firstname} {team.four.lastname}</p>
+            <p>{team.four.role}</p>
             <p>{team.four.about}</p>
             <hr />
             <Link to="/team">Back to our team page.</Link>
@@ -56,6 +60,7 @@ class TeamMember extends React.Component {
         return (
           <div className="profile">
             <p>{team.five.firstname} {team.five.lastname}</p>
+            <p>{team.five.role}</p>
             <p>{team.five.about}</p>
             <hr />
             <Link to="/team">Back to our team page.</Link>
@@ -65,6 +70,7 @@ class TeamMember extends React.Component {
         return (
           <div className="profile">
             <p>{team.six.firstname} {team.six.lastname}</p>
+            <p>{team.six.role}</p>
             <p>{team.six.about}</p>
             <hr />
             <Link to="/team">Back to our team page.</Link>
