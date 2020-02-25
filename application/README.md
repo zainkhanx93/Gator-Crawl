@@ -1,5 +1,6 @@
 # Application Folder
 
+
 ## Purpose
 The purpose of this folder is to store all the source code and related files for your team's application. Source code MUST NOT be in any of folder. <strong>YOU HAVE BEEN WARNED</strong>
 
