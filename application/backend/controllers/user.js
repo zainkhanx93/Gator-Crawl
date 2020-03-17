@@ -1,6 +1,6 @@
-const db = require('../database');
+const models = require('../models');
 
-const User = db.users;
+const { User } = models;
 
 // Create and Save a new user
 exports.create = (req, res) => {
@@ -9,13 +9,8 @@ exports.create = (req, res) => {
     return res.status(400).send({ message: 'Content cannot be empty' });
   }
 
-  const user = {
-    username,
-    password,
-  };
-
   // respond with jwt with id as payload
-  User.create(user)
+  User.create(req.body)
     .then(data => {
       res.send(data);
     })
@@ -49,11 +44,11 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num === 1) {
         res.send({
-          message: 'Tutorial was deleted successfully!',
+          message: 'User was deleted successfully!',
         });
       } else {
         res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
+          message: `User delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
         });
       }
     })

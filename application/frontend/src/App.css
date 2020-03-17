@@ -13,3 +13,11 @@
 .App-link {
   color: #61dafb;
 }
+
+.nav-item{
+  color:white;
+  padding:10px;
+}
+.nav-item:visited{
+  color:white;
+}
