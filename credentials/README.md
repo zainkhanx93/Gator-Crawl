@@ -9,7 +9,7 @@
 
 1. Server URL or IP: 18.220.99.4
 2. SSH username: ubuntu  
-    - (Not sure what username is. Connection is `ssh -i "csc648-team01.pem" ubuntu@ec2-18-221-178-224.us-east-2.compute.amazonaws.com
+    - (Not sure what username is. Connection is `ssh -i "csc648-team01.pem" ubuntu@ec2-18-220-99-4.us-east-2.compute.amazonaws.com
 `)
 3. SSH password or key: "csc648-team01.pem"
     <br> If a ssh key is used please upload the key to the credentials folder.
