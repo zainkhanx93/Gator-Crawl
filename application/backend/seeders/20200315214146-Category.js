@@ -4,13 +4,11 @@ module.exports = {
       'Categories',
       [
         {
-          id: 1,
           name: 'Clothing',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
           name: 'Electronics',
           createdAt: new Date(),
           updatedAt: new Date(),
