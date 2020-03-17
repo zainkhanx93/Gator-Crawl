@@ -7,7 +7,7 @@
 
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
-1. Server URL or IP: 18.221.178.224
+1. Server URL or IP: 18.220.99.4
 2. SSH username: ubuntu  
     - (Not sure what username is. Connection is `ssh -i "csc648-team01.pem" ubuntu@ec2-18-221-178-224.us-east-2.compute.amazonaws.com
 `)
