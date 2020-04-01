@@ -11,6 +11,7 @@ class TeamMember extends React.Component {
       history
     } = this.props;
 
+    console.log(history);
     // console.log(history.location.pathname);
     const n = history.location.pathname.slice(6);
     // console.log(n);

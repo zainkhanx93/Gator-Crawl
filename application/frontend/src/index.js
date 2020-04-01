@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import './index.css';
 
 import teamReducer from './Store/Reducers/teamReducer';
+import profileReducer from './Store/Reducers/profileReducer';
 import App from './App';
 
 import * as serviceWorker from './serviceWorker';
@@ -19,7 +20,8 @@ import * as serviceWorker from './serviceWorker';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  teamReducer
+  teamReducer,
+  profileReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

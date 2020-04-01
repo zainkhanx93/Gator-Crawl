@@ -1,1 +1,2 @@
 export const SET_USER_CLICKED = 'SET_USER_CLICKED';
+export const CHANGE_FIRST_NAME = 'CHANGE_FIRST_NAME';
