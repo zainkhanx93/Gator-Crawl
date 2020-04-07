@@ -1,6 +1,9 @@
 const express = require('express');
 const users = require('../controllers/user.js');
+const passport = require('passport');
+require('../config/passport')
 
+const passportSignIn = passport.authenticate( 'local', { session: false } ); 
 const router = express.Router();
 
 //Register new User
@@ -9,7 +12,7 @@ router.post('/', users.create);
 
 //Log in current User
 //Post request to /api/login
-router.post('/login', users.login);
+router.post('/login', passportSignIn, users.login);
 
 //Show all registered User
 //Get request public to route /api/users/
