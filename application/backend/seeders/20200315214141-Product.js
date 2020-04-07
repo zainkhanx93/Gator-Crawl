@@ -4,7 +4,8 @@ module.exports = {
       'Products',
       [
         {
-          photo: 'https://dummyimage.com/400x400/ad93ad/ffffff',
+          photo:
+            'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg',
           categoryId: 1,
           description: 'First Product',
           productName: 'Nike Air Max',
@@ -17,7 +18,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          photo: 'https://dummyimage.com/400x400/ad93ad/ffffff',
+          photo:
+            'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg',
           categoryId: 2,
           description: 'this is an old used iClicker',
           productName: 'iClicker',
@@ -30,7 +32,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          photo: 'https://dummyimage.com/400x400/ad93ad/ffffff',
+          photo:
+            'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg',
           categoryId: 2,
           description: 'Old Tv',
           productName: 'Old Tv',
@@ -43,7 +46,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          photo: 'https://dummyimage.com/400x400/ad93ad/ffffff',
+          photo:
+            'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg',
           categoryId: 2,
           description: 'Old sfsu shirt from 1975',
           productName: 'Vintage SFSU Shirt',
