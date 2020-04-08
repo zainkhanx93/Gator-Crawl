@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './Team.css';
 
+import MainNavBar from '../Nav/MainNavBar';
 import * as teamActions from '../Store/Actions/teamActions';
 
 class Team extends React.Component {
@@ -22,6 +23,7 @@ class Team extends React.Component {
 
     return (
       <div>
+      <MainNavBar />
         <h1 className="Title"><u>Our Team</u></h1>
         <ul>
           <div className="Box" onClick={() => handleClick(team.one)}>{team.one.firstname} {team.one.lastname}</div>

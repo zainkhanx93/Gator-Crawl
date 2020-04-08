@@ -6,7 +6,7 @@ const noMatch = () => (
   <div>
     <h1 style={{ textAlign: 'center' }}>Page not found</h1>
     <hr />
-    <Link to="/team">Back to our team page.</Link>
+    <Link to="/">Back to login page.</Link>
   </div>
 );
 
