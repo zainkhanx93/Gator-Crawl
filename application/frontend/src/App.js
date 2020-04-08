@@ -1,18 +1,26 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 
-import './App.css';
+import Login from './Containers/Login';
+import Register from './Containers/Register';
 
-import noMatch from './Components/noMatch';
 import Team from './Containers/Team';
 import TeamMember from './Containers/TeamMember';
 import SearchResults from './Containers/SearchResults';
+import noMatch from './Components/noMatch';
+
+import './App.css';
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <nav>
             <Link to="/" className="nav-item">
               Home
@@ -27,9 +35,12 @@ class App extends React.Component {
           <br />
           Team 1
           <br />
-        </header>
+        </header> */}
         <Switch>
-          <Route path="/" exact component={SearchResults} />
+          <Redirect exact from="/" to="/login" />
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/searchresults" exact component={SearchResults} />
           <Route path="/team" exact component={Team} />
           <Route path="/team/:id" exact component={TeamMember} />
           <Route component={noMatch} />
