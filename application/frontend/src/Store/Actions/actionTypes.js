@@ -1,1 +1,9 @@
 export const SET_USER_CLICKED = 'SET_USER_CLICKED';
+
+export const TRY_LOGIN = 'TRY_LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+
+export const TRY_REGISTER = 'TRY_REGISTER';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
