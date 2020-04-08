@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import MainNavBar from '../Nav/MainNavBar';
+
 const SearchResults = () => {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('');
@@ -37,13 +39,13 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className="profile">
-        <h1>filter => {filter}</h1>
+      <div>
+        <MainNavBar />
+        {/* <h1>filter => {filter}</h1>
         <h2>
           Search for a specific item or Search with empty input to get all
           products
-        </h2>
-
+        </h2> */}
         <select
           value={filter}
           onChange={(e) => {
