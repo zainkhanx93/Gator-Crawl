@@ -7,6 +7,7 @@ import LoginForm from '../Forms/LoginForm';
 import * as loginActions from '../Store/Actions/loginActions';
 
 import gclogo from '../Images/gclogo.png';
+import logotitle from '../Images/logotitle.png';
 import './LoginRegister.css';
 
 class Login extends React.Component {
@@ -36,6 +37,8 @@ class Login extends React.Component {
 
     return (
       <div className="Login-Box">
+        <img className="Logo-Title" src={logotitle} alt="Gator Crawl" />
+        <br />
         <img className="Logo" src={gclogo} alt="Logo" />
         <br />
         <h1 style={{ margin: 0 }}>Login</h1>

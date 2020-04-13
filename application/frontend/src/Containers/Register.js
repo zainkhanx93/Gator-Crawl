@@ -6,7 +6,7 @@ import { Cookies } from 'react-cookie';
 import RegisterForm from '../Forms/RegisterForm';
 import * as registerActions from '../Store/Actions/registerActions';
 
-
+import logotitle from '../Images/logotitle.png';
 import gclogo from '../Images/gclogo.png';
 import './LoginRegister.css';
 
@@ -27,6 +27,8 @@ class Register extends React.Component {
   render() {
     return (
       <div className="Login-Box">
+        <img className="Logo-Title" src={logotitle} alt="Gator Crawl" />
+        <br />
         <img className="Logo" src={gclogo} alt="Logo" />
         <h1 style={{ margin: 0 }}>Register</h1>
         <br />
