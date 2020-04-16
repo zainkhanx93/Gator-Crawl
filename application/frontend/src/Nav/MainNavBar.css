@@ -1,5 +1,6 @@
 .nav-item{
   color:black;
+
   padding:10px;
 }
 .nav-item:visited{
@@ -8,15 +9,33 @@
 
 .MainNavBar {
     text-align: right;
+
 }
 
 .Nav-header {
+  width : 100%;
+  display: inline-flex;
+
 
 }
 
 .Nav-line {
-  margin-top: 20px;
   background-color: #662A82;
   padding-top: 10px;
+
+}
+
+.Nav-Bar-Img {
+  text-align: left;
+  width: 20%;
+  padding-top: 20px;
+  padding-left: 20px;
+
+}
+
+.Nav-Bar-Items {
+  text-align: right;
+  width : 80%;
+  margin-top: 60px;
 
 }
