@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import navBarlogo from '../Images/NavBarLogo.PNG';
 
 import './MainNavBar.css';
 
@@ -7,7 +8,8 @@ const MainNavBar = (props) => {
   return (
     <div className="MainNavBar">
       <header className="Nav-header">
-        <nav>
+        <img className="Nav-Bar-Img" src={navBarlogo} alt="BarLogo" />
+        <nav className="Nav-Bar-Items">
           <Link to="/searchresults" className="nav-item">
             Search
           </Link>
@@ -28,6 +30,6 @@ const MainNavBar = (props) => {
       <hr className="Nav-line" />
     </div>
   );
-}
+};
 
 export default MainNavBar;
