@@ -9,11 +9,15 @@
 }
 
 .Logo {
-  text-align: center;
   width: 130px;
   height: auto;
   padding-top: 35px;
   padding-bottom: 0px;
+}
+
+.Logo-Title {
+  width: 350px;
+  padding-top: 40px;
 }
 
 .Title {
