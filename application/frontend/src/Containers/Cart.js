@@ -1,8 +1,8 @@
 import React from 'react';
 
-import MainNavBar from '../Nav/MainNavBar';
+import MainNavBar from '../Components/Navigation/MainNavBar';
 
-import gclogo from '../Images/nike.jpg';
+import gclogo from '../Assets/Images/nike.jpg';
 
 import './Cart.css';
 
