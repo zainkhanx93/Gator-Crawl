@@ -46,7 +46,7 @@ class Login extends React.Component {
         <LoginForm handleSubmit={this.onSubmit} />
         <br />
         {failed}
-        <a className="Link" href="register"><b>Create new account</b></a>
+        <a className="Link2" href="register"><b>Create new account</b></a>
         <br />
         <br />
         <br />
@@ -56,7 +56,7 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const formSelector = formValueSelector('existingUserForm');
+  const formSelector = formValueSelector('LoginForm');
   return {
     formValues: {
       email: formSelector(state, 'email'),

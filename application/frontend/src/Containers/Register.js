@@ -44,7 +44,7 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const formSelector = formValueSelector('newUserForm');
+  const formSelector = formValueSelector('RegisterForm');
   return {
     formValues: {
       email: formSelector(state, 'email'),
