@@ -1,0 +1,42 @@
+.product {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: 20px;
+  text-align: center;
+  font-family: arial;
+  display: inline-block;
+}
+
+.product-img {
+  width: 200px;
+  min-width: 200px;
+  border: 1px solid black;
+}
+
+.product-info {
+  text-align: left;
+  background-color: white;
+  padding: 12px;
+}
+
+.home-window {
+  width: 100%;
+  display: inline-flex;
+}
+
+.home-filters-upload {
+  width: 200px;
+}
+
+.home-searchresults {
+  width: 75%;
+}
+
+.home-title-sort {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.home-products {
+
+}

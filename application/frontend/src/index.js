@@ -14,6 +14,7 @@ import './index.css';
 import teamReducer from './Store/Reducers/teamReducer';
 import loginReducer from './Store/Reducers/loginReducer';
 import registerReducer from './Store/Reducers/registerReducer';
+import homeReducer from './Store/Reducers/homeReducer';
 
 import App from './App';
 
@@ -24,7 +25,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   teamReducer,
   loginReducer,
-  registerReducer
+  registerReducer,
+  homeReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

@@ -11,9 +11,10 @@ import Register from './Containers/Register';
 
 import Team from './Containers/Team';
 import TeamMember from './Containers/TeamMember';
-import SearchResults from './Containers/SearchResults';
+import Home from './Containers/Home';
 import Profile from './Containers/Profile';
 import Cart from './Containers/Cart';
+import Product from './Containers/Product';
 import noMatch from './Components/noMatch';
 
 import './App.css';
@@ -26,7 +27,8 @@ class App extends React.Component {
           <Redirect exact from="/" to="/login" />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
-          <Route path="/searchresults" exact component={SearchResults} />
+          <Route path="/home" exact component={Home} />
+          <Route path="/home/products" exact component={Product} />
           <Route path="/team" exact component={Team} />
           <Route path="/team/:id" exact component={TeamMember} />
           <Route path="/profile/me" exact component={Profile} />

@@ -8,9 +8,10 @@ import './Profile.css';
 
 class Profile extends React.Component {
   render() {
+    const { history } = this.props;
     return (
       <div>
-        <MainNavBar />
+        <MainNavBar history={history} />
         <div>
           <p className="Title">My Profile</p>
           <div className="Box">
@@ -26,7 +27,7 @@ class Profile extends React.Component {
               <br />
             </div>
           </div>
-          <button className="Button" type="buton"> Edit </button>
+          <button className="Button" type="button"> Edit </button>
         </div>
       </div>
     );
