@@ -8,9 +8,10 @@ import './Cart.css';
 
 class Cart extends React.Component {
   render() {
+    const { history } = this.props;
     return (
       <div>
-        <MainNavBar />
+        <MainNavBar history={history} />
         <p className="Title"> My Shopping Cart </p>
         <div className="Shopping-Cart-Window">
 

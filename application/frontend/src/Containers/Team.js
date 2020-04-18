@@ -23,7 +23,7 @@ class Team extends React.Component {
 
     return (
       <div>
-      <MainNavBar />
+        <MainNavBar history={history} />
         <h1 className="Title"><u>Our Team</u></h1>
         <ul>
           <div className="Box" onClick={() => handleClick(team.one)}>{team.one.firstname} {team.one.lastname}</div>
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
   return {
     setUserClicked: (id) => dispatch(teamActions.setUserClicked(id))
   };

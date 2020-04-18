@@ -17,12 +17,12 @@ class Login extends React.Component {
   }
 
   onSubmit = () => {
-    console.log('onsubmit');
+    // console.log('onsubmit');
     const { handleSubmit, formValues, history } = this.props;
     handleSubmit({
       ...formValues
     });
-    history.push('/searchresults');
+    history.push('/home');
   };
 
   render() {
