@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
 
-import LoginForm from '../Forms/LoginForm';
+import LoginForm from '../Components/Forms/LoginForm';
 import * as loginActions from '../Store/Actions/loginActions';
 
-import gclogo from '../Images/gclogo.png';
-import logotitle from '../Images/logotitle.png';
+import gclogo from '../Assets/Images/gclogo.png';
+import logotitle from '../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
 class Login extends React.Component {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 // import * as homeActions from '../Store/Actions/homeActions';
-import MainNavBar from '../Nav/MainNavBar';
+import MainNavBar from '../Components/Navigation/MainNavBar';
 
 class Product extends React.Component {
   componentDidMount() {

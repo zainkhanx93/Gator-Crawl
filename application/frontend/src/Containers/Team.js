@@ -1,9 +1,8 @@
 import React from 'react';
-// import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Team.css';
 
-import MainNavBar from '../Nav/MainNavBar';
+import MainNavBar from '../Components/Navigation/MainNavBar';
 import * as teamActions from '../Store/Actions/teamActions';
 
 class Team extends React.Component {
@@ -11,10 +10,8 @@ class Team extends React.Component {
     const {
       team,
       history,
-      // userClicked,
       setUserClicked
     } = this.props;
-    // console.log(team);
 
     const handleClick = (member) => {
       setUserClicked(member);
@@ -33,7 +30,6 @@ class Team extends React.Component {
           <div className="Box" onClick={() => handleClick(team.five)}>{team.five.firstname} {team.five.lastname}</div>
           <div className="Box" onClick={() => handleClick(team.six)}>{team.six.firstname} {team.six.lastname}</div>
         </ul>
-        {/* <p>userclicked {userClicked}</p> */}
       </div>
     );
   }

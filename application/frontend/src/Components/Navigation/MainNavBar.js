@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import navBarlogo from '../Images/NavBarLogo.png';
-import SearchBar from '../Components/SearchBar';
+import navBarlogo from '../../Assets/Images/NavBarLogo.png';
+import SearchBar from '../SearchBar';
 
 import './MainNavBar.css';
 

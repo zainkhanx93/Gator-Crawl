@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
 
-import RegisterForm from '../Forms/RegisterForm';
+import RegisterForm from '../Components/Forms/RegisterForm';
 import * as registerActions from '../Store/Actions/registerActions';
 
-import logotitle from '../Images/logotitle.png';
-import gclogo from '../Images/gclogo.png';
+import logotitle from '../Assets/Images/logotitle.png';
+import gclogo from '../Assets/Images/gclogo.png';
 import './LoginRegister.css';
 
 class Register extends React.Component {

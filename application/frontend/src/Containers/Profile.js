@@ -1,8 +1,8 @@
 import React from 'react';
 
-import MainNavBar from '../Nav/MainNavBar';
+import MainNavBar from '../Components/Navigation/MainNavBar';
 
-import gclogo from '../Images/gclogo.png';
+import gclogo from '../Assets/Images/gclogo.png';
 
 import './Profile.css';
 

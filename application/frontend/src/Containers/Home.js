@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import MainNavBar from '../Nav/MainNavBar';
+import MainNavBar from '../Components/Navigation/MainNavBar';
 import * as homeActions from '../Store/Actions/homeActions';
 import './Home.css';
-import placeholder from '../Images/placeholder.png';
+import placeholder from '../Assets/Images/placeholder.png';
 
 class Home extends React.Component {
   componentDidMount() {
