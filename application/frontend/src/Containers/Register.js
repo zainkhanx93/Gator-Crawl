@@ -22,8 +22,10 @@ class Register extends React.Component {
     console.log(formValues);
     axios.post('/api/users', { email: formValues.email, password: formValues.password })
       .then((res) => {
+        // console.log('got the response');
         console.log(res.data);
       }).catch((error) => {
+        // console.log('whoops error');
         console.log(error);
       });
 
