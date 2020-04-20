@@ -58,6 +58,21 @@
   width: 233px;
 }
 
+.Text-Area-Field {
+  background-color: #white;
+  border: 1px solid black;
+  border-radius: 3px;
+  color: #662A82;
+  padding: 11px 32px;
+  margin-bottom: 20px;
+  resize: vertical;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 233px;
+
+}
+
 .Link {
   color: #662A82;
   display: inline-block;

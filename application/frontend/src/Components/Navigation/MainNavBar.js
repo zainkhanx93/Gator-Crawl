@@ -29,7 +29,7 @@ class MainNavBar extends React.Component {
     return (
       <div className="navbar-window">
         <header className="navbar-header">
-          <img className="navbar-logo" src={navBarlogo} alt="NavBarLogo" />
+          <img className="navbar-logo" src={navBarlogo} alt="NavBarLogo" onClick={() => history.push('/home')}/>
           <SearchBar history={history} className="navbar-searchbar" />
           {navBarItems}
         </header>
