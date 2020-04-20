@@ -18,11 +18,14 @@ class LoginForm extends React.Component {
     type,
     meta
   }) => {
-    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+    // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     // console.log(className);
-    console.table(input);
+    // console.table(input);
+    // className={className}
+    // {...input}
+    // console.table(meta);
     return (
-      <div className={className}>
+      <div>
         <input
           {...input}
           className="Input-Field"
@@ -55,23 +58,22 @@ class LoginForm extends React.Component {
       submitting,
       invalid
     } = this.props;
-    console.log(`${pristine} ${submitting} ${invalid}`);
+    // console.log(`${pristine} ${submitting} ${invalid}`);
+    // className="ui form error"
     return (
-      <form onSubmit={(e) => this.onSubmit(e)} className="ui form error">
+      <form onSubmit={(e) => this.onSubmit(e)}>
         <Field name="email" type="email" component={this.renderInputField} label="Email" />
         <Field name="password" type="password" component={this.renderInputField} label="Password" />
         <a href="forgotpassword" className="Link">Forgot password?</a>
         {/* error && <strong>{error}</strong> */}
-        <div>
-          <button
-            className="Button"
-            type="submit"
-            
-          >
-            <b>Login</b>
-            {/* disabled={pristine || submitting || invalid} */}
-          </button>
-        </div>
+        <button
+          className="Button"
+          type="submit"
+          disabled={pristine || submitting || invalid}
+        >
+          <b>Login</b>
+          {/* disabled={pristine || submitting || invalid} */}
+        </button>
       </form>
     );
   }

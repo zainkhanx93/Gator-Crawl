@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { reducer as formReducer } from 'redux-form';
 import {
   createStore,
   applyMiddleware,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   teamReducer,
   loginReducer,
   registerReducer,
-  homeReducer
+  homeReducer,
+  form: formReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

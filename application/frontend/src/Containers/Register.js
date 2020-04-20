@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import RegisterForm from '../Components/Forms/RegisterForm';
 import * as registerActions from '../Store/Actions/registerActions';
@@ -18,7 +19,13 @@ class Register extends React.Component {
 
   onSubmit = () => {
     const { handleSubmit, formValues } = this.props;
-    // console.log(formValues);
+    console.log(formValues);
+    axios.post('/api/users', { ...formValues }).then((res) => {
+      console.log(res.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+
     handleSubmit({
       ...formValues
     });
@@ -44,7 +51,7 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const formSelector = formValueSelector('RegisterForm');
+  const formSelector = formValueSelector('registerForm');
   return {
     formValues: {
       email: formSelector(state, 'email'),

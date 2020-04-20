@@ -1,14 +1,14 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import './LoginForm.css';
+// import './LoginForm.css';
 
 class RegisterForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
+    // console.log('onsubmit');
     const { handleSubmit } = this.props;
     handleSubmit();
-    // console.log(formValues);
   }
 
   renderInputField = ({
@@ -17,13 +17,11 @@ class RegisterForm extends React.Component {
     type,
     meta
   }) => {
-    // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
-      <div>
-        <div>
-          <input className="Input-Field" type={type} autoComplete="off" placeholder={label} />
-          {this.renderError(meta)}
-        </div>
+      <div className={className}>
+        <input {...input} className="Input-Field" type={type} autoComplete="off" placeholder={label} />
+        {this.renderError(meta)}
       </div>
     );
   };
@@ -55,7 +53,7 @@ class RegisterForm extends React.Component {
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
-            className="Login-Button"
+            className="Button"
             type="submit"
             disabled={pristine || submitting || invalid}
           >
@@ -85,6 +83,6 @@ const validate = (formValues) => {
 
 
 export default reduxForm({
-  form: 'RegisterForm',
+  form: 'registerForm',
   validate
 })(RegisterForm);
