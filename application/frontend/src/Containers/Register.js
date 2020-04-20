@@ -18,17 +18,20 @@ class Register extends React.Component {
   }
 
   onSubmit = () => {
-    const { handleSubmit, formValues } = this.props;
+    const { handleSubmit, formValues, history } = this.props;
     console.log(formValues);
-    axios.post('/api/users', { ...formValues }).then((res) => {
-      console.log(res.data);
-    }).catch((error) => {
-      console.log(error);
-    });
+    axios.post('/api/users', { email: formValues.email, password: formValues.password })
+      .then((res) => {
+        console.log(res.data);
+      }).catch((error) => {
+        console.log(error);
+      });
 
     handleSubmit({
       ...formValues
     });
+
+    history.push('/login');
   };
 
   render() {

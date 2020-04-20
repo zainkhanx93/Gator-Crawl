@@ -86,3 +86,9 @@ a:hover {
 a:active {
   text-decoration: underline;
 }
+
+.errormessage {
+  font-weight: bold;
+  font-size: 12px;
+  padding-bottom: 15px;
+}
