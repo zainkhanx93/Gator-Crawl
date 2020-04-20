@@ -43,7 +43,7 @@ class CreatePostForm extends React.Component {
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
-        <div className="ui error message">
+        <div className="errormessage">
           <div className="header">{error}</div>
         </div>
       );

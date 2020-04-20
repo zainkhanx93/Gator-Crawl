@@ -61,6 +61,9 @@ const mapStateToProps = (state) => {
     formValues: {
       email: formSelector(state, 'email'),
       password: formSelector(state, 'password'),
+      major: formSelector(state, 'major'),
+      firstName: formSelector(state, 'firstName'),
+      lastName: formSelector(state, 'lastName')
     }
     // initialValues: state.auth.initialValues
   };
