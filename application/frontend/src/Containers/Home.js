@@ -28,18 +28,16 @@ class Home extends React.Component {
   }
 
   onProductCreated = () => {
-    const { formValues, setProducts } = this.props;
-    // console.log(formValues);
-    axios.post('/api/products/', { ...formValues })
+    const { formValues, setProducts, currentUser } = this.props;
+    console.log(formValues);
+    axios.post('/api/products/', { ...formValues, sellerId: currentUser.id })
       .then((res) => {
-        // console.log('got the response');
-        // console.log(res.data);
+        console.log(res.data);
         this.setState({ isModalShowing: false });
         axios.get('/api/products/all').then((response) => {
           setProducts(response.data);
         });
       }).catch((error) => {
-        // console.log('whoops error');
         console.log(error);
       });
   }
@@ -60,7 +58,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { products, history } = this.props;
+    const { products, history, currentUser } = this.props;
     const { isModalShowing } = this.state;
 
     const filters = (
@@ -150,6 +148,7 @@ class Home extends React.Component {
         */}
         <div className="home-window">
           <div className="home-filters-upload">
+            <p>Hi {currentUser.firstName}!</p>
             <button type="button" onClick={this.createPostClicked}>Create Posting</button>
             {filters}
           </div>
@@ -171,7 +170,8 @@ const mapStateToProps = (state) => {
       productName: formSelector(state, 'productName'),
       description: formSelector(state, 'description'),
       price: formSelector(state, 'price'),
-    }
+    },
+    currentUser: state.userReducer.currentUser
   };
 };
 

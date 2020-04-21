@@ -8,14 +8,19 @@ import './MyProducts.css';
 
 class MyProducts extends React.Component {
   render() {
-    const { history, products } = this.props;
+    const { history, products, currentUser } = this.props;
 
     let myprods = <p>You have no items for sale.</p>;
 
     if (products.length !== 0) {
+      console.table(products);
       myprods = (
         <div className="home-products">
-          {products.map((product) => (
+          {products.filter((product) => {
+            // console.log(product.sellerId);
+            // console.log(currentUser.id);
+            return parseInt(product.sellerId, 10) === parseInt(currentUser.id, 10);
+          }).map((product) => (
             <div id={product.id} key={product.id} className="product" onClick={() => this.productClicked(product)}>
               <img className="product-img" src={placeholder} alt={placeholder} />
               <div className="product-info">
@@ -51,7 +56,8 @@ class MyProducts extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.homeReducer.products
+    products: state.homeReducer.products,
+    currentUser: state.userReducer.currentUser
   };
 };
 
