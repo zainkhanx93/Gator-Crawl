@@ -54,18 +54,20 @@ passport.use(new LocalStrategy({
 
                 console.log(user)
                 console.log("passport back end")
-
-                const isMatch = bcrypt.compareSync(user.password, password)
-                // If not, handle it
-                console.log("isMatch: " + isMatch)
                 console.log("user.password: " + user.password)
                 console.log("password: " + password)
-                if (!isMatch) {
-                    return done(null, false);
-                }
-                // Otherwise, return the user
-                done(null, user);
-                
+
+                // Load hash from your password DB.
+                bcrypt.compare(password, user.password, function (err, result) {
+                    console.log("result: " + result)
+                    if (result == true){
+                        done(null, user);
+                    }
+                    else {
+                        return done(null, false);
+                    }
+                });
+            
             })
     } catch (error) {
         done(error, false);

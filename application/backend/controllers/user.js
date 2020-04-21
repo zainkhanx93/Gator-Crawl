@@ -27,6 +27,9 @@ exports.create = (req, res) => {
         const newUser = {
           email: req.body.email,
           password: req.body.password,
+          major: req.body.major,
+          firstName: req.body.firstName,
+          lastName: req.major.lastName,
         }
         //bcrypt hash password
         bcrypt.genSalt(10, (err, salt) => {
@@ -40,6 +43,9 @@ exports.create = (req, res) => {
                 let payload = {
                   id: data._id,
                   email: data.email,
+                  major: data.major,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
                 }
                 /*
                                 res.status(200).json({
@@ -99,12 +105,11 @@ exports.login = (req, res) => {
       //check password, isMatch is a boolean - True if both match
       //user.password is password from database
       //password is password from post request
-      isMatch = bcrypt.compareSync(user.password, password)
-      if (!isMatch)
-        return res.status(400).send({
-          msg: "Password was incorrect!"
-        })
-      //Successful log in
+      bcrypt.compare(password, user.password, function (err, result) {
+        console.log("result: " + result)
+        if (result == true) {
+
+          //Successful log in
       //Build payload for JWT
       const today = new Date();
       const expDate = new Date(today);
@@ -120,6 +125,15 @@ exports.login = (req, res) => {
         }),
         user: user
       })
+        }
+        else {
+          return res.status(400).send({
+            msg: "Password was incorrect!"
+          })
+        }
+      });
+
+      
     })
 };
 
