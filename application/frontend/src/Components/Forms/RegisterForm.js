@@ -1,14 +1,14 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import './LoginForm.css';
+// import './LoginForm.css';
 
 class RegisterForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
+    // console.log('onsubmit');
     const { handleSubmit } = this.props;
     handleSubmit();
-    // console.log(formValues);
   }
 
   renderInputField = ({
@@ -17,13 +17,11 @@ class RegisterForm extends React.Component {
     type,
     meta
   }) => {
-    // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
-      <div>
-        <div>
-          <input className="Input-Field" type={type} autoComplete="off" placeholder={label} />
-          {this.renderError(meta)}
-        </div>
+      <div className={className}>
+        <input {...input} className="Input-Field" type={type} autoComplete="off" placeholder={label} />
+        {this.renderError(meta)}
       </div>
     );
   };
@@ -31,7 +29,7 @@ class RegisterForm extends React.Component {
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
-        <div className="ui error message">
+        <div className="errormessage">
           <div className="header">{error}</div>
         </div>
       );
@@ -50,12 +48,15 @@ class RegisterForm extends React.Component {
     } = this.props;
     return (
       <form onSubmit={(e) => this.onSubmit(e)}>
+        <Field name="firstName" type="text" component={this.renderInputField} label="First Name" />
+        <Field name="lastName" type="text" component={this.renderInputField} label="Last Name" />
+        <Field name="major" type="text" component={this.renderInputField} label="Major" />
         <Field name="email" type="email" component={this.renderInputField} label="Email" />
         <Field name="password" type="password" component={this.renderInputField} label="Password" />
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
-            className="Login-Button"
+            className="Button"
             type="submit"
             disabled={pristine || submitting || invalid}
           >
@@ -80,11 +81,21 @@ const validate = (formValues) => {
     errors.password = 'You must enter a password';
   }
 
+  if (!formValues.firstName) {
+    errors.firstName = 'You must enter your first name';
+  }
+
+  if (!formValues.lastName) {
+    errors.lastName = 'You must enter your last name';
+  }
+  if (!formValues.major) {
+    errors.major = 'You must enter your Major';
+  }
   return errors;
 };
 
 
 export default reduxForm({
-  form: 'newUserForm',
+  form: 'registerForm',
   validate
 })(RegisterForm);

@@ -1,17 +1,17 @@
 import React from 'react';
 
-import MainNavBar from '../Nav/MainNavBar';
-
-import gclogo from '../Images/nike.jpg';
+import MainNavBar from '../Components/Navigation/MainNavBar';
+import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
+import gclogo from '../Assets/Images/nike.jpg';
 
 import './Cart.css';
 
 class Cart extends React.Component {
   render() {
     const { history } = this.props;
-    return (
+
+    const mycart = (
       <div>
-        <MainNavBar history={history} />
         <p className="Title"> My Shopping Cart </p>
         <div className="Shopping-Cart-Window">
 
@@ -49,6 +49,20 @@ class Cart extends React.Component {
               <br />
               <p style={{ fontSize: '25px' }}> <b> $200 </b></p>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    return (
+      <div>
+        <MainNavBar history={history} />
+        <div className="Cart-Window">
+          <div className="Cart-Left-Side">
+            <ProfileNavBar />
+          </div>
+          <div className="Cart-Right-Side">
+            {mycart}
           </div>
         </div>
       </div>

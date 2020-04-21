@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
 
-import LoginForm from '../Forms/LoginForm';
+import LoginForm from '../Components/Forms/LoginForm';
 import * as loginActions from '../Store/Actions/loginActions';
 
-import gclogo from '../Images/gclogo.png';
-import logotitle from '../Images/logotitle.png';
+import gclogo from '../Assets/Images/gclogo.png';
+import logotitle from '../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
 class Login extends React.Component {
@@ -46,7 +46,7 @@ class Login extends React.Component {
         <LoginForm handleSubmit={this.onSubmit} />
         <br />
         {failed}
-        <a className="Link" href="register"><b>Create new account</b></a>
+        <a className="Link2" href="register"><b>Create new account</b></a>
         <br />
         <br />
         <br />
@@ -56,7 +56,7 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const formSelector = formValueSelector('existingUserForm');
+  const formSelector = formValueSelector('LoginForm');
   return {
     formValues: {
       email: formSelector(state, 'email'),

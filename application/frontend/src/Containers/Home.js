@@ -1,12 +1,22 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import MainNavBar from '../Nav/MainNavBar';
+import { formValueSelector } from 'redux-form';
+import MainNavBar from '../Components/Navigation/MainNavBar';
+import Modal from '../Components/UI/Modal';
+import CreatePostForm from '../Components/Forms/CreatePostForm';
 import * as homeActions from '../Store/Actions/homeActions';
 import './Home.css';
-import placeholder from '../Images/placeholder.png';
+import placeholder from '../Assets/Images/placeholder.png';
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalShowing: false
+    };
+  }
+
   componentDidMount() {
     // .substring(3)
     const { setProducts } = this.props;
@@ -17,14 +27,41 @@ class Home extends React.Component {
     });
   }
 
+  onProductCreated = () => {
+    const { formValues, setProducts } = this.props;
+    // console.log(formValues);
+    axios.post('/api/products/', { ...formValues })
+      .then((res) => {
+        // console.log('got the response');
+        // console.log(res.data);
+        this.setState({ isModalShowing: false });
+        axios.get('/api/products/all').then((response) => {
+          setProducts(response.data);
+        });
+      }).catch((error) => {
+        // console.log('whoops error');
+        console.log(error);
+      });
+  }
+
   productClicked = (product) => {
     const { history } = this.props;
     console.table(product);
     history.push(`home/products?productid=${product.id}`);
   }
 
+  createPostClicked = () => {
+    // console.log('button clicked');
+    this.setState({ isModalShowing: true });
+  }
+
+  hideModal = () => {
+    this.setState({ isModalShowing: false });
+  }
+
   render() {
     const { products, history } = this.props;
+    const { isModalShowing } = this.state;
 
     const filters = (
       <div>
@@ -71,8 +108,35 @@ class Home extends React.Component {
       </div>
     );
 
+    let postings = <div style={{ textAlign: 'center' }}>No postings available</div>;
+
+    if (products.length !== 0) {
+      postings = (
+        <div className="home-products">
+          {products.map((product) => (
+            <div id={product.id} key={product.id} className="product" onClick={() => this.productClicked(product)}>
+              <img className="product-img" src={placeholder} alt={placeholder} />
+              <div className="product-info">
+                <strong>{product.productName}</strong>
+                <br />
+                <br />
+                <strong>${product.price}</strong>
+                <br />
+                <p>{product.createdAt.substring(0, 10)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
     return (
       <div>
+        <Modal show={isModalShowing} modalClosed={this.hideModal}>
+          <CreatePostForm handleSubmit={this.onProductCreated} />
+          <br />
+          <button type="button" onClick={this.hideModal}>exit</button>
+        </Modal>
         <MainNavBar history={history} />
         {/*
         <select value={filter} onChange={(e) => { setFilter(e.target.value); }}>
@@ -86,27 +150,12 @@ class Home extends React.Component {
         */}
         <div className="home-window">
           <div className="home-filters-upload">
-            <button type="button">Create Posting</button>
+            <button type="button" onClick={this.createPostClicked}>Create Posting</button>
             {filters}
           </div>
           <div className="home-searchresults">
             {titlesort}
-            <div className="home-products">
-              {products.map((product) => (
-                <div id={product.id} key={product.id} className="product" onClick={() => this.productClicked(product)}>
-                  <img className="product-img" src={placeholder} alt={placeholder} />
-                  <div className="product-info">
-                    <strong>{product.productName}</strong>
-                    <br />
-                    <br />
-                    <strong>${product.price}</strong>
-                    <br />
-                    <p>Date posted</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
+            {postings}
           </div>
         </div>
       </div>
@@ -115,8 +164,14 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const formSelector = formValueSelector('createPostForm');
   return {
-    products: state.homeReducer.products
+    products: state.homeReducer.products,
+    formValues: {
+      productName: formSelector(state, 'productName'),
+      description: formSelector(state, 'description'),
+      price: formSelector(state, 'price'),
+    }
   };
 };
 

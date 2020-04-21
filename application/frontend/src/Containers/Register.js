@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
-import RegisterForm from '../Forms/RegisterForm';
+import RegisterForm from '../Components/Forms/RegisterForm';
 import * as registerActions from '../Store/Actions/registerActions';
 
-import logotitle from '../Images/logotitle.png';
-import gclogo from '../Images/gclogo.png';
+import logotitle from '../Assets/Images/logotitle.png';
+import gclogo from '../Assets/Images/gclogo.png';
 import './LoginRegister.css';
 
 class Register extends React.Component {
@@ -17,11 +18,22 @@ class Register extends React.Component {
   }
 
   onSubmit = () => {
-    const { handleSubmit, formValues } = this.props;
-    // console.log(formValues);
+    const { handleSubmit, formValues, history } = this.props;
+    console.log(formValues);
+    axios.post('/api/users', { email: formValues.email, password: formValues.password })
+      .then((res) => {
+        // console.log('got the response');
+        console.log(res.data);
+      }).catch((error) => {
+        // console.log('whoops error');
+        console.log(error);
+      });
+
     handleSubmit({
       ...formValues
     });
+
+    history.push('/login');
   };
 
   render() {
@@ -44,11 +56,14 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const formSelector = formValueSelector('newUserForm');
+  const formSelector = formValueSelector('registerForm');
   return {
     formValues: {
       email: formSelector(state, 'email'),
       password: formSelector(state, 'password'),
+      major: formSelector(state, 'major'),
+      firstName: formSelector(state, 'firstName'),
+      lastName: formSelector(state, 'lastName')
     }
     // initialValues: state.auth.initialValues
   };

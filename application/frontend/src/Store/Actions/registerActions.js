@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 
 // REGISTER ACTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export const tryRegister = (values) => {
+  // console.log('try register action');
   return {
     type: actionTypes.TRY_REGISTER,
     payload: { values }
