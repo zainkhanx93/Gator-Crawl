@@ -40,6 +40,7 @@ class MyProducts extends React.Component {
             <ProfileNavBar />
           </div>
           <div className="myproducts-right">
+            <p className="Title">My Products </p>
             {myprods}
           </div>
         </div>

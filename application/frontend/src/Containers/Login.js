@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import LoginForm from '../Components/Forms/LoginForm';
 import * as loginActions from '../Store/Actions/loginActions';
@@ -19,10 +20,19 @@ class Login extends React.Component {
   onSubmit = () => {
     // console.log('onsubmit');
     const { handleSubmit, formValues, history } = this.props;
-    handleSubmit({
-      ...formValues
-    });
-    history.push('/home');
+    // handleSubmit({
+    //   ...formValues
+    // });
+    console.table(formValues);
+    axios.post('/api/users/login', { email: formValues.email, password: formValues.password })
+      .then((res) => {
+        // console.log('got the response');
+        console.log(res.data);
+      }).catch((error) => {
+        // console.log('whoops error');
+        console.log(error);
+      });
+    // history.push('/home');
   };
 
   render() {
@@ -73,7 +83,7 @@ const mapDispatchToProps = (dispatch, props) => {
       if (isSuccess) {
         const cookie = new Cookies();
         cookie.set('token', token);
-        history.push('/searchresults');
+        history.push('/home');
       }
     }))
   };
