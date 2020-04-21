@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import MainNavBar from '../Components/Navigation/MainNavBar';
 import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
@@ -8,7 +9,7 @@ import './Profile.css';
 
 class Profile extends React.Component {
   render() {
-    const { history } = this.props;
+    const { history, currentUser } = this.props;
 
     const me = (
       <div>
@@ -18,9 +19,9 @@ class Profile extends React.Component {
             <img className="Profile-picture" src={gclogo} alt="Logo" />
           </div>
           <div className="User-Info">
-            <p>Name: Ally Gator</p>
-            <p>Email: allygator@mail.sfsu.edu</p>
-            <p>Major: Computer Science</p>
+            <p>Name: {currentUser.firstName} {currentUser.lastName}</p>
+            <p>Email: {currentUser.email}</p>
+            <p>Major: {currentUser.major}</p>
           </div>
         </div>
         <br />
@@ -44,4 +45,10 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.currentUser
+  };
+};
+
+export default connect(mapStateToProps)(Profile);

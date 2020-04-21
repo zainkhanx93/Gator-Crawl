@@ -10,13 +10,14 @@ import {
   combineReducers
 } from 'redux';
 import thunk from 'redux-thunk';
-import './index.css';
-
+import userReducer from './Store/Reducers/userReducer';
 import teamReducer from './Store/Reducers/teamReducer';
 import loginReducer from './Store/Reducers/loginReducer';
 import registerReducer from './Store/Reducers/registerReducer';
 import homeReducer from './Store/Reducers/homeReducer';
 
+
+import './index.css';
 import App from './App';
 
 import * as serviceWorker from './serviceWorker';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   loginReducer,
   registerReducer,
   homeReducer,
+  userReducer,
   form: formReducer
 });
 
