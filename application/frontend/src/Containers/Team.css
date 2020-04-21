@@ -2,21 +2,40 @@
   text-align: center;
 }
 
-.Box {
-  text-align: left;
-  background-color: lightblue;
-  border-radius: 40px;
-  width: 200px;
+.Member-Box {
+  text-align: center;
+  background-color: white;
+  border: 1px solid black;
   padding: 15px;
   margin-bottom: 20px;
-  margin-left: -10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Title {
+  font-size: 21px;
   text-align: left;
-  margin-left: 40px;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.teamwindow {
+  display: inline-flex;
+  width: 100%;
+}
+
+.teamleftside {
+  width: 150px;
+  margin-left: 20px;
+}
+
+.teamrightside {
+  width: 70%;
+  text-align: center;
+}
+
+.wholeteam {
+  text-align: center;
+  display: inline-block;
 }
