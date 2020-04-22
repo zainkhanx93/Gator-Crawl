@@ -32,31 +32,33 @@ class Home extends React.Component {
   onProductCreated = () => {
     const { formValues, setProducts, currentUser } = this.props;
     console.log(formValues);
-    axios.post('/api/products/', { ...formValues, sellerId: currentUser.id })
+    axios
+      .post('/api/products/', { ...formValues, sellerId: currentUser.id })
       .then((res) => {
         console.log(res.data);
         this.setState({ isModalShowing: false });
         axios.get('/api/products/all').then((response) => {
           setProducts(response.data);
         });
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   productClicked = (product) => {
     const { history } = this.props;
     console.table(product);
     history.push(`home/products?productid=${product.id}`);
-  }
+  };
 
   createPostClicked = () => {
     this.setState({ isModalShowing: true });
-  }
+  };
 
   hideModal = () => {
     this.setState({ isModalShowing: false });
-  }
+  };
 
   render() {
     const {
@@ -71,7 +73,9 @@ class Home extends React.Component {
 
     const filters = (
       <div>
-        <p><b>Filters</b></p>
+        <p>
+          <b>Filters</b>
+        </p>
         Categories:
         <select name="categories" value={filter} onChange={(e) => { setFilter(e.target.value); }}>
           <option defaultValue value="">All</option>
@@ -119,14 +123,25 @@ class Home extends React.Component {
       </div>
     );
 
-    let postings = <div style={{ textAlign: 'center' }}>No postings available</div>;
+    let postings = (
+      <div style={{ textAlign: 'center' }}>No postings available</div>
+    );
 
     if (products.length !== 0) {
       postings = (
         <div className="home-products">
           {products.map((product) => (
-            <div id={product.id} key={product.id} className="product" onClick={() => this.productClicked(product)}>
-              <img className="product-img" src={placeholder} alt={placeholder} />
+            <div
+              id={product.id}
+              key={product.id}
+              className="product"
+              onClick={() => this.productClicked(product)}
+            >
+              <img
+                className="product-img"
+                src={product.photo}
+                alt={placeholder}
+              />
               <div className="product-info">
                 <strong>{product.productName}</strong>
                 <br />
@@ -146,13 +161,17 @@ class Home extends React.Component {
         <Modal show={isModalShowing} modalClosed={this.hideModal}>
           <CreatePostForm handleSubmit={this.onProductCreated} />
           <br />
-          <button type="button" onClick={this.hideModal}>exit</button>
+          <button type="button" onClick={this.hideModal}>
+            exit
+          </button>
         </Modal>
         <MainNavBar history={history} />
         <div className="home-window">
           <div className="home-filters-upload">
             <p>Hi {currentUser.firstName}!</p>
-            <button type="button" onClick={this.createPostClicked}>Create Posting</button>
+            <button type="button" onClick={this.createPostClicked}>
+              Create Posting
+            </button>
             {filters}
           </div>
           <div className="home-searchresults">
