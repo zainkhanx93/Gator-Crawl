@@ -18,12 +18,14 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    // .substring(3)
-    const { setProducts } = this.props;
-    // console.log(location.search.substring(11));
-
+    const { setProducts, setCategories } = this.props;
     axios.get('/api/products/all').then((res) => {
       setProducts(res.data);
+    });
+
+    axios.get('/api/categories').then((res) => {
+      console.log(res.data);
+      setCategories(res.data);
     });
   }
 
@@ -51,7 +53,6 @@ class Home extends React.Component {
   };
 
   createPostClicked = () => {
-    // console.log('button clicked');
     this.setState({ isModalShowing: true });
   };
 
@@ -60,7 +61,14 @@ class Home extends React.Component {
   };
 
   render() {
-    const { products, history, currentUser } = this.props;
+    const {
+      products,
+      history,
+      currentUser,
+      categories,
+      filter,
+      setFilter
+    } = this.props;
     const { isModalShowing } = this.state;
 
     const filters = (
@@ -69,14 +77,16 @@ class Home extends React.Component {
           <b>Filters</b>
         </p>
         Categories:
-        <select name="categories" id="categories">
-          <option value="All">All</option>
-          <option value="Books">Books</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Furniture">Furniture</option>
+        <select name="categories" value={filter} onChange={(e) => { setFilter(e.target.value); }}>
+          <option defaultValue value="">All</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
         <br />
+        {/*
         Condition:
         <select name="conditon" id="condition">
           <option value="All">All</option>
@@ -94,14 +104,14 @@ class Home extends React.Component {
           <option value="$0-$50">$0-$50</option>
           <option value="Free">Free</option>
         </select>
+        */}
       </div>
     );
 
     const titlesort = (
       <div className="home-title-sort">
-        <p>
-          <b>Search Results</b>
-        </p>
+        <p><b>Search Results</b></p>
+        {/*
         Sort by:
         <select name="sortby" id="sortby">
           <option value="Newest">Newest</option>
@@ -109,6 +119,7 @@ class Home extends React.Component {
           <option value="Most Expensive">Most Expensive</option>
           <option value="Least Expensive">Least Expensive</option>
         </select>
+        */}
       </div>
     );
 
@@ -155,16 +166,6 @@ class Home extends React.Component {
           </button>
         </Modal>
         <MainNavBar history={history} />
-        {/*
-        <select value={filter} onChange={(e) => { setFilter(e.target.value); }}>
-          <option defaultValue value="">All</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        */}
         <div className="home-window">
           <div className="home-filters-upload">
             <p>Hi {currentUser.firstName}!</p>
@@ -187,10 +188,13 @@ const mapStateToProps = (state) => {
   const formSelector = formValueSelector('createPostForm');
   return {
     products: state.homeReducer.products,
+    categories: state.homeReducer.categories,
+    filter: state.homeReducer.filter,
     formValues: {
       productName: formSelector(state, 'productName'),
       description: formSelector(state, 'description'),
-      price: formSelector(state, 'price')
+      price: formSelector(state, 'price'),
+      categoryId: formSelector(state, 'categoryId')
     },
     currentUser: state.userReducer.currentUser
   };
@@ -198,7 +202,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setProducts: (products) => dispatch(homeActions.setProducts(products))
+    setProducts: (products) => dispatch(homeActions.setProducts(products)),
+    setCategories: (categories) => dispatch(homeActions.setCategories(categories)),
+    setFilter: (filter) => dispatch(homeActions.setFilter(filter))
   };
 };
 

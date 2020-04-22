@@ -41,6 +41,7 @@ class Product extends React.Component {
                   <p style={{marginLeft: '30px', fontSize: '30px', fontWeight: 'bold' }}> {product.productName}</p>
                   <p style={{marginLeft: '30px', fontSize: '15px' }}>Date Posted: {product.createdAt.substring(0, 10)}</p>
                   <p style={{marginLeft: '30px', fontSize: '15px' }}>Seller Id: {product.sellerId}</p>
+                  <p style={{marginLeft: '30px', fontSize: '15px' }}>Category: {product.categoryId}</p>
                   <p style={{marginLeft: '30px', fontSize: '15px' }}>Condition: {product.condition}</p>
                   <br />
                   <p style={{marginLeft: '30px', fontSize: '15px' }}>Buy it now: </p>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-// import './LoginForm.css';
+import './LoginForm.css';
 
 class CreatePostForm extends React.Component {
   onSubmit = (e) => {
@@ -40,6 +40,23 @@ class CreatePostForm extends React.Component {
     );
   }
 
+  renderSelect = ({
+    input,
+    label,
+    type,
+    meta,
+    children
+  }) => {
+    return (
+      <div>
+        <select {...input} className="selectfield">
+          {children}
+        </select>
+        {this.renderError(meta)}
+      </div>
+    );
+  }
+
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -69,6 +86,14 @@ class CreatePostForm extends React.Component {
         <Field name="productName" type="text" component={this.renderInputField} label="Product Name" />
         <Field name="description" component={this.renderTextArea} label="Description" />
         <Field name="price" type="text" component={this.renderInputField} label="Price" />
+        <Field name="categoryId" component={this.renderSelect} label="Category">
+          <option name="">Choose A Category</option>
+          <option value="1" name="1">Books</option>
+          <option value="2" name="2">Clothing</option>
+          <option value="3" name="3">Electronics</option>
+          <option value="4" name="4">Furniture</option>
+          <option value="5" name="5">School Supplies</option>
+        </Field>
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
@@ -88,15 +113,19 @@ const validate = (formValues) => {
   const errors = {};
 
   if (!formValues.productName) {
-    errors.email = 'You must enter a name for your product';
+    errors.productName = 'You must enter a name for your product';
   }
 
   if (!formValues.description) {
-    errors.password = 'You must enter a description';
+    errors.description = 'You must enter a description';
   }
 
   if (!formValues.price) {
-    errors.password = 'You must enter a price';
+    errors.price = 'You must enter a price';
+  }
+
+  if (!formValues.categoryId || formValues.categoryId === 'Choose A Category') {
+    errors.categoryId = 'You must select a category';
   }
 
 
