@@ -20,16 +20,6 @@ const navBarItems = (
   </nav>
 );
 
-// <Link to="/team" className="nav-item">
-//   Team
-// </Link>
-// <Link to="/cart" className="nav-item">
-//   Cart
-// </Link>
-// <Link to="/" className="nav-item">
-//   Logout
-// </Link>
-
 class MainNavBar extends React.Component {
   render() {
     const { history } = this.props;

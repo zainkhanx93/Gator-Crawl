@@ -9,3 +9,11 @@ export const setProducts = (products) => {
     payload: { products }
   };
 };
+
+export const setCategories = (categories) => {
+  // console.log(categories);
+  return {
+    type: actionTypes.SET_CATEGORIES,
+    payload: { categories }
+  };
+};
