@@ -11,30 +11,69 @@
   font-size: 14px;
   width: 100px;
   margin-left: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Title {
   font-size: 21px;
+  margin-right: 0px;
 }
 
-.Box {
-  margin-left: 40px;
+.User-Box {
   background-color: white;
   border: 1px solid black;
   border-radius: 0px;
   width: 500px;
+  height: 210px;
+  display: inline-flex;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.Profile-Picture-Window {
+  width: 20%;
 }
 
 .Profile-picture {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 200px;
+  max-height: 90%;
   border: 1px solid black;
-  display: inline-block;
+  margin: 10px;
 }
 
-.Info {
-  display: inline-block;
+.img {
+  max-width: 100%;
+  height: auto;
+}
 
-  margin-top: 0px;
-  padding-left: 50px;
+.User-Info {
+  width: 80%;
+  margin-top:42px;
+  padding-left: 170px;
+}
+
+.userwindow {
+  display: inline-flex;
+  width: 100%;
+}
+
+.leftside {
+  width: 150px;
+  margin-left: 20px;
+}
+
+.rightside {
+  width: 70%;
+}
+
+
+.profile-navbar-items {
+  text-align: left;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+.profile-navitem {
+  border: 1px solid black;
 }

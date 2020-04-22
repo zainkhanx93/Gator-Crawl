@@ -1,37 +1,54 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import MainNavBar from '../Components/Navigation/MainNavBar';
-
+import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
 import gclogo from '../Assets/Images/gclogo.png';
 
 import './Profile.css';
 
 class Profile extends React.Component {
   render() {
-    const { history } = this.props;
+    const { history, currentUser } = this.props;
+
+    const me = (
+      <div>
+        <p className="Title">My Profile</p>
+        <div className="User-Box">
+          <div className="Profile-Picture-Window">
+            <img className="Profile-picture" src={gclogo} alt="Logo" />
+          </div>
+          <div className="User-Info">
+            <p>Name: {currentUser.firstName} {currentUser.lastName}</p>
+            <p>Email: {currentUser.email}</p>
+            <p>Major: {currentUser.major}</p>
+          </div>
+        </div>
+        <br />
+        <button className="Button" type="button"> Edit </button>
+      </div>
+    );
+
     return (
       <div>
         <MainNavBar history={history} />
-        <div>
-          <p className="Title">My Profile</p>
-          <div className="Box">
-            <img className="Profile-picture" src={gclogo} alt="Logo" />
-            <div className="Info">
-              Name: Ally Gator
-              <br />
-              SFSU Email: allygator@mail.sfsu.edu
-              <br />
-              Phone: (555) 555-5555
-              <br />
-              Major: Computer Science
-              <br />
-            </div>
+        <div className="userwindow">
+          <div className="leftside">
+            <ProfileNavBar />
           </div>
-          <button className="Button" type="button"> Edit </button>
+          <div className="rightside">
+            {me}
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.currentUser
+  };
+};
+
+export default connect(mapStateToProps)(Profile);
