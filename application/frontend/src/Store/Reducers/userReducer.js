@@ -7,6 +7,7 @@ const initialState = {
     firstName: null,
     lastName: null,
     major: null,
+    profilePhoto: null,
     token: null
   }
 };

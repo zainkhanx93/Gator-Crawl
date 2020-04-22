@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser')
 const db = require('./models/index.js');
+const fileUpload = require('express-fileupload');
 
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
@@ -13,6 +14,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(fileUpload());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);

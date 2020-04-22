@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import productpic from '../Assets/Images/fff.png';
 import * as homeActions from '../Store/Actions/homeActions';
 import MainNavBar from '../Components/Navigation/MainNavBar';
-import './Product.css';
+import './product.css';
 
 
 class Product extends React.Component {

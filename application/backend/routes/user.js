@@ -23,11 +23,16 @@ router.get('/', users.findAll);
 router.delete('/:id', users.delete);
 
 //upload profile image
-//Get request to route /api/users/image to upload profile image
-//router.post('/image', users.uploadImage);
+//Put request to route /api/users/image/:id to upload profile image
+router.put('/image/:userID', users.uploadImage);
+
 
 //show profile image
-//Get request to route /api/users/image to see profile image
-//router.get('/image', users.showImage);
+//Get request to route /api/users/image/:id to see profile image
+//router.get('/image/:userID', users.showImage);
 
+//Update information of specific user
+//put request to route /api/users/update/:id
+//Private, giving user's id
+router.put('/update/:id', users.userUpdate);
 module.exports = router;
