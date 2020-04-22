@@ -13,8 +13,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalShowing: false,
-      filter: null
+      isModalShowing: false
     };
   }
 
@@ -64,15 +63,17 @@ class Home extends React.Component {
       products,
       history,
       currentUser,
-      categories
+      categories,
+      filter,
+      setFilter
     } = this.props;
-    const { isModalShowing, filter } = this.state;
+    const { isModalShowing } = this.state;
 
     const filters = (
       <div>
         <p><b>Filters</b></p>
         Categories:
-        <select name="categories" value={filter} onChange={(e) => { this.setState({ filter: e.target.value }); }}>
+        <select name="categories" value={filter} onChange={(e) => { setFilter(e.target.value); }}>
           <option defaultValue value="">All</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -169,6 +170,7 @@ const mapStateToProps = (state) => {
   return {
     products: state.homeReducer.products,
     categories: state.homeReducer.categories,
+    filter: state.homeReducer.filter,
     formValues: {
       productName: formSelector(state, 'productName'),
       description: formSelector(state, 'description'),
@@ -182,7 +184,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setProducts: (products) => dispatch(homeActions.setProducts(products)),
-    setCategories: (categories) => dispatch(homeActions.setCategories(categories))
+    setCategories: (categories) => dispatch(homeActions.setCategories(categories)),
+    setFilter: (filter) => dispatch(homeActions.setFilter(filter))
   };
 };
 

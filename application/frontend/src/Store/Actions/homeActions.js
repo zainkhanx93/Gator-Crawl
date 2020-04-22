@@ -17,3 +17,11 @@ export const setCategories = (categories) => {
     payload: { categories }
   };
 };
+
+export const setFilter = (filter) => {
+  // console.log(filter);
+  return {
+    type: actionTypes.SET_FILTER,
+    payload: { filter }
+  };
+};
