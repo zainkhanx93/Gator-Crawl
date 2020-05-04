@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       bidding: DataTypes.BOOLEAN,
       price: DataTypes.DECIMAL,
       approved: DataTypes.BOOLEAN,
+      sold: DataTypes.BOOLEAN,
     },
     {}
   );

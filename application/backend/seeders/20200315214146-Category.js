@@ -13,6 +13,31 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          name: 'Collectables & Art',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Home & Garden',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Sporting Goods',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Toys & Hobbies',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Other',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     ),
