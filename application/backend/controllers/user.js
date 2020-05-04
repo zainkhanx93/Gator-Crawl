@@ -1,140 +1,130 @@
 const models = require('../models');
 
 const { User } = models;
-//Using bcrypt to hash password
+// Using bcrypt to hash password
 const bcrypt = require('bcryptjs');
-//JWT
+// JWT
 const JWT = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
 
 // Create and Save a new user
-//Since we login in with 2 fields email and password
+// Since we login in with 2 fields email and password
 exports.create = (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const {
+    email,
+    password,
+    major,
+    username,
+    admin,
+    profilePhoto,
+    firstName,
+    lastName,
+  } = req.body;
   if (!password || !email) {
     return res.status(400).send({ message: 'Content cannot be empty' });
   }
   // respond with jwt with id as payload (maybe later)
-  User.findOne({ where: { email: req.body.email } })
-    .then(function (user) {
-      if (user) {
-        return res.status(400).send({
-          msg: "User already registers"
-        })
-      } else {
-        //const hashPassword = await bcrypt.hash(req.body.password, 10); raise error
-        const newUser = {
-          email: req.body.email,
-          password: req.body.password,
-          major: req.body.major,
-          firstName: req.body.firstName,
-          lastName: req.major.lastName,
-        }
-        //bcrypt hash password
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hashPassword) => {
-            if (err) throw err;
-            newUser.password = hashPassword;
-            User.create(newUser)
-              .then(data => {
-                //res.send(data); if we remove comment of this line. ERR_HTTP_HEADERS_SENT err will occurs
-                //Build payload for JWT
-                let payload = {
-                  id: data._id,
-                  email: data.email,
-                  major: data.major,
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                }
-                /*
-                                res.status(200).json({
-                                  token: JWT.sign(payload, JWT_SECRET, {
-                                    expiresIn: parseInt(expDate.getDate())
-                                  }),
-                                  user: data
-                                })
-                */
-
-                const jwtToken = JWT.sign({
-                  sub: payload,
-                  iat: new Date().getTime(), //current
-                  exp: new Date().setTime(new Date().getTime() + 1) //expirate
-                }, JWT_SECRET);
-
-                console.log(jwtToken);
-
-                //cookie implement
-                res.cookie('access_token', jwtToken, {
-                  httpOnly: true
-                });
-
-                res.status(200).json({
-                  token: jwtToken,
-                  user: data
-                })
-
-                //res.redirect('/api/users/login');
-              })
-              .catch(err => {
-                return res
-                  .status(500)
-                  .send({ error: err, message: 'error creating user' });
-              });
-          })
-        })
+  User.findOne({ where: { email: req.body.email } }).then(function(user) {
+    if (user) {
+      return res.status(400).send({
+        msg: 'User already registers',
+      });
+    }
+    // const hashPassword = await bcrypt.hash(req.body.password, 10); raise error
+    const newUser = {
+      email,
+      password,
+      major,
+      username,
+      admin,
+      profilePhoto,
+      firstName,
+      lastName,
+    };
+    // bcrypt hash password
+    bcrypt.genSalt(10, (saltError, salt) => {
+      if (saltError) {
+        console.log('saltError => ', saltError);
+        throw saltError;
       }
-    })
-}
+      bcrypt.hash(newUser.password, salt, (hashError, hashPassword) => {
+        if (hashError) {
+          console.log('hashError => ', hashError);
+          throw hashError;
+        }
+        newUser.password = hashPassword;
+        User.create(newUser)
+          .then(data => {
+            const payload = {
+              id: data.id,
+              admin: data.admin,
+            };
+            console.log('payload => ', payload);
+            const jwtToken = JWT.sign(payload, JWT_SECRET, {
+              expiresIn: '2 days',
+            });
 
-//Handle Sign In function with JWT - Public
-//route /api/users/login => Log In user and return JWT token
+            // cookie implement
+            res.cookie('access_token', jwtToken, {
+              httpOnly: true,
+            });
+
+            res.status(200).json({
+              token: jwtToken,
+            });
+          })
+          .catch(err => {
+            return res
+              .status(500)
+              .send({ error: err, message: 'error creating user' });
+          });
+      });
+    });
+  });
+};
+
+// Handle Sign In function with JWT - Public
+// route /api/users/login => Log In user and return JWT token
 exports.login = (req, res) => {
   const { email, password } = req.body;
+  console.log(req.user.dataValues);
   if (!password || !email) {
     return res.status(400).send({ message: 'Content cannot be empty' });
   }
 
-  User.findOne({ where: { email: req.body.email } })
-    .then(function (user) {
-      if (!user) {
-        return res.status(400).send({
-          msg: "Email did not register yet!"
-        })
-      }
-      //check password, isMatch is a boolean - True if both match
-      //user.password is password from database
-      //password is password from post request
-      bcrypt.compare(password, user.password, function (err, result) {
-        console.log("result: " + result)
-        if (result == true) {
-
-          //Successful log in
-      //Build payload for JWT
-      const today = new Date();
-      const expDate = new Date(today);
-      expDate.setDate(today.getDate() + 1) //one day ahead to expirate
-      //payload hold all datas
-      let payload = {
-        id: user._id,
-        email: user.email,
-      }
-      res.status(200).json({
-        token: JWT.sign(payload, JWT_SECRET, {
-          expiresIn: parseInt(expDate.getDate())
-        }),
-        user: user
-      })
-        }
-        else {
-          return res.status(400).send({
-            msg: "Password was incorrect!"
-          })
-        }
+  User.findOne({ where: { email: req.body.email } }).then(function(user) {
+    if (!user) {
+      return res.status(400).send({
+        msg: 'Email did not register yet!',
       });
-
-      
-    })
+    }
+    // check password, isMatch is a boolean - True if both match
+    // user.password is password from database
+    // password is password from post request
+    bcrypt.compare(password, user.password, function(err, result) {
+      if (result == true) {
+        // Successful log in
+        // Build payload for JWT
+        const today = new Date();
+        const expDate = new Date(today);
+        expDate.setDate(today.getDate() + 1); // one day ahead to expirate
+        // payload hold all datas
+        const payload = {
+          id: user.id,
+          admin: user.admin,
+        };
+        res.status(200).json({
+          token: JWT.sign(payload, JWT_SECRET, {
+            expiresIn: '2 days',
+          }),
+        });
+      } else {
+        return res.status(400).send({
+          msg: 'Password was incorrect!',
+        });
+      }
+    });
+  });
 };
 
 // Find all users
