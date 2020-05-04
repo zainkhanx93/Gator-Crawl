@@ -24,6 +24,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <header className="App-header">
+          <p style={{ textAlign: 'center' }}>SFSU Software Engineering Project CSC 648-848, Spring 2020.  For Demonstration Only</p>
+        </header>
         <Switch>
           <Redirect exact from="/" to="/login" />
           <Route path="/login" exact component={Login} />
