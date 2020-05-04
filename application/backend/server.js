@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
 const categoryRoutes = require('./routes/category');
 const saleRoutes = require('./routes/sale');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Routes
+app.use('/admin', adminRoutes);
 app.use('/api/sales', saleRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
