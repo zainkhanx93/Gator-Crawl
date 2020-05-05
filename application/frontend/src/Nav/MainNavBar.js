@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import navBarlogo from '../Images/NavBarLogo.png';
+import navBarlogo from '../Images/NavBarLogo.PNG';
 import SearchBar from '../Components/SearchBar';
 
 import './MainNavBar.css';
