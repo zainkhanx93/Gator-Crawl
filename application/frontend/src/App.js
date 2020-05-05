@@ -26,6 +26,7 @@ class App extends React.Component {
             SFSU Software Engineering Project CSC 648-848, Spring 2020. For
             Demonstration Only
           </p>
+          <p style={{ textAlign: 'center' }}>SFSU Software Engineering Project CSC 648-848, Spring 2020.  For Demonstration Only</p>
         </header>
         <Switch>
           <Redirect exact from="/" to="/login" />

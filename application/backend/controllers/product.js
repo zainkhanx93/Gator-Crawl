@@ -18,6 +18,23 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAllSoldProducts = (req, res) => {
+  const { userid } = req.params;
+
+  Product.findAll({
+    where: {
+      [Op.and]: [
+        {
+          userId: userid,
+        },
+        {
+          sold: true,
+        },
+      ],
+    },
+  });
+};
+
 exports.findAllUserProducts = (req, res) => {
   const { id } = req.user;
 

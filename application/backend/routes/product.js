@@ -14,6 +14,10 @@ router.get('/all/:categoryId', products.findWithFilter);
 // Get product with specific id
 // router.get('/:id', products.findById);
 
+// find all sold products for given user
+router.get('/:userid/all/sold', products.findAllSoldProducts);
+
+// find all products with userId
 router.get('/:userid/all/', requireAuth, products.findAllUserProducts);
 
 // Get all products by search term
