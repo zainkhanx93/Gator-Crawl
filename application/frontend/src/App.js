@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Login from './Containers/Login';
 import Register from './Containers/Register';
@@ -17,6 +13,7 @@ import Messages from './Containers/Messages';
 import Product from './Containers/Product';
 import MyProducts from './Containers/MyProducts';
 import noMatch from './Components/noMatch';
+import FileUpload from './Containers/TestImageUpload';
 
 import './App.css';
 
@@ -25,10 +22,15 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
+          <p style={{ textAlign: 'center' }}>
+            SFSU Software Engineering Project CSC 648-848, Spring 2020. For
+            Demonstration Only
+          </p>
           <p style={{ textAlign: 'center' }}>SFSU Software Engineering Project CSC 648-848, Spring 2020.  For Demonstration Only</p>
         </header>
         <Switch>
           <Redirect exact from="/" to="/login" />
+          <Route path="/imageUpload" exact component={FileUpload} />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/home" exact component={Home} />
