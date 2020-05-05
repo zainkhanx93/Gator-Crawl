@@ -10,6 +10,7 @@ const productRoutes = require('./routes/product');
 const categoryRoutes = require('./routes/category');
 const saleRoutes = require('./routes/sale');
 const adminRoutes = require('./routes/admin');
+const imageUploadRoute = require('./routes/imageUpload');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/sales', saleRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('', imageUploadRoute);
 
 app.use(express.static(path.resolve(__dirname, '../', 'frontend', 'build')));
 
