@@ -26,7 +26,7 @@ class Profile extends React.Component {
               <br />
             </div>
           </div>
-          <button className="Button" type="buton"> Edit </button>
+          <button className="Button" type="button"> Edit </button>
         </div>
       </div>
     );
