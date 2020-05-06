@@ -1,0 +1,102 @@
+.Cart-Window {
+  display: inline-flex;
+  width: 100%;
+}
+
+.Cart-Left-Side {
+  width: 150px;
+  margin-left: 20px;
+}
+
+.Cart-Right-Side {
+  width: 70%;
+}
+
+.Button {
+  background-color: #F3CB0A;
+  border: none;
+  border-radius: 5px;
+  color: #662A82;
+  padding: 11px 32px;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  width: 200px;
+  margin-left: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.Title {
+  font-size: 21px;
+}
+.Shopping-Cart-Window {
+  display: inline-flex;
+  width: 100%;
+}
+
+
+.Product-Window {
+  margin-left: 40px;
+  float: left;
+  background-color: #f7f3f3;
+  width: 75%;
+  height: 100%;
+
+}
+
+
+.Total-Box {
+  margin-top: 14px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border : 1px solid black;
+  width: 25%;
+  height : 200px;
+  float: left;
+  display: inline-flex;
+}
+
+
+.Cart-Product {
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  display: inline-flex;
+  border: 1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.Profile-picture {
+
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+}
+
+.Cart-Product-Info {
+  text-align: left;
+  display: inline-block;
+  font-size: 20px;
+  padding-left: 50px;
+  width: 50%;
+}
+
+.Total-Cart-Info-Right {
+  width : 50%;
+  text-align: center;
+}
+
+.Total-Cart-Info-Left {
+  text-align: center;
+  width : 50%;
+}
+
+.Cart-Buttons{
+  display: inline-block;
+  text-align: right;
+  width : 25%;
+  padding-right: 50px;
+}

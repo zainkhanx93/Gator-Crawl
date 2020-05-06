@@ -1,0 +1,37 @@
+.navbar-window {
+
+}
+
+.nav-item{
+  color:black;
+  padding:10px;
+}
+
+.nav-item:visited{
+  color:black;
+}
+
+.navbar-header {
+  width : 100%;
+  display: inline-flex;
+}
+
+.navbar-logo {
+  min-width: 150px;
+  height: 60px;
+  width: auto;
+
+}
+
+.navbar-items {
+  text-align: right;
+  width : 40%;
+  margin-top: 25px;
+  margin-right: 10px;
+}
+
+.navbar-line {
+  background-color: #662A82;
+  margin-top: 0px;
+  padding-top: 10px;
+}

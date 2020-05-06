@@ -2,21 +2,28 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const db = require('./models/index.js');
 
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
 const categoryRoutes = require('./routes/category');
+const saleRoutes = require('./routes/sale');
+const adminRoutes = require('./routes/admin');
+const imageUploadRoute = require('./routes/imageUpload');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 // Routes
+app.use('/admin', adminRoutes);
+app.use('/api/sales', saleRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('', imageUploadRoute);
 
 app.use(express.static(path.resolve(__dirname, '../', 'frontend', 'build')));
 

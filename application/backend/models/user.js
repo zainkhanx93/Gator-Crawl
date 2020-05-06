@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       username: DataTypes.STRING,
       password: DataTypes.STRING,
       profilePhoto: DataTypes.STRING,
+      admin: DataTypes.BOOLEAN,
     },
     {}
   );
-  User.associate = function (models) {
+  User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Product, {
       foreignKey: 'sellerId',
@@ -22,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
-    return User;
-  };
+  return User;
+};

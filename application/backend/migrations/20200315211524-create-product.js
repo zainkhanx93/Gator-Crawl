@@ -38,6 +38,12 @@ module.exports = {
       price: {
         type: Sequelize.DECIMAL,
       },
+      approved: {
+        type: Sequelize.BOOLEAN,
+      },
+      sold: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
