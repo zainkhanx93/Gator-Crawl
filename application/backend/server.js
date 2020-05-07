@@ -11,8 +11,17 @@ const categoryRoutes = require('./routes/category');
 const saleRoutes = require('./routes/sale');
 const adminRoutes = require('./routes/admin');
 const imageUploadRoute = require('./routes/imageUpload');
+const messageRoutes = require('./routes/message');
 
 const app = express();
+
+//socketIO
+const server = require('http').Server(express);
+const io = module.exports.io = require('socket.io')(server)
+const socketManager = require('./config/socketManager')
+
+io.on('connection', socketManager);
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -24,6 +33,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('', imageUploadRoute);
+//use our route for message function
+// app.use('', messageRoutes);
 
 app.use(express.static(path.resolve(__dirname, '../', 'frontend', 'build')));
 
@@ -46,7 +57,7 @@ db.sequelize.sync({ force: createDatabaseOnSync }).then(() => {
     console.log('Drop and re-sync db');
   }
 
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 });

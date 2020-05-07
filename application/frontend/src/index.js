@@ -15,6 +15,7 @@ import teamReducer from './Store/Reducers/teamReducer';
 import loginReducer from './Store/Reducers/loginReducer';
 import registerReducer from './Store/Reducers/registerReducer';
 import homeReducer from './Store/Reducers/homeReducer';
+import messageReducer from './Store/Reducers/messageReducer';
 
 
 import './index.css';
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   registerReducer,
   homeReducer,
   userReducer,
+  messageReducer,
   form: formReducer
 });
 

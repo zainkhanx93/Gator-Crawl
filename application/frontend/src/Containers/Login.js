@@ -7,15 +7,51 @@ import axios from 'axios';
 import LoginForm from '../Components/Forms/LoginForm';
 import * as loginActions from '../Store/Actions/loginActions';
 import * as userActions from '../Store/Actions/userActions';
+import * as messageActions from '../Store/Actions/messageActions';
 
 import gclogo from '../Assets/Images/gclogo.png';
 import logotitle from '../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
+//for message
+import io from 'socket.io-client'
+import { USER_CONNECTED } from '../Containers/messageEvent'
+const awsURL = ""
+const localURL = "http://localhost:8080/"
+const socketURL = localURL || awsURL
+
 class Login extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     socket:null,
+  //     user:null
+  //   };
+  // }
+
+  // call initSocket function
   componentDidMount() {
     const cookie = new Cookies();
     cookie.remove('token');
+    this.initSocket()
+  }
+
+  initSocket = () => {
+    const { setSocket } = this.props;
+    const socket = io(socketURL)
+    // when socket connect to server from client do arrow function
+    socket.on('connect', () => {
+      console.log('Connected')
+    });
+    setSocket(socket);
+  }
+
+  // Sets the users from this.state
+  // user parameter will have id and name
+  setUser = (user) => {
+    const { socket, setUser } = this.props;
+    socket.emit(USER_CONNECTED, user);
+    setUser(user);
   }
 
   onSubmit = () => {
@@ -58,10 +94,23 @@ class Login extends React.Component {
     if (formValues.email === 'gfreedland@mail.sfsu.edu' && formValues.password === '123') {
       console.log('george logging in');
       setCurrentUser(george);
+
+      // backend code in config/socketManager.js
+
+      this.setUser(george);
       history.push('/home');
     } else if (formValues.email === 'bsanders@mail.sfsu.edu' && formValues.password === '123') {
       console.log('bernie logging in');
       setCurrentUser(bernie);
+
+      this.setUser(bernie);
+      history.push('/home');
+    } else {
+      console.log(formValues.email);
+      // code for message
+      const socketUser = formValues;
+      setCurrentUser(socketUser);
+      this.setUser(socketUser);
       history.push('/home');
     } else {
       console.log(formValues.email);
@@ -69,9 +118,11 @@ class Login extends React.Component {
     // history.push('/home');
   };
 
+  // Message front-end code
+
   render() {
     const { isAuth } = this.props;
-
+    const { socket, user } = this.props;
     let failed = null;
     if (isAuth === false) {
       failed = <p>Login failed, try again</p>;
@@ -87,7 +138,7 @@ class Login extends React.Component {
         <br />
         <h1 style={{ margin: 0 }}>Login</h1>
         <br />
-        <LoginForm handleSubmit={this.onSubmit} />
+        <LoginForm socket={socket} setUser={this.setUser} handleSubmit={this.onSubmit} />
         <br />
         {failed}
         <a className="Link2" href="register"><b>Create new account</b></a>
@@ -106,7 +157,9 @@ const mapStateToProps = (state) => {
       email: formSelector(state, 'email'),
       password: formSelector(state, 'password'),
     },
-    isAuth: state.loginReducer.token
+    isAuth: state.loginReducer.token,
+    socket: state.messageReducer.socket,
+    user: state.messageReducer.user
   };
 };
 
@@ -120,7 +173,9 @@ const mapDispatchToProps = (dispatch, props) => {
         history.push('/home');
       }
     })),
-    setCurrentUser: (currentUser) => dispatch(userActions.setCurrentUser(currentUser))
+    setCurrentUser: (currentUser) => dispatch(userActions.setCurrentUser(currentUser)),
+    setUser: (user) => dispatch(messageActions.setUser(user)),
+    setSocket: (socket) => dispatch(messageActions.setSocket(socket))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
