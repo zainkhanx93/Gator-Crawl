@@ -7,18 +7,18 @@ import ChatContainer from './chat/messageContainer'
 
 class Messages extends React.Component {
   constructor(props) {
-	  super(props);	
+	  super(props);
 	}
   render() {
     const { history } = this.props;
     const { socket, user } = this.props;
-    console.log(user.socketId);
+    console.log(user);
     return (
       <div>
         <MainNavBar history={history} />
         <br />
         <p style={{ textAlign: 'center' }}>No new messages</p>
-        <ChatContainer socket={socket} user={user} /> 
+        <ChatContainer socket={socket} user={user} />
       </div>
     );
   }
