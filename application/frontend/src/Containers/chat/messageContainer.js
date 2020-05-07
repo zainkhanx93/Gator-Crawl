@@ -3,7 +3,7 @@ import SideBar from '../sidebar/SideBar'
 import { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, 
 				TYPING, PRIVATE_MESSAGE, USER_CONNECTED, USER_DISCONNECTED,
 				NEW_CHAT_USER } from '../messageEvent'
-import ChatHeading from '../ChatHeading'
+import ChatHeading from './ChatHeading'
 import Messages from '../message/Message'
 import MessageInput from '../message/MessageInput'
 import { values, difference, differenceBy } from 'lodash'
