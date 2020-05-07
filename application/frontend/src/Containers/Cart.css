@@ -28,6 +28,7 @@
   margin-left: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   resize: both;
+  position: relative;
 }
 
 .Title {
@@ -56,11 +57,11 @@
 
 .Total-Box {
   margin-top: 14px;
-  margin-left: 1100px;
+  margin-left: 1000px;
   margin-right: 20px;
   background-color: white;
   border : 1px solid black;
-  width: 25%;
+  width: 15%;
   height : 200px;
   float: left;
   display: inline-flex;
@@ -73,15 +74,14 @@
 .Cart-Product {
   padding: 10px;
   margin: 10px;
-  width: 75%;
   height: 30%;
-  position:relative;
-  resize: none;
-  background-color: white;
+  width: 40%;
+ background-color: white;
   display: inline-flex;
   border: 1px solid black;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
+  position:fixed;
+  resize:none;
 
 }
 
