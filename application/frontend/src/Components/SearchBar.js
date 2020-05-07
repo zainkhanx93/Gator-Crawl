@@ -10,30 +10,18 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: '',
-      filter: '',
-      // categories: [],
-      // products: []
+      query: ''
     };
   }
 
   render() {
-    // const [query, setQuery] = useState('');
-    // const [filter, setFilter] = useState('');
-    // const [categories, setCategories] = useState([]);
-    // const [products, setProducts] = useState([]);
-    const {
-      query,
-      filter,
-      // categories,
-      // products
-    } = this.state;
+    const { filter } = this.props;
+    const { query } = this.state;
 
     const { setProducts } = this.props;
 
     const handleSearch = () => {
       const { history } = this.props;
-      // console.log(this.props.history);
       if (query) {
         if (filter) {
           axios.get(`/api/products/${query}/${filter}`).then((res) => {
@@ -77,6 +65,7 @@ class SearchBar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     products: state.homeReducer.products,
+    filter: state.homeReducer.filter
   };
 };
 

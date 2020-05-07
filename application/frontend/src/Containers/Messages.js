@@ -1,0 +1,27 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import MainNavBar from '../Components/Navigation/MainNavBar';
+
+import ChatContainer from './chat/messageContainer'
+//URL for socket to connect to local for now or aws ip address
+
+class Messages extends React.Component {
+  constructor(props) {
+	  super(props);	
+	}
+  render() {
+    const { history } = this.props;
+    const { socket, user } = this.props;
+    console.log(user.socketId);
+    return (
+      <div>
+        <MainNavBar history={history} />
+        <br />
+        <p style={{ textAlign: 'center' }}>No new messages</p>
+        <ChatContainer socket={socket} user={user} /> 
+      </div>
+    );
+  }
+}
+
+export default Messages;

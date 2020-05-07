@@ -4,8 +4,8 @@ const initialState = {
 
 };
 
-const tryRegister = (state) => {
-  // console.log(action.payload.values);
+const tryRegister = (state, action) => {
+  // console.table(action.payload.values);
   return {
     ...state
   };

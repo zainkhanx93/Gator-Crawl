@@ -18,8 +18,49 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAllSoldProducts = (req, res) => {
+  const { userid } = req.params;
+
+  Product.findAll({
+    where: {
+      [Op.and]: [
+        {
+          userId: userid,
+        },
+        {
+          sold: true,
+        },
+      ],
+    },
+  });
+};
+
+exports.findAllUserProducts = (req, res) => {
+  const { id } = req.user;
+
+  Product.findAll({
+    where: {
+      sellerId: id,
+    },
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: err.message,
+        message: 'Error occurred while fetching products',
+      });
+    });
+};
+
+// finds all public products
 exports.findAll = (req, res) => {
-  Product.findAll()
+  Product.findAll({
+    where: {
+      approved: true,
+    },
+  })
     .then(data => {
       res.send(data);
     })
@@ -31,11 +72,19 @@ exports.findAll = (req, res) => {
     });
 };
 
+// finds all public products with filter
 exports.findWithFilter = (req, res) => {
   const { categoryId } = req.params;
   Product.findAll({
     where: {
-      categoryId: categoryId,
+      [Op.and]: [
+        {
+          categoryId: categoryId,
+        },
+        {
+          approved: true,
+        },
+      ],
     },
   })
     .then(data => {
@@ -49,6 +98,7 @@ exports.findWithFilter = (req, res) => {
     });
 };
 
+// finds all public products with query
 exports.findWithQuery = (req, res) => {
   const { query, categoryId } = req.params;
 
@@ -61,6 +111,7 @@ exports.findWithQuery = (req, res) => {
               [Op.substring]: query,
             },
             categoryId: categoryId,
+            approved: true,
           },
         ],
       },
@@ -77,9 +128,14 @@ exports.findWithQuery = (req, res) => {
   } else {
     Product.findAll({
       where: {
-        productName: {
-          [Op.substring]: query,
-        },
+        [Op.and]: [
+          {
+            approved: true,
+            productName: {
+              [Op.substring]: query,
+            },
+          },
+        ],
       },
     })
       .then(data => {
@@ -94,19 +150,78 @@ exports.findWithQuery = (req, res) => {
   }
 };
 
+exports.updateProduct = (req, res) => {
+  const userId = req.user.id;
+  const { productId } = req.params;
+  const {
+    photo,
+    categoryId,
+    description,
+    productName,
+    sellerId,
+    startDate,
+    endDate,
+    bidding,
+    price,
+  } = req.body;
+  Product.update(
+    {
+      photo,
+      categoryId,
+      description,
+      productName,
+      sellerId,
+      startDate,
+      endDate,
+      bidding,
+      price,
+    },
+    {
+      where: {
+        [Op.and]: [{ id: productId, sellerId: userId }],
+      },
+    }
+  )
+    .then(data => {
+      if (!data) {
+        return res.status(400).send({ message: 'Could not update product' });
+      }
+      if (data[0] === 1) {
+        res.send({ message: 'Product Updated Successfully' });
+      } else {
+        res.status(400).send({ message: 'Could not update product' });
+      }
+    })
+    .catch(err => {
+      return res.status(500).send({
+        error: err.message,
+        message: 'Something went wrong updating product',
+      });
+    });
+};
+
 exports.delete = (req, res) => {
   const { id } = req.params;
+  const sellerId = req.user.id;
+
   Product.destroy({
-    where: { id },
+    where: {
+      [Op.and]: [
+        { id: id },
+        {
+          sellerId: sellerId,
+        },
+      ],
+    },
   })
     .then(num => {
       if (num === 1) {
         res.send({
-          message: 'User was deleted successfully!',
+          message: 'Product was deleted successfully!',
         });
       } else {
         res.send({
-          message: `User delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
+          message: `Could not delete product`,
         });
       }
     })

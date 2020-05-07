@@ -1,0 +1,14 @@
+.myproducts-window {
+  display: inline-flex;
+  width: 100%;
+}
+
+.myproducts-left {
+  width: 150px;
+  margin-left: 20px;
+}
+
+.myproducts-right {
+  width: 70%;
+  text-align: center;
+}

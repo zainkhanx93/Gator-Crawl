@@ -1,3 +1,17 @@
+.Cart-Window {
+  display: inline-flex;
+  width: 100%;
+}
+
+.Cart-Left-Side {
+  width: 150px;
+  margin-left: 20px;
+}
+
+.Cart-Right-Side {
+  width: 70%;
+}
+
 .Button {
   background-color: #F3CB0A;
   border: none;
@@ -11,6 +25,7 @@
   font-size: 20px;
   width: 200px;
   margin-left: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Title {
@@ -28,6 +43,7 @@
   background-color: #f7f3f3;
   width: 75%;
   height: 100%;
+
 }
 
 
@@ -50,6 +66,7 @@
   background-color: white;
   display: inline-flex;
   border: 1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Profile-picture {
