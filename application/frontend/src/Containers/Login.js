@@ -112,6 +112,8 @@ class Login extends React.Component {
       setCurrentUser(socketUser);
       this.setUser(socketUser);
       history.push('/home');
+    } else {
+      console.log(formValues.email);
     }
     // history.push('/home');
   };

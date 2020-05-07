@@ -24,7 +24,6 @@ class Messages extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     socket: state.messageReducer.socket,
