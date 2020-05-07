@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainNavBar from '../Components/Navigation/MainNavBar';
-
+import './Messages.scss'
 import ChatContainer from './chat/messageContainer'
 //URL for socket to connect to local for now or aws ip address
 
