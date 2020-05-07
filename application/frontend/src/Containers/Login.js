@@ -120,7 +120,7 @@ class Login extends React.Component {
 
   render() {
     const { isAuth } = this.props;
-    const { socket, user } = this.state;
+    const { socket, user } = this.props;
     let failed = null;
     if (isAuth === false) {
       failed = <p>Login failed, try again</p>;

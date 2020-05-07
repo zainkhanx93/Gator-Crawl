@@ -14,7 +14,7 @@ const createMessage = ({ message = "", sender = "" } = { }) => ({
         // message {Array.Message}
         // name {String}
         // users {Array.String}
-const createChat = ({ messages = [], name = "Public", user = [] } = {}) => ({
+const createChat = ({ messages = [], name = "Public", users = [] } = {}) => ({
     id: UUIDV4(),
     name,
     messages,

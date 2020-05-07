@@ -6,6 +6,7 @@ const { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED,
 const { createMessage, createChat } = require('../config/messageFunction')
 
 let connectedUser = { }
+let communityChat = createChat({ isCommunity:true });
 //export
 // module.exports = function(io) {
 //     io.sockets.on('connection', function(socket){

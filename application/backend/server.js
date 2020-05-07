@@ -16,7 +16,7 @@ const messageRoutes = require('./routes/message');
 const app = express();
 
 //socketIO
-const server = require('http').createServer()
+const server = require('http').Server(express);
 const io = module.exports.io = require('socket.io')(server)
 const socketManager = require('./config/socketManager')
 
