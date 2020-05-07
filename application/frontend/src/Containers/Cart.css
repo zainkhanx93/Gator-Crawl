@@ -27,6 +27,7 @@
   width: 200px;
   margin-left: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  resize: both;
 }
 
 .Title {
@@ -72,13 +73,15 @@
 .Cart-Product {
   padding: 10px;
   margin: 10px;
-  width: 50%;
+  width: 75%;
+  height: 30%;
+  position:relative;
+  resize: none;
   background-color: white;
   display: inline-flex;
   border: 1px solid black;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  position: fixed;
-  resize: both;
+
 
 }
 
