@@ -7,15 +7,22 @@
 .Cart-Left-Side {
   width: 150px;
   margin-left: 20px;
+  resize: both;
+
 }
 
 .Cart-Right-Side {
-  width: 70%;
+  width: 200%;
+  height: 80px;
+  resize: both;
+  border: 2px solid black;
+
+
 }
 
 .Button {
   background-color: #F3CB0A;
-  border: none;
+  border: 1px solid purple;
   border-radius: 5px;
   color: #662A82;
   padding: 11px 32px;
@@ -23,20 +30,24 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 20px;
-  width: 200px;
-  margin-left: 10px;
+  font-size: 15px;
+  width: 150px;
+  margin-right: 100px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  resize: both;
-  position: relative;
+  resize: none;
+
 }
 
 .Title {
   font-size: 21px;
+  resize: both;
+
 }
 .Shopping-Cart-Window {
   display: inline-flex;
   width: 100%;
+  resize: both;
+
 
 }
 
@@ -45,11 +56,14 @@
   margin-left: 40px;
   float: left;
   background-color: #f7f3f3;
-  width: 70%;
-  height: 100%;
+  width: 40%;
+  height: 40%;
   display: inline-flex;
   float: left;
   position: fixed;
+  resize: both;
+  border: 1px solid green;
+
 
 
 }
@@ -57,15 +71,17 @@
 
 .Total-Box {
   margin-top: 14px;
-  margin-left: 1000px;
+  margin-left: 900px;
   margin-right: 20px;
   background-color: white;
-  border : 1px solid black;
+  border : 1px solid red;
   width: 15%;
   height : 200px;
   float: left;
   display: inline-flex;
   position: fixed;
+  resize: both;
+
 
 
 }
@@ -75,20 +91,23 @@
   padding: 10px;
   margin: 10px;
   height: 30%;
-  width: 40%;
+  min-width: 600px;
+  max-width: 700px;
  background-color: white;
   display: inline-flex;
   border: 1px solid black;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   position:fixed;
   resize:none;
+  box-sizing:border-box;
+
 
 }
 
 .Profile-picture {
 
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   display: inline-block;
   resize: both;
 }
@@ -98,8 +117,12 @@
   display: inline-block;
   font-size: 20px;
   padding-left: 50px;
-  width: 20%;
+  width: 10%;
+  margin-left: 280px;
   resize: both;
+  position: fixed;
+  border: 1px solid blue;
+
 
 }
 

@@ -27,7 +27,9 @@ class Cart extends React.Component {
               </div>
               <div className="Cart-Buttons">
                 <p style={{ fontSize: '25px' }}><b> $ 200.00 </b> </p>
-                <button className="Button" type="button"> Message Seller </button>
+                <button className="Button" type="button"> Message  </button>
+                <br />
+                <br />
                 <button className="Button" type="button"> Remove </button>
               </div>
             </div>
