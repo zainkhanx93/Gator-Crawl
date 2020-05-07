@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FaChevronDown, FaSearch} from "react-icons/fa";
 import { FcMenu } from "react-icons/fc";
+import { MdEject } from "react-icons/md";
 // import FAChevronDown from 'react-icons/fa'
 // import FAMenu from 'react-icons/fa'
 // import FASearch from 'react-icons/fa'
@@ -99,12 +100,12 @@ export default class SideBar extends Component{
 							})
 						}
 					</div>
-					{/* <div className="current-user">
+					<div className="current-user">
 						<span>{user.name}</span>
 						<div onClick={()=>{logout()}} title="Logout" className="logout">
 							<MdEject/>	
 						</div>
-					</div> */}
+					</div> 
 			</div>
 		);
 	
