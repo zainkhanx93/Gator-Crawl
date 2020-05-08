@@ -19,19 +19,19 @@ class Cart extends React.Component {
 
             <div className="Cart-Product">
               <img className="Profile-picture" src={gclogo} alt="Logo" />
-              <div className="Cart-Product-Info">
-                <p style={{ fontSize: '25px' }}> <b> Nike Shoes </b></p>
-                <p> Size 9 Roshis </p>
-                <p style={{ fontSize: '25px' }}><b> $ 200.00 </b> </p>
-              </div>
               <div className="Cart-Buttons">
                 <button className="Button" type="button"> Message  </button>
                 <br />
                 <br />
                 <br />
                 <button className="Button" onClick="Delete()" type="button"> Delete </button>
-
               </div>
+              <div className="Cart-Product-Info">
+                <p style={{ fontSize: '25px' }}> <b> Nike Shoes </b></p>
+                <p> Size 9 Roshis </p>
+                <p style={{ fontSize: '25px' }}><b> $ 200.00 </b> </p>
+              </div>
+
             </div>
           </div>
 
@@ -76,6 +76,6 @@ class Cart extends React.Component {
 export default Cart;
 
 function Delete() {
-  //let product = document.getElementById('Cart-Product');
-  //product.removeChild(product.childNodes[0]);
+  let product = document.getElementById('Cart-Product');
+  product.removeChild(product.childNodes[0]);
 }

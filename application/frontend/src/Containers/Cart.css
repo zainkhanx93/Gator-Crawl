@@ -8,15 +8,12 @@
   width: 150px;
   margin-left: 20px;
   resize: both;
-
-
 }
 
 .Cart-Right-Side {
   width: 200%;
   height: 80px;
   resize: both;
-
 
 }
 
@@ -29,13 +26,12 @@
   margin-top: 20px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: table-column-group;
   font-size: 15px;
   width: 150px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   resize: none;
   position:absolute;
-  float: right;
 
 }
 
@@ -114,7 +110,7 @@
 
 .Cart-Product-Info {
   text-align: left;
-  display: inline-block;
+  display:table-column-group;
   font-size: 20px;
   padding-left: 50px;
   width: 10%;
