@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { FaChevronDown, FaSearch} from "react-icons/fa";
 import { FcMenu } from "react-icons/fc";
+import { MdEject } from "react-icons/md";
 // import FAChevronDown from 'react-icons/fa'
 // import FAMenu from 'react-icons/fa'
 // import FASearch from 'react-icons/fa'
 //import MdEject from 'react-icons/lib/md/eject'
 import SideBarOption from './SideBarOption'
 import { last, get, differenceBy } from 'lodash' 
-//import { createChatNameFromUsers } from '../../Factories'
 export default class SideBar extends Component{
 	static type = {
 		USERS:"users",
@@ -35,6 +35,9 @@ export default class SideBar extends Component{
 	}
 	setActiveSideBar = (type) => {
 		this.setState({ activeSideBar:type })
+	}
+	createChatNameFromUsers = (users, excludedUser = "") => {
+		return users.filter(u => u !== excludedUser).join(' & ')
 	}
 
 	render(){
@@ -79,10 +82,11 @@ export default class SideBar extends Component{
 						chats.map((chat)=>{
 								return(
 								<SideBarOption 
+									
 									key = {chat.id}
                                     lastMessage = { get(last(chat.messages), 'message', '') }
-                                    name = {chat.name}
-									// name = { chat.isCommunity ? chat.name : createChatNameFromUsers(chat.users, user.name) }
+                                    //name = {chat.name}
+									name = { chat.isCommunity ? chat.name : this.createChatNameFromUsers(chat.users, user.email) }
 									active = { activeChat.id === chat.id }
 									onClick = { ()=>{ this.props.setActiveChat(chat) } }
 								/>
@@ -90,21 +94,21 @@ export default class SideBar extends Component{
 						})	
 						
 						:
-							differenceBy(users, [user], 'name').map((user)=>{
+							differenceBy(users, [user], 'email').map((user)=>{
 								return <SideBarOption 
 									key = { user.id }
-									name = { user.name }
-									onClick = { ()=>{ this.addChatForUser(user.name) }  }
+									name = { user.email }
+									onClick = { ()=>{ this.addChatForUser(user.email) }  }
 								/>
 							})
 						}
 					</div>
-					{/* <div className="current-user">
-						<span>{user.name}</span>
+					<div className="current-user">
+						<span>{user.email}</span>
 						<div onClick={()=>{logout()}} title="Logout" className="logout">
 							<MdEject/>	
 						</div>
-					</div> */}
+					</div> 
 			</div>
 		);
 	

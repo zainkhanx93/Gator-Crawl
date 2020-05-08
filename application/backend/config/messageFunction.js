@@ -14,12 +14,13 @@ const createMessage = ({ message = "", sender = "" } = { }) => ({
         // message {Array.Message}
         // name {String}
         // users {Array.String}
-const createChat = ({ messages = [], name = "Public", users = [] } = {}) => ({
+const createChat = ({ messages = [], name = "Public", users = [], isCommunity = false } = {}) => ({
     id: UUIDV4(),
-    name,
+    name: isCommunity ? name : createChatNameFromUsers(users),
     messages,
     users,
     typingUsers: [],
+    isCommunity,
 })
 
 //get time with date object
@@ -27,7 +28,12 @@ const getTime = (date) => {
     return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}`
 }
 
+const createChatNameFromUsers = (users, excludedUser = "") => {
+	return users.filter(u => u !== excludedUser).join(' & ') || "Empty Chat"
+}
+
 module.exports = {
     createMessage, 
-    createChat
+    createChat,
+    createChatNameFromUsers
 }

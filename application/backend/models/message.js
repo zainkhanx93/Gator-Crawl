@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define(
     'Message',
     {
-      senderUsername: DataTypes.INTEGER,
+      senderID: DataTypes.INTEGER,
       receiverUsername: DataTypes.STRING,
       messageContent: DataTypes.STRING,
     },

@@ -52,7 +52,7 @@ export default class ChatContainer extends Component {
 	sendOpenPrivateMessage = (reciever) => {
 		const { socket, user } = this.props
 		const { activeChat } = this.state
-		socket.emit(PRIVATE_MESSAGE, {reciever, sender:user.name, activeChat})
+		socket.emit(PRIVATE_MESSAGE, {reciever, sender:user.email, activeChat})
 
 	}
 	addUserToChat = ({ chatId, newUser }) => {
@@ -68,7 +68,7 @@ export default class ChatContainer extends Component {
 	removeUsersFromChat = removedUsers => {
 		const { chats } = this.state
 		const newChats = chats.map( chat => {
-			let newUsers = difference( chat.users, removedUsers.map( u => u.name ) )
+			let newUsers = difference( chat.users, removedUsers.map( u => u.email ) )
 				return Object.assign({}, chat, { users: newUsers })
 		})
 		this.setState({ chats: newChats })
@@ -128,8 +128,9 @@ export default class ChatContainer extends Component {
 	*	@param chatId {number}
 	*/
 	updateTypingInChat = (chatId) =>{
+		console.log("Current Typing email: " + this.props.user.email)
 		return ({isTyping, user})=>{
-			if(user !== this.props.user.name){
+			if(user !== this.props.user.email){
 
 				const { chats } = this.state
 
@@ -174,6 +175,9 @@ export default class ChatContainer extends Component {
 	render() {
 		const { user, logout } = this.props
 		const { chats, activeChat, users } = this.state
+		console.log("users in message Container is: " + users);
+		console.log(user.id);
+		console.log(user.email);
 		return (
 			<div className="container">
 				<SideBar
@@ -190,7 +194,7 @@ export default class ChatContainer extends Component {
 						activeChat !== null ? (
 
 							<div className="chat-room">
-								<ChatHeading name={activeChat.name} />
+								<ChatHeading name={activeChat.email} />
 								<Messages 
 									messages={activeChat.messages}
 									user={user}

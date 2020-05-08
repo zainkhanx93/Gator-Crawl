@@ -9,7 +9,7 @@ import TeamMember from './Containers/TeamMember';
 import Home from './Containers/Home';
 import Profile from './Containers/Profile';
 import Cart from './Containers/Cart';
-import Messages from './Containers/Messages';
+import Messages from './Containers/messageRelated/Messages';
 import Product from './Containers/Product';
 import MyProducts from './Containers/MyProducts';
 import noMatch from './Components/noMatch';
