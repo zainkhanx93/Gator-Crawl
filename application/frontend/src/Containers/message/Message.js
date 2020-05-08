@@ -22,6 +22,13 @@ export default class Messages extends Component {
 	
 	render() {
 		const { messages, user, typingUsers } = this.props
+		console.log("Message function user: " + user.email)
+		console.log("Message function: " + messages)
+		messages.map((mes)=>{
+			console.log(mes.id)
+			console.log(mes.sender)
+			console.log(mes.message)
+		})
 		return (
 			<div ref='container'
 				className="thread-container">
@@ -31,7 +38,7 @@ export default class Messages extends Component {
 							return (
 								<div
 									key={mes.id}
-									className={`message-container ${mes.sender === user.name && 'right'}`}
+									className={`message-container ${mes.sender === user.email && 'right'}`}
 								>
 									<div className="time">{mes.time}</div>
 									<div className="data">
@@ -44,10 +51,10 @@ export default class Messages extends Component {
 						})
 					}
 					{
-						typingUsers.map((name)=>{
+						typingUsers.map((email)=>{
 							return (
-								<div key={name} className="typing-user">
-									{`${name} is typing . . .`}
+								<div key={email} className="typing-user">
+									{`${email} is typing . . .`}
 								</div>
 							)
 						})

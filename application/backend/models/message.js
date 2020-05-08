@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define(
     'Message',
     {
-      senderUsername: DataTypes.STRING,
+      senderID: DataTypes.INTEGER,
       receiverUsername: DataTypes.STRING,
       messageContent: DataTypes.STRING,
     },

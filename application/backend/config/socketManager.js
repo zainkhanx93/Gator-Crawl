@@ -21,26 +21,30 @@ module.exports = function(socket) {
     //User connected event
     //user object will be added to connected user list
     socket.on(USER_CONNECTED, (user) => {
-        user.socketId = socket.id
+		user.socketId = socket.id		
+		//console.log("user.socketID = " + user.socketId);
         connectedUser = addUser(connectedUser, user)
         //store user to socket.user so we can use it anywhere with socket
         socket.user = user;
 
-        sendMessageToChatFromUser = sendMessageToChat(user.name)
-        sendTypingFromUser = sendTypingToChat(user.name)
+		// console.log("New connection is: " + socket.user.email)
+		// console.log("connectedUser is: " + connectedUser)
+		sendMessageToChatFromUser = sendMessageToChat(user.email)
+		console.log("user.email: " + user.email);
+        sendTypingFromUser = sendTypingToChat(user.email)
         
         //broadcast to all sockets connected
         io.emit(USER_CONNECTED, connectedUser);
-        console.log(connectedUser);
+        //console.log(connectedUser);
     })
 
     //User disconnects
 	socket.on('disconnect', ()=>{
 		if("user" in socket){
-			connectedUsers = removeUser(connectedUser, socket.user.name)
+			connectedUsers = removeUser(connectedUser, socket.user.email)
 
 			io.emit(USER_DISCONNECTED, connectedUsers)
-			console.log("Disconnect", connectedUsers);
+			//console.log("Disconnect", connectedUsers);
 		}
 	})
 
@@ -51,6 +55,7 @@ module.exports = function(socket) {
 
 	socket.on(MESSAGE_SENT, ({chatId, message})=>{
 		sendMessageToChatFromUser(chatId, message)
+		console.log(chatId + " " + message);
 	})
 
 	socket.on(TYPING, ({chatId, isTyping})=>{
@@ -58,27 +63,27 @@ module.exports = function(socket) {
 	})
 
     ////Get Private Chat
-	socket.on(PRIVATE_MESSAGE, ({reciever, sender, activeChat})=>{
-		if(reciever in connectedUsers){
-			const recieverSocket = connectedUsers[reciever].socketId
-			if(activeChat === null || activeChat.id === communityChat.id){
-				const newChat = createChat({ name:`${reciever}&${sender}`, users:[reciever, sender] })
-				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
-				socket.emit(PRIVATE_MESSAGE, newChat)
-			}else{
-				if(!(reciever in activeChat.users)){
-					activeChat.users
-										.filter( user => user in connectedUsers)
-										.map( user => connectedUsers[user] )
-										.map( user => {
-												socket.to(user.socketId).emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever })
-										} )
-										socket.emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever } )
-				}
-				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, activeChat)
-			}
-		}
-	})
+	// socket.on(PRIVATE_MESSAGE, ({reciever, sender, activeChat})=>{
+	// 	if(reciever in connectedUsers){
+	// 		const recieverSocket = connectedUsers[reciever].socketId
+	// 		if(activeChat === null || activeChat.id === communityChat.id){
+	// 			const newChat = createChat({ name:`${reciever}&${sender}`, users:[reciever, sender] })
+	// 			socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
+	// 			socket.emit(PRIVATE_MESSAGE, newChat)
+	// 		}else{
+	// 			if(!(reciever in activeChat.users)){
+	// 				activeChat.users
+	// 									.filter( user => user in connectedUsers)
+	// 									.map( user => connectedUsers[user] )
+	// 									.map( user => {
+	// 											socket.to(user.socketId).emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever })
+	// 									} )
+	// 									socket.emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever } )
+	// 			}
+	// 			socket.to(recieverSocket).emit(PRIVATE_MESSAGE, activeChat)
+	// 		}
+	// 	}
+	// })
 }
 
 //addUser function
