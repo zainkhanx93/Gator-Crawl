@@ -1,6 +1,8 @@
 const express = require('express');
 const sales = require('../controllers/sale.js');
 
+const requireAuth = require('../middleware/requireAuth');
+
 const router = express.Router();
 
 // creates sale
