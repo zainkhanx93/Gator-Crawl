@@ -15,7 +15,7 @@ import './LoginRegister.css';
 
 //for message
 import io from 'socket.io-client'
-import { USER_CONNECTED } from '../Containers/messageEvent'
+import { USER_CONNECTED } from '../Containers/messageRelated/messageEvent'
 const awsURL = ""
 const localURL = "http://localhost:8080/"
 const socketURL = localURL || awsURL

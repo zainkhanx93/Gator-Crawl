@@ -2,7 +2,7 @@
 const io = require('../server.js').io
 const { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, 
     TYPING, PRIVATE_MESSAGE, USER_CONNECTED, USER_DISCONNECTED,
-    NEW_CHAT_USER } = require('../../frontend/src/Containers/messageEvent');
+    NEW_CHAT_USER } = require('../../frontend/src/Containers/messageRelated/messageEvent');
 const { createMessage, createChat } = require('../config/messageFunction')
 
 let connectedUser = { }
@@ -15,6 +15,10 @@ let communityChat = createChat({ isCommunity:true });
 // } 
 module.exports = function(socket) {
     console.log("Socket id is: " + socket.id);
+
+	let sendMessageToChatFromUser;
+
+	let sendTypingFromUser;
 
     //Verify Username event
 
