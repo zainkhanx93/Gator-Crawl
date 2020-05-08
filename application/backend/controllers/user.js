@@ -128,8 +128,15 @@ exports.login = (req, res) => {
 };
 
 // Find all users
-exports.findAll = (req, res) => {
-  User.findAll()
+exports.findById = (req, res) => {
+  const { id } = req.params;
+  console.log('hello world');
+
+  User.findAll({
+    where: {
+      id: id,
+    },
+  })
     .then(data => {
       res.send(data);
     })

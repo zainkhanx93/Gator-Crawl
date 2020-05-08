@@ -17,11 +17,8 @@ router.post('/login', passportSignIn, users.login);
 
 // Show all registered User
 // Get request public to route /api/users/
-router.get('/', users.findAll);
+router.get('/:id', users.findById);
 
-router.post('/test', requireAuth, (req, res) => {
-  res.send(req.user);
-});
 // Delete User
 // Del request private, giving private user's id
 router.delete('/:id', users.delete);
@@ -35,4 +32,3 @@ router.delete('/:id', users.delete);
 // router.get('/image', users.showImage);
 
 module.exports = router;
- 
