@@ -19,13 +19,18 @@ class Profile extends React.Component {
             <img className="Profile-picture" src={gclogo} alt="Logo" />
           </div>
           <div className="User-Info">
-            <p>Name: {currentUser.firstName} {currentUser.lastName}</p>
+            <p>
+              Name: {currentUser.firstName} {currentUser.lastName}
+            </p>
             <p>Email: {currentUser.email}</p>
             <p>Major: {currentUser.major}</p>
           </div>
         </div>
         <br />
-        <button className="Button" type="button"> Edit </button>
+        <button className="Button" type="button">
+          {' '}
+          Edit{' '}
+        </button>
       </div>
     );
 
@@ -36,9 +41,7 @@ class Profile extends React.Component {
           <div className="leftside">
             <ProfileNavBar />
           </div>
-          <div className="rightside">
-            {me}
-          </div>
+          <div className="rightside">{me}</div>
         </div>
       </div>
     );
@@ -47,7 +50,7 @@ class Profile extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.userReducer.currentUser
+    currentUser: state.userReducer.currentUser,
   };
 };
 

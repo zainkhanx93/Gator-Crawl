@@ -14,30 +14,44 @@ class Cart extends React.Component {
       <div>
         <p className="Title"> My Shopping Cart </p>
         <div className="Shopping-Cart-Window">
-
           <div className="Product-Window">
-
             <div className="Cart-Product">
               <img className="Profile-picture" src={gclogo} alt="Logo" />
               <div className="Cart-Product-Info">
-                <p style={{ fontSize: '25px' }}> <b> Nike Shoes </b></p>
+                <p style={{ fontSize: '25px' }}>
+                  {' '}
+                  <b> Nike Shoes </b>
+                </p>
                 <br />
                 <p> Size 9 Roshis </p>
                 <br />
               </div>
               <div className="Cart-Buttons">
-                <p style={{ fontSize: '25px' }}><b> $ 200.00 </b> </p>
-                <button className="Button" type="button"> Message Seller </button>
-                <button className="Button" type="button"> Remove </button>
+                <p style={{ fontSize: '25px' }}>
+                  <b> $ 200.00 </b>{' '}
+                </p>
+                <button className="Button" type="button">
+                  {' '}
+                  Message Seller{' '}
+                </button>
+                <button className="Button" type="button">
+                  {' '}
+                  Remove{' '}
+                </button>
               </div>
             </div>
           </div>
 
           <div className="Total-Box">
             <div className="Total-Cart-Info-Left">
-              <p style={{ fontSize: '30px', color: '#662A82' }}><b> Summary </b> </p>
+              <p style={{ fontSize: '30px', color: '#662A82' }}>
+                <b> Summary </b>{' '}
+              </p>
               <br />
-              <p style={{ fontSize: '25px' }}> <b> Total </b></p>
+              <p style={{ fontSize: '25px' }}>
+                {' '}
+                <b> Total </b>
+              </p>
               <br />
             </div>
             <div className="Total-Cart-Info-Right">
@@ -47,7 +61,10 @@ class Cart extends React.Component {
               <br />
               <br />
               <br />
-              <p style={{ fontSize: '25px' }}> <b> $200 </b></p>
+              <p style={{ fontSize: '25px' }}>
+                {' '}
+                <b> $200 </b>
+              </p>
             </div>
           </div>
         </div>
@@ -61,9 +78,7 @@ class Cart extends React.Component {
           <div className="Cart-Left-Side">
             <ProfileNavBar />
           </div>
-          <div className="Cart-Right-Side">
-            {mycart}
-          </div>
+          <div className="Cart-Right-Side">{mycart}</div>
         </div>
       </div>
     );
