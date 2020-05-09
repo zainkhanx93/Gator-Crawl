@@ -22,13 +22,13 @@ export default class Messages extends Component {
 	
 	render() {
 		const { messages, user, typingUsers } = this.props
-		console.log("Message function user: " + user.email)
-		console.log("Message function: " + messages)
-		messages.map((mes)=>{
-			console.log(mes.id)
-			console.log(mes.sender)
-			console.log(mes.message)
-		})
+		// console.log("Message function user: " + user.email)
+		// console.log("Message function: " + messages)
+		// messages.map((mes)=>{
+		// 	console.log(mes.id)
+		// 	console.log(mes.sender)
+		// 	console.log(mes.message)
+		// })
 		return (
 			<div ref='container'
 				className="thread-container">

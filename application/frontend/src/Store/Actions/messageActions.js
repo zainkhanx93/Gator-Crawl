@@ -13,3 +13,10 @@ export const setUser = (user) => {
     payload: { user }
   };
 };
+
+export const addOtherUsers = (otherUsers) => {
+  return {
+    type: actionTypes.ADD_OTHER_USER,
+    payload: otherUsers
+  };
+};

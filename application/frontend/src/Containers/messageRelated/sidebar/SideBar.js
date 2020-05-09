@@ -43,6 +43,11 @@ export default class SideBar extends Component{
 	render(){
 		const { chats, activeChat, user, setActiveChat, logout, users } = this.props
 		const { reciever, activeSideBar } = this.state
+		console.log("From side bar: " + users)
+		users.map(notMe => {
+			console.log("Other Users: " + notMe.id);
+			console.log("Other Users email: " + notMe.email);
+		})
 		return (
 			<div id="side-bar">
 					<div className="heading">
@@ -94,7 +99,7 @@ export default class SideBar extends Component{
 						})	
 						
 						:
-							differenceBy(users, [user], 'email').map((user)=>{
+							differenceBy(users, [user], 'id').map((user)=>{
 								return <SideBarOption 
 									key = { user.id }
 									name = { user.email }

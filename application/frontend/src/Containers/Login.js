@@ -15,7 +15,7 @@ import logotitle from '../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
 // for message
-import { USER_CONNECTED } from './messageEvent';
+import { USER_CONNECTED } from './messageRelated/messageEvent';
 
 const awsURL = '';
 const localURL = 'http://localhost:8080/';
@@ -49,11 +49,19 @@ class Login extends React.Component {
 
   // Sets the users from this.state
   // user parameter will have id and name
-  setUser = (user) => {
-    const { socket, setUser } = this.props;
+  addUserToSocket = (user) => {
+    const { socket, setUser, addOtherUsers } = this.props;
     socket.emit(USER_CONNECTED, user);
+    //call action dispatch to set user to socket
     setUser(user);
+    //addOtherUsers(user);
   };
+
+  // addOthersUsersToSocket = (users) => {
+  //   const { socket, addOtherUsers } = this.props;
+  //   socket.emit(USER_CONNECTED, users)
+  //   addOtherUsers(users);
+  // }
 
   onSubmit = () => {
     const {
@@ -101,7 +109,9 @@ class Login extends React.Component {
 
       // backend code in config/socketManager.js
 
-      this.setUser(george);
+      this.addUserToSocket(george);
+      // this.addOthersUsersToSocket(george)
+
       history.push('/home');
     } else if (
       formValues.email === 'bsanders@mail.sfsu.edu'
@@ -109,15 +119,20 @@ class Login extends React.Component {
     ) {
       console.log('bernie logging in');
       setCurrentUser(bernie);
-
-      this.setUser(bernie);
+      
+      this.addUserToSocket(bernie);
+      // this.addOthersUsersToSocket(bernie)
+      
       history.push('/home');
     } else {
       console.log(formValues.email);
       // code for message
       const socketUser = formValues;
       setCurrentUser(socketUser);
-      this.setUser(socketUser);
+
+      this.addUserToSocket(socketUser);
+      // this.addOthersUsersToSocket(socketUser)
+
       history.push('/home');
     }
     // history.push('/home');
@@ -127,7 +142,7 @@ class Login extends React.Component {
 
   render() {
     const { isAuth } = this.props;
-    const { socket, user } = this.props;
+    const { socket, user, otherUsers } = this.props;
     let failed = null;
     if (isAuth === false) {
       failed = <p>Login failed, try again</p>;
@@ -145,7 +160,8 @@ class Login extends React.Component {
         <br />
         <LoginForm
           socket={socket}
-          setUser={this.setUser}
+          addUserToSocket={this.addUserToSocket}
+          addOthersUsersToSocket={this.addOthersUsersToSocket}
           handleSubmit={this.onSubmit}
         />
         <br />
@@ -171,6 +187,7 @@ const mapStateToProps = (state) => {
     isAuth: state.loginReducer.token,
     socket: state.messageReducer.socket,
     user: state.messageReducer.user,
+    otherUsers: state.messageReducer.otherUsers
   };
 };
 
@@ -189,6 +206,8 @@ const mapDispatchToProps = (dispatch, props) => {
     setCurrentUser: (currentUser) => dispatch(userActions.setCurrentUser(currentUser)),
     setUser: (user) => dispatch(messageActions.setUser(user)),
     setSocket: (socket) => dispatch(messageActions.setSocket(socket)),
+    addOtherUsers: (otherUsers) => dispatch(messageActions.addOtherUsers(otherUsers)),
+
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -5,7 +5,7 @@ const { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED,
     NEW_CHAT_USER } = require('../../frontend/src/Containers/messageRelated/messageEvent');
 const { createMessage, createChat } = require('../config/messageFunction')
 
-let connectedUser = { }
+let connectedUser = { };
 let communityChat = createChat({ isCommunity:true });
 //export
 // module.exports = function(io) {
@@ -14,14 +14,11 @@ let communityChat = createChat({ isCommunity:true });
 //     })
 // } 
 module.exports = function(socket) {
-    console.log("Socket id is: " + socket.id);
+    // console.log("Socket id is: " + socket.id);
 
 	let sendMessageToChatFromUser;
 
 	let sendTypingFromUser;
-
-    //Verify Username event
-
     //User connected event
     //user object will be added to connected user list
     socket.on(USER_CONNECTED, (user) => {
@@ -34,20 +31,21 @@ module.exports = function(socket) {
 		// console.log("New connection is: " + socket.user.email)
 		// console.log("connectedUser is: " + connectedUser)
 		sendMessageToChatFromUser = sendMessageToChat(user.email)
-		console.log("user.email: " + user.email);
+		// console.log("user.email: " + user.email);
         sendTypingFromUser = sendTypingToChat(user.email)
         
         //broadcast to all sockets connected
         io.emit(USER_CONNECTED, connectedUser);
-        //console.log(connectedUser);
+		console.log(connectedUser);
+		
     })
 
     //User disconnects
 	socket.on('disconnect', ()=>{
 		if("user" in socket){
-			connectedUsers = removeUser(connectedUser, socket.user.email)
+			connectedUser = removeUser(connectedUser, socket.user.email)
 
-			io.emit(USER_DISCONNECTED, connectedUsers)
+			io.emit(USER_DISCONNECTED, connectedUser)
 			//console.log("Disconnect", connectedUsers);
 		}
 	})
@@ -59,7 +57,7 @@ module.exports = function(socket) {
 
 	socket.on(MESSAGE_SENT, ({chatId, message})=>{
 		sendMessageToChatFromUser(chatId, message)
-		console.log(chatId + " " + message);
+		// console.log(chatId + " " + message);
 	})
 
 	socket.on(TYPING, ({chatId, isTyping})=>{
