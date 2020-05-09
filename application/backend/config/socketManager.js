@@ -66,28 +66,30 @@ module.exports = function(socket) {
 		sendTypingFromUser(chatId, isTyping)
 	})
 
-    ////Get Private Chat
-	// socket.on(PRIVATE_MESSAGE, ({reciever, sender, activeChat})=>{
-	// 	if(reciever in connectedUsers){
-	// 		const recieverSocket = connectedUsers[reciever].socketId
-	// 		if(activeChat === null || activeChat.id === communityChat.id){
-	// 			const newChat = createChat({ name:`${reciever}&${sender}`, users:[reciever, sender] })
-	// 			socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
-	// 			socket.emit(PRIVATE_MESSAGE, newChat)
-	// 		}else{
-	// 			if(!(reciever in activeChat.users)){
-	// 				activeChat.users
-	// 									.filter( user => user in connectedUsers)
-	// 									.map( user => connectedUsers[user] )
-	// 									.map( user => {
-	// 											socket.to(user.socketId).emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever })
-	// 									} )
-	// 									socket.emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever } )
-	// 			}
-	// 			socket.to(recieverSocket).emit(PRIVATE_MESSAGE, activeChat)
-	// 		}
-	// 	}
-	// })
+    //Get Private Chat
+	socket.on(PRIVATE_MESSAGE, ({reciever, sender, activeChat})=>{
+		// console.log("sender info: " + {sender});
+		// console.log("receiver info: "+ {receiver});
+		if(reciever in connectedUser){
+			const recieverSocket = connectedUser[reciever].socketId
+			if(activeChat === null || activeChat.id === communityChat.id){
+				const newChat = createChat({ name:`Private Room of ${reciever} & ${sender}`, users:[reciever, sender] })
+				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
+				socket.emit(PRIVATE_MESSAGE, newChat)
+			}else{
+				if(!(reciever in activeChat.users)){
+					activeChat.users
+										.filter( user => user in connectedUser)
+										.map( user => connectedUser[user] )
+										.map( user => {
+												socket.to(user.socketId).emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever })
+										} )
+										socket.emit(NEW_CHAT_USER, { chatId: activeChat.id, newUser: reciever } )
+				}
+				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, activeChat)
+			}
+		}
+	})
 }
 
 //addUser function
