@@ -15,7 +15,7 @@ import logotitle from '../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
 // for message
-import { USER_CONNECTED } from './messageEvent';
+import { USER_CONNECTED } from './messageRelated/messageEvent';
 
 const awsURL = '';
 const localURL = 'http://localhost:8080/';

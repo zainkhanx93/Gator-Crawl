@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
 import gclogo from '../Assets/Images/gclogo.png';
 import MainNavBar from '../Components/Navigation/MainNavBar.js';
 
