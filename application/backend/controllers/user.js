@@ -189,3 +189,16 @@ exports.findByEmail = (req, res) => {
       });
     });
 };
+
+exports.findAll = (req, res) => {
+  User.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      return res.status(500).send({
+        error: err.message,
+        message: 'Error occurred while retrieving users',
+      });
+    });
+};
