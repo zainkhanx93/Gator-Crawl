@@ -2,10 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
+import { Cookies } from 'react-cookie';
 
+import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import Modal from '../../Components/UI/Modal';
 import CreatePostForm from '../../Components/Forms/CreatePostForm';
+
+import * as userActions from '../../Store/Actions/userActions';
 import * as homeActions from '../../Store/Actions/homeActions';
 import placeholder from '../../Assets/Images/placeholder.png';
 import './Home.css';
@@ -19,16 +23,25 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const { setProducts, setCategories } = this.props;
+    const { setProducts, setCategories, setCurrentUser } = this.props;
+    // Fetches All Products From Backend
     axios.get('/api/products/all').then((res) => {
-      console.log(res.data);
       setProducts(res.data);
     });
-
+    // Fetches All Categories From Backend
     axios.get('/api/categories').then((res) => {
-      console.log(res.data);
       setCategories(res.data);
     });
+    // Fetches User From Cookies
+    const cookie = new Cookies();
+    const token = cookie.get('token');
+    if (token) {
+      const user = {
+        id: cookie.get('id'),
+        firstName: cookie.get('firstName')
+      };
+      setCurrentUser(user);
+    }
   }
 
   onProductCreated = () => {
@@ -145,12 +158,11 @@ class Home extends React.Component {
                 alt={placeholder}
               />
               <div className="product-info">
-                <strong>{product.productName}</strong>
-                <br />
-                <br />
-                <strong>${product.price}</strong>
-                <br />
-                <p>{product.createdAt.substring(0, 10)}</p>
+                <strong style={{}}>{product.productName}</strong>
+                <p style={{}}>Price: ${product.price}</p>
+                <p>CategoryId: {product.categoryId}</p>
+                <p>SellerId: {product.sellerId}</p>
+                <p>Posted on: {product.createdAt.substring(0, 10)}</p>
               </div>
             </div>
           ))}
@@ -163,17 +175,14 @@ class Home extends React.Component {
         <Modal show={isModalShowing} modalClosed={this.hideModal}>
           <CreatePostForm handleSubmit={this.onProductCreated} />
           <br />
-          <button type="button" onClick={this.hideModal}>
-            exit
-          </button>
         </Modal>
         <MainNavBar history={history} />
+        <p style={{ paddingLeft: '10px' }}>Hi {currentUser.firstName}!</p>
+        <button type="button" className="create-button" onClick={this.createPostClicked}>
+          Create Post
+        </button>
         <div className="home-window">
           <div className="home-filters-upload">
-            <p>Hi {currentUser.firstName}!</p>
-            <button type="button" onClick={this.createPostClicked}>
-              Create Posting
-            </button>
             {filters}
           </div>
           <div className="home-searchresults">
@@ -198,7 +207,7 @@ const mapStateToProps = (state) => {
       price: formSelector(state, 'price'),
       categoryId: formSelector(state, 'categoryId')
     },
-    currentUser: state.userReducer.currentUser
+    currentUser: state.loginReducer.currentUser
   };
 };
 
@@ -206,8 +215,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setProducts: (products) => dispatch(homeActions.setProducts(products)),
     setCategories: (categories) => dispatch(homeActions.setCategories(categories)),
-    setFilter: (filter) => dispatch(homeActions.setFilter(filter))
+    setFilter: (filter) => dispatch(homeActions.setFilter(filter)),
+    setCurrentUser: (user) => dispatch(userActions.setCurrentUser(user))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(Home));

@@ -1,12 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Cookies } from 'react-cookie';
 
+
+import LoginChecker from '../HOC/LoginChecker';
 import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
-import gclogo from '../../Assets/Images/gclogo.png';
 import MainNavBar from '../../Components/Navigation/MainNavBar.js';
+import * as userActions from '../../Store/Actions/userActions';
+import gclogo from '../../Assets/Images/gclogo.png';
 import './Profile.css';
 
 class Profile extends React.Component {
+  componentDidMount() {
+    const { setCurrentUser } = this.props;
+    const cookie = new Cookies();
+    const token = cookie.get('token');
+    if (token) {
+      const user = {
+        id: cookie.get('id'),
+        firstName: cookie.get('firstName'),
+        lastName: cookie.get('lastName'),
+        major: cookie.get('major'),
+        email: cookie.get('email')
+      };
+      setCurrentUser(user);
+    }
+  }
+
   render() {
     const { history, currentUser } = this.props;
 
@@ -49,8 +69,14 @@ class Profile extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.userReducer.currentUser,
+    currentUser: state.loginReducer.currentUser,
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser: (user) => dispatch(userActions.setCurrentUser(user))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(Profile));

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
 import gclogo from '../../Assets/Images/nike.jpg';
@@ -76,4 +77,4 @@ class Cart extends React.Component {
    }
 }
 
-export default Cart;
+export default LoginChecker(Cart);

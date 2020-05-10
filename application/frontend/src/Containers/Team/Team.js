@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
 import * as teamActions from '../../Store/Actions/teamActions';
@@ -62,7 +63,7 @@ class Team extends React.Component {
               >{team.five.firstname} {team.five.lastname}
               </div>
               <div
-                style={{ width: '300px' }} 
+                style={{ width: '300px' }}
                 className="Member-Box"
                 onClick={() => handleClick(team.six)}
               >{team.six.firstname} {team.six.lastname}
@@ -88,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Team);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(Team));

@@ -7,7 +7,9 @@ const initialState = {
     firstName: null,
     lastName: null,
     major: null,
-    token: null
+    token: null,
+    profilePhoto: null,
+    admin: null
   }
 };
 
@@ -22,7 +24,7 @@ const setCurrentUser = (state, action) => {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_CURRENT_USER: return setCurrentUser(state, action);
+    // case actionTypes.SET_CURRENT_USER: return setCurrentUser(state, action);
     default: return state;
   }
 };

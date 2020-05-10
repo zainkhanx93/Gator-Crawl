@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import LoginChecker from '../HOC/LoginChecker';
 import * as homeActions from '../../Store/Actions/homeActions';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import productpic from '../../Assets/Images/fff.png';
@@ -108,4 +109,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(Product));

@@ -26,6 +26,7 @@
 
 .home-filters-upload {
   width: 200px;
+  padding-left: 10px;
 }
 
 .home-searchresults {
@@ -39,4 +40,18 @@
 
 .home-products {
 
+}
+
+.create-button {
+  background-color: #F3CB0A;
+  border: none;
+  border-radius: 5px;
+  color: #662A82;
+  padding: 11px 32px;
+  margin-left: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 150px;
 }

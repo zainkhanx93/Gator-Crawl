@@ -54,7 +54,9 @@ class LoginForm extends React.Component {
     return (
       <form autoComplete="off" onSubmit={(e) => this.onSubmit(e)}>
         <Field name="email" type="email" component={this.renderInputField} label="Email" />
+        <br />
         <Field name="password" type="password" component={this.renderInputField} label="Password" />
+        <br />
         <a href="forgotpassword" className="Link">Forgot password?</a>
         {/* error && <strong>{error}</strong> */}
         <button

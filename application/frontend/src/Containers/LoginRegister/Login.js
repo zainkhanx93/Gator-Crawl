@@ -14,10 +14,10 @@ import gclogo from '../../Assets/Images/gclogo.png';
 import logotitle from '../../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
-
 const awsURL = '';
 const localURL = 'http://localhost:8080/';
 const socketURL = localURL || awsURL;
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -31,6 +31,12 @@ class Login extends React.Component {
   componentDidMount() {
     const cookie = new Cookies();
     cookie.remove('token');
+    cookie.remove('id');
+    cookie.remove('email');
+    cookie.remove('firstName');
+    cookie.remove('lastName');
+    cookie.remove('major');
+    cookie.remove('admin');
     this.initSocket();
   }
 
@@ -54,39 +60,41 @@ class Login extends React.Component {
 
   onSubmit = () => {
     const {
-      // handleSubmit,
+      handleSubmit,
       formValues,
       history,
       setCurrentUser,
     } = this.props;
-    // handleSubmit({
-    //   ...formValues
-    // });
-    // console.table(formValues);
-    axios.post('/api/users/login', { ...formValues })
-      .then((res) => {
-        this.setState({ isAuth: true });
-        setCurrentUser({ email: formValues.email, token: res.data.token });
-        this.setUser(formValues);
-        history.push('/home');
-      }).catch((error) => {
-        this.setState({ isAuth: false });
-        console.log(error);
-      });
-    // const george = {
-    //   id: '1',
-    //   email: 'gfreedland@mail.sfsu.edu',
-    //   firstName: 'George',
-    //   lastName: 'Freedland',
-    //   major: 'Computer Science',
-    //   token: 'token',
-    // };
-    // code for message
+
+    handleSubmit({
+      ...formValues
+    });
+
+    // axios.post('/api/users/login', { ...formValues })
+    //   .then((res) => {
+    //     this.setState({ isAuth: true });
+    //     axios.post('api/users/email', { email: formValues.email })
+    //       .then((res2) => {
+    //         setCurrentUser({
+    //           id: res2.data[0].id,
+    //           firstName: res2.data[0].firstName,
+    //           lastName: res2.data[0].lastName,
+    //           major: res2.data[0].major,
+    //           email: res2.data[0].email,
+    //           token: res.data.token,
+    //           admin: res2.data[0].admin
+    //         });
+    //         history.push('/home');
+    //         this.setUser(formValues);
+    //       });
+    //   }).catch((error) => {
+    //     this.setState({ isAuth: false });
+    //     console.log(error);
+    //   });
   };
 
   render() {
-    const { socket } = this.props;
-    const { isAuth } = this.state;
+    const { socket, isAuth } = this.props;
     // const { socket, user } = this.props;
     let failed = null;
     if (isAuth === false) {
@@ -126,7 +134,7 @@ const mapStateToProps = (state) => {
       email: formSelector(state, 'email'),
       password: formSelector(state, 'password'),
     },
-    // isAuth: state.loginReducer.token,
+    isAuth: state.loginReducer.token,
     socket: state.messageReducer.socket,
     user: state.messageReducer.user,
   };

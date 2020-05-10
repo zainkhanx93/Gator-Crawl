@@ -4,7 +4,7 @@
   border-radius: 5px;
   color: #662A82;
   padding: 11px 32px;
-  margin-top: 20px;
+  margin-top: 40px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -42,7 +42,9 @@
     }
 }
 
-
+.pricefield {
+  display:inline-block;
+}
 
 .Input-Field {
   background-color: #white;
@@ -63,8 +65,7 @@
   border: 1px solid black;
   border-radius: 3px;
   color: #662A82;
-  padding: 11px 32px;
-  margin-bottom: 5px;
+  padding: 10px 32px;
   resize: vertical;
   text-decoration: none;
   display: inline-block;
@@ -103,7 +104,7 @@ a:active {
 }
 
 .field {
-  padding-bottom: 15px;
+  padding-bottom: 0px;
 }
 
 .errormessage {
@@ -119,11 +120,11 @@ a:active {
   border: 1px solid black;
   border-radius: 3px;
   color: #662A82;
-  padding: 11px 32px;
-  margin-bottom: 20px;
-
+  padding: 11px 40px;
+  margin-bottom: 5px;
+  text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  width: 233px;
+  width: 300px;
 }

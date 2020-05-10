@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
 import placeholder from '../../Assets/Images/placeholder.png';
@@ -61,4 +63,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MyProducts);
+export default connect(mapStateToProps)(LoginChecker(MyProducts));

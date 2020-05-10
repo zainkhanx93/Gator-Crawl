@@ -12,28 +12,37 @@ class CreatePostForm extends React.Component {
   };
 
   renderInputField = ({
-    input, label, type, meta 
+    input,
+    label,
+    type,
+    meta,
+    icon
   }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
       <div className={className}>
-        <input
-          {...input}
-          className="Input-Field"
-          type={type}
-          autoComplete="off"
-          placeholder={label}
-        />
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
+        <div className="pricefield">
+          <p style={{ display: 'inline' }}>{icon}</p>
+          <input
+            {...input}
+            className="Input-Field"
+            type={type}
+            autoComplete="off"
+            placeholder={label}
+          />
+        </div>
         {this.renderError(meta)}
       </div>
     );
   };
 
   renderTextArea = ({
-    input, label, type, meta 
+    input, label, type, meta
   }) => {
     return (
-      <div>
+      <div style={{ paddingBottom: '10px' }}>
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
         <textarea
           {...input}
           className="Text-Area-Field"
@@ -47,10 +56,11 @@ class CreatePostForm extends React.Component {
   };
 
   renderSelect = ({
-    input, label, type, meta, children 
+    input, label, type, meta, children
   }) => {
     return (
       <div>
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
         <select {...input} className="selectfield">
           {children}
         </select>
@@ -82,9 +92,8 @@ class CreatePostForm extends React.Component {
     return (
       <form onSubmit={(e) => this.onSubmit(e)}>
         <br />
-        <strong>Enter Your Item Info</strong>
-        <br />
-        <br />
+        <h1>Enter Your Item Info</h1>
+
         <Field
           name="productName"
           type="text"
@@ -101,6 +110,7 @@ class CreatePostForm extends React.Component {
           type="text"
           component={this.renderInputField}
           label="Price"
+          icon="$"
         />
         <Field name="categoryId" component={this.renderSelect} label="Category">
           <option name="">Choose A Category</option>
@@ -123,7 +133,7 @@ class CreatePostForm extends React.Component {
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
-            className="Button"
+            className="Login-Button"
             type="submit"
             disabled={pristine || submitting || invalid}
           >
@@ -148,6 +158,8 @@ const validate = (formValues) => {
 
   if (!formValues.price) {
     errors.price = 'You must enter a price';
+  } else if (+formValues.price !== parseInt(formValues.price, 10)) {
+    errors.price = 'You must enter a numerical value';
   }
 
   if (!formValues.categoryId || formValues.categoryId === 'Choose A Category') {
