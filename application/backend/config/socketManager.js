@@ -5,6 +5,9 @@ const { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED,
     NEW_CHAT_USER } = require('../../frontend/src/Containers/messageRelated/messageEvent');
 const { createMessage, createChat } = require('../config/messageFunction')
 
+const addMessageToDB = require('../controllers/message.js');
+const conversation = require('../controllers/conversation.js');
+
 let connectedUser = { };
 let communityChat = createChat({ isCommunity:true });
 //export
@@ -17,7 +20,6 @@ module.exports = function(socket) {
     // console.log("Socket id is: " + socket.id);
 
 	let sendMessageToChatFromUser;
-
 	let sendTypingFromUser;
     //User connected event
     //user object will be added to connected user list
@@ -31,6 +33,13 @@ module.exports = function(socket) {
 		// console.log("New connection is: " + socket.user.email)
 		// console.log("connectedUser is: " + connectedUser)
 		sendMessageToChatFromUser = sendMessageToChat(user.email)
+		console.log(sendMessageToChatFromUser);
+		const { chatid, message, sender } = sendMessageToChatFromUser;
+		//add message to db
+		//addMessageToDB.create(chatid, message, user.email);
+		console.log(chatid)
+		console.log(message)
+		console.log(sender);
 		// console.log("user.email: " + user.email);
         sendTypingFromUser = sendTypingToChat(user.email)
         
@@ -56,8 +65,8 @@ module.exports = function(socket) {
 	})
 
 	socket.on(MESSAGE_SENT, ({chatId, message})=>{
-		sendMessageToChatFromUser(chatId, message)
-		// console.log(chatId + " " + message);
+		sendMessageToChatFromUser(chatId, message);
+		//console.log(chatId + " " + message);
 	})
 
 	socket.on(TYPING, ({chatId, isTyping})=>{
@@ -72,8 +81,11 @@ module.exports = function(socket) {
 			const recieverSocket = connectedUser[reciever].socketId
 			if(activeChat === null || activeChat.id === communityChat.id){
 				const newChat = createChat({ name:`Private Room of ${reciever} & ${sender}`, users:[reciever, sender] })
+				console.log(newChat);
 				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
-				socket.emit(PRIVATE_MESSAGE, newChat)
+				socket.emit(PRIVATE_MESSAGE, newChat);
+				//add private chat to db
+				conversation.findOrCreateConversation(reciever, sender);
 			}else{
 				if(!(reciever in activeChat.users)){
 					activeChat.users

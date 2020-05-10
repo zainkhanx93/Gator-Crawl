@@ -2,7 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+
+const app = express();
 const cookieParser = require('cookie-parser');
+const server = require('http').Server(app);
+const io = (module.exports.io = require('socket.io')(server));
 const db = require('./models/index.js');
 
 const userRoutes = require('./routes/user');
@@ -11,17 +15,11 @@ const categoryRoutes = require('./routes/category');
 const saleRoutes = require('./routes/sale');
 const adminRoutes = require('./routes/admin');
 const imageUploadRoute = require('./routes/imageUpload');
-const messageRoutes = require('./routes/message');
+const conversationRoutes = require('./routes/conversation');
 
-const app = express();
-
-//socketIO
-const server = require('http').Server(express);
-const io = module.exports.io = require('socket.io')(server)
-const socketManager = require('./config/socketManager')
+const socketManager = require('./config/socketManager');
 
 io.on('connection', socketManager);
-
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -33,8 +31,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('', imageUploadRoute);
-//use our route for message function
-// app.use('', messageRoutes);
+app.use('/conversation', conversationRoutes);
+
 
 app.use(express.static(path.resolve(__dirname, '../', 'frontend', 'build')));
 
