@@ -105,6 +105,7 @@ export default class ChatContainer extends Component {
 
 		socket.on(typingEvent, this.updateTypingInChat(chat.id))
 		socket.on(messageEvent, this.addMessageToChat(chat.id))
+		console.log("Chat room name: " + chat.name);
 	}
 
 	/*
@@ -158,8 +159,17 @@ export default class ChatContainer extends Component {
 	*	@param message {string} The message to be added to the chat.
 	*/
 	sendMessage = (chatId, message)=>{
-		const { socket } = this.props
-		socket.emit(MESSAGE_SENT, {chatId, message} )
+		const { socket, user } = this.props
+		const { chats } = this.state;
+		let roomName;
+		chats.map( chat => {
+			let chatName = chat.name;
+			roomName = chatName;
+		});
+		const sender = user.email;
+		
+		console.log(message);
+		socket.emit(MESSAGE_SENT, {chatId, message, sender, roomName} )
 	}
 
 	/*

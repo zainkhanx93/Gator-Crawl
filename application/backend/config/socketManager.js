@@ -32,14 +32,8 @@ module.exports = function(socket) {
 
 		// console.log("New connection is: " + socket.user.email)
 		// console.log("connectedUser is: " + connectedUser)
-		sendMessageToChatFromUser = sendMessageToChat(user.email)
-		console.log(sendMessageToChatFromUser);
-		const { chatid, message, sender } = sendMessageToChatFromUser;
-		//add message to db
-		//addMessageToDB.create(chatid, message, user.email);
-		console.log(chatid)
-		console.log(message)
-		console.log(sender);
+		sendMessageToChatFromUser = sendMessageToChat(user.email);
+		
 		// console.log("user.email: " + user.email);
         sendTypingFromUser = sendTypingToChat(user.email)
         
@@ -64,16 +58,24 @@ module.exports = function(socket) {
 		callback(communityChat)
 	})
 
-	socket.on(MESSAGE_SENT, ({chatId, message})=>{
-		sendMessageToChatFromUser(chatId, message);
+	// socket.emit is send event to frontend
+	// Listen for event send back from front-end, get from frontend
+	socket.on(MESSAGE_SENT, function(data) {
+		console.log(data);
+		sendMessageToChatFromUser(data.chatId, data.message);
 		//console.log(chatId + " " + message);
-	})
+		// add message to database
+		addMessageToDB.create(data.chatId, data.message, data.sender, data.roomName);
+		console.log("Inserted new message... " + data.chatId + " " + data.message + " " + data.sender);
+	 })
+	//  	({chatId, message})=>{	
+	// }
 
 	socket.on(TYPING, ({chatId, isTyping})=>{
 		sendTypingFromUser(chatId, isTyping)
 	})
 
-    //Get Private Chat
+    //Get Private Chat Room
 	socket.on(PRIVATE_MESSAGE, ({reciever, sender, activeChat})=>{
 		// console.log("sender info: " + {sender});
 		// console.log("receiver info: "+ {receiver});
@@ -85,7 +87,10 @@ module.exports = function(socket) {
 				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
 				socket.emit(PRIVATE_MESSAGE, newChat);
 				//add private chat to db
-				conversation.findOrCreateConversation(reciever, sender);
+				//conversation.findOrCreateConversation(reciever, sender);
+				conversation.findOrCreateConversation(newChat.users[0], newChat.users[1])
+				//conversation.addMessageToDB(newChat.name, message)
+
 			}else{
 				if(!(reciever in activeChat.users)){
 					activeChat.users

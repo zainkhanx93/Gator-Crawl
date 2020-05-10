@@ -1,6 +1,7 @@
 const UUIDV4 = require('uuid/v4')
+
 //createMessage function
-const createMessage = ({ message = "", sender = "" } = { }) => ({
+const createMessage = ( { message = "", sender = "" } = { } ) => ({
     id: UUIDV4(),
     time: getTime(new Date(Date.now())),
     message,
@@ -21,7 +22,9 @@ const createChat = ({ messages = [], name = "Public", users = [], isCommunity = 
     users,
     typingUsers: [],
     isCommunity,
-})
+    }
+
+)
 
 //get time with date object
 const getTime = (date) => {

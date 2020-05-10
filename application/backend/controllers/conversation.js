@@ -3,9 +3,32 @@ const { Op } = require('sequelize');
 
 const { Conversation, Message } = models;
 
+const create = (name, receiverId, senderId) => {
+  const newConversation = {
+    name,
+    receiverId,
+    senderId,
+  }
+  Conversation.create(newConversation)
+    .then(data => { return data })
+}
+
+// const addMessageToDB = (name, message) => {
+//   Conversation.findOne({
+//     where: {
+//       name,
+//     }
+//   })
+//   .then(conversation => {
+//     if (conversation) {
+//       conversation.messages = message;
+//     }
+//   })
+// }
+
 //find or create - first find if not found then create message
 const findOrCreateConversation = (receiverId, senderId) => {
-    Conversation.findAll({
+    Conversation.findOne({
         where: {
           receiverId: {
             [Op.or]: [senderId, receiverId]
@@ -26,9 +49,11 @@ const findOrCreateConversation = (receiverId, senderId) => {
       })
         .then(conversation => {
           if(conversation) {
+            console.log(conversation)
             return conversation;
           } else {
             return Conversation.create({
+              name: `${receiverId} & ${senderId}`,
               senderId: senderId,
               receiverId: receiverId, 
               //messages: [],
@@ -47,3 +72,4 @@ const findOrCreateConversation = (receiverId, senderId) => {
 }
 
 exports.findOrCreateConversation = findOrCreateConversation;
+exports.create = create;

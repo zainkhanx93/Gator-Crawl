@@ -2,12 +2,12 @@ const models = require('../models');
 
 const { Message } = models;
 
-//2 parametter pass in with Id and message content
-const create = (messageId, messageContent, sender) => {
+const create = (conversationId, messageContent, author, roomName) => {
     const newMessage = {
-        messageId,
+        conversationId,
         messageContent,
-        sender,
+        author,
+        roomName,
     }
     Message.create(newMessage)
     .then(data => {

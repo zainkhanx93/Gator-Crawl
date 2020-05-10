@@ -9,13 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         name: DataTypes.STRING,
         senderId: DataTypes.STRING,
         receiverId: DataTypes.STRING,
+        messages: DataTypes.JSON,
         //messages: DataTypes.JSON,
     },
     {}
   );
   Conversation.associate = function(models) {
     Conversation.hasMany(models.Message, {
-        foreignKey: 'conversationId',
+        foreignKey: 'conversationID',
         as: 'message',
         onDelete: 'CASCADE',
       });
