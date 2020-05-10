@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import MainNavBar from '../Nav/MainNavBar';
+import MainNavBar from '../../Navigation/MainNavBar';
 
 const SearchResults = () => {
   const [query, setQuery] = useState('');
@@ -50,9 +50,9 @@ const SearchResults = () => {
           Search for a specific item or Search with empty input to get all
           products
         </h2> */}
+
         <select
         // code for filter drop down menu
-
           value={filter}
           onChange={(e) => {
             setFilter(e.target.value);

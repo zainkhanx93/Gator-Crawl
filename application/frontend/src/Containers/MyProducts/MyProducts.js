@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MainNavBar from '../Components/Navigation/MainNavBar';
-import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
-import placeholder from '../Assets/Images/placeholder.png';
+import MainNavBar from '../../Components/Navigation/MainNavBar';
+import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
+import placeholder from '../../Assets/Images/placeholder.png';
 
 import './MyProducts.css';
 

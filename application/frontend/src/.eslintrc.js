@@ -17,6 +17,13 @@ module.exports = {
     "es6": true,
     "jest": true
   },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "rules": {
     "no-console": OFF,
     "linebreak-style": 0,

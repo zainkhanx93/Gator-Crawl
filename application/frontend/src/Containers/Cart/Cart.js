@@ -1,19 +1,17 @@
 import React from 'react';
 
-import MainNavBar from '../Components/Navigation/MainNavBar';
-import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
-import gclogo from '../Assets/Images/nike.jpg';
+import MainNavBar from '../../Components/Navigation/MainNavBar';
+import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
+import gclogo from '../../Assets/Images/nike.jpg';
 
 import './Cart.css';
 
 class Cart extends React.Component {
-
    delete = () => {
      // let product = document.getElementById('Cart-Product');
      // product.removeChild(product.childNodes[0]);
      console.log('delete product');
    }
-   //
    //  product.removeChild(product.childNodes[0]);
 
    render() {
@@ -23,12 +21,9 @@ class Cart extends React.Component {
        <div>
          <p className="Title"> My Shopping Cart </p>
          <div className="Shopping-Cart-Window">
-
            <div className="Product-Window">
-
              <div className="Cart-Product">
                <img className="Profile-picture" src={gclogo} alt="Logo" />
-
                <div className="Cart-Product-Info">
                  <p style={{ fontSize: '25px' }}> <b> Nike Shoes </b></p>
                  <p> Size 9 Roshis </p>
@@ -41,7 +36,6 @@ class Cart extends React.Component {
                  <br />
                  <button className="Button" onClick={this.delete} type="button"> Delete </button>
                </div>
-
              </div>
            </div>
 
@@ -81,6 +75,5 @@ class Cart extends React.Component {
      );
    }
 }
-
 
 export default Cart;

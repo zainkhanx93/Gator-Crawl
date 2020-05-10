@@ -2,34 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
-import axios from 'axios';
-
+// import axios from 'axios';
 import io from 'socket.io-client';
-import LoginForm from '../Components/Forms/LoginForm';
-import * as loginActions from '../Store/Actions/loginActions';
-import * as userActions from '../Store/Actions/userActions';
-import * as messageActions from '../Store/Actions/messageActions';
 
-import gclogo from '../Assets/Images/gclogo.png';
-import logotitle from '../Assets/Images/logotitle.png';
+import { USER_CONNECTED } from '../Messages/messageEvent'; // for message
+import LoginForm from '../../Components/Forms/LoginForm';
+import * as loginActions from '../../Store/Actions/loginActions';
+import * as userActions from '../../Store/Actions/userActions';
+import * as messageActions from '../../Store/Actions/messageActions';
+import gclogo from '../../Assets/Images/gclogo.png';
+import logotitle from '../../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
-// for message
-import { USER_CONNECTED } from './messageRelated/messageEvent';
 
 const awsURL = '';
 const localURL = 'http://localhost:8080/';
 const socketURL = localURL || awsURL;
 
 class Login extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     socket:null,
-  //     user:null
-  //   };
-  // }
-
   // call initSocket function
   componentDidMount() {
     const cookie = new Cookies();
@@ -126,8 +116,8 @@ class Login extends React.Component {
   // Message front-end code
 
   render() {
-    const { isAuth } = this.props;
-    const { socket, user } = this.props;
+    const { isAuth, socket } = this.props;
+    // const { socket, user } = this.props;
     let failed = null;
     if (isAuth === false) {
       failed = <p>Login failed, try again</p>;

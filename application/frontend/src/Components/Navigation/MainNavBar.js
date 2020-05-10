@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import SearchBar from '../Search/SearchBar';
 import navBarlogo from '../../Assets/Images/NavBarLogo.png';
-import SearchBar from '../SearchBar';
 
 import './MainNavBar.css';
 
@@ -27,7 +28,9 @@ class MainNavBar extends React.Component {
     return (
       <div className="navbar-window">
         <header className="navbar-header">
-          <img className="navbar-logo" src={navBarlogo} alt="NavBarLogo" onClick={() => history.push('/home')}/>
+          <div onClick={() => history.push('/home')}>
+            <img className="navbar-logo" src={navBarlogo} alt="NavBarLogo" />
+          </div>
           <SearchBar history={history} className="navbar-searchbar" />
           {navBarItems}
         </header>

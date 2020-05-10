@@ -17,6 +17,7 @@ module.exports = {
     "es6": true,
     "jest": true
   },
+  "parserOptions": {"ecmaVersion": 2018},
   "rules": {
     "no-console": OFF,
     "linebreak-style": 0,

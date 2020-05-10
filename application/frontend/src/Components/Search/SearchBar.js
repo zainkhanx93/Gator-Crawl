@@ -2,9 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
+import * as homeActions from '../../Store/Actions/homeActions';
 import './SearchBar.css';
-
-import * as homeActions from '../Store/Actions/homeActions';
 
 class SearchBar extends React.Component {
   constructor(props) {

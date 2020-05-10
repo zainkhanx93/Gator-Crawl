@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import MainNavBar from '../Components/Navigation/MainNavBar';
+import MainNavBar from '../../Components/Navigation/MainNavBar';
 
 import './Messages.css';
 

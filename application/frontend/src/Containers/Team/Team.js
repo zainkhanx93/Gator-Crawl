@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import './Team.css';
 
-import MainNavBar from '../Components/Navigation/MainNavBar';
-import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
-import * as teamActions from '../Store/Actions/teamActions';
+import MainNavBar from '../../Components/Navigation/MainNavBar';
+import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
+import * as teamActions from '../../Store/Actions/teamActions';
+import './Team.css';
 
 class Team extends React.Component {
   render() {

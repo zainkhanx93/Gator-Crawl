@@ -1,19 +1,18 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import Login from './Containers/Login';
-import Register from './Containers/Register';
-
-import Team from './Containers/Team';
-import TeamMember from './Containers/TeamMember';
-import Home from './Containers/Home';
-import Profile from './Containers/Profile';
-import Cart from './Containers/Cart';
-import Messages from './Containers/messageRelated/Messages';
-import Product from './Containers/Product';
-import MyProducts from './Containers/MyProducts';
-import noMatch from './Components/noMatch';
-import FileUpload from './Containers/TestImageUpload';
+import Login from './Containers/LoginRegister/Login';
+import Register from './Containers/LoginRegister/Register';
+import Team from './Containers/Team/Team';
+import TeamMember from './Containers/Team/TeamMember';
+import Home from './Containers/Home/Home';
+import Profile from './Containers/Profile/Profile';
+import Cart from './Containers/Cart/Cart';
+import Messages from './Containers/Messages/Messages';
+import Product from './Containers/MyProducts/Product';
+import MyProducts from './Containers/MyProducts/MyProducts';
+import FileUpload from './Containers/Test/TestImageUpload';
+import noMatch from './Components/Error/noMatch';
 
 import './App.css';
 
@@ -24,11 +23,7 @@ class App extends React.Component {
         <header className="App-header">
           <p style={{ textAlign: 'center' }}>
             SFSU Software Engineering Project CSC 648-848, Spring 2020. For
-            Demonstration Only
-          </p>
-          <p style={{ textAlign: 'center' }}>
-            SFSU Software Engineering Project CSC 648-848, Spring 2020. For
-            Demonstration Only
+            Demonstration Only.
           </p>
         </header>
         <Switch>
