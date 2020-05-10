@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import './TeamMember.css';
 // import * as userActions from '../Actions/userActions';
-import MainNavBar from '../Components/Navigation/MainNavBar';
-import ProfileNavBar from '../Components/Navigation/ProfileNavBar';
+import MainNavBar from '../../Components/Navigation/MainNavBar';
+import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
+import './TeamMember.css';
 
 class TeamMember extends React.Component {
   render() {

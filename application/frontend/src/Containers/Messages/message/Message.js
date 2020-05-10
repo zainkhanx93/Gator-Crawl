@@ -7,17 +7,18 @@ export default class Messages extends Component {
     this.scrollDown = this.scrollDown.bind(this);
   }
 
-  scrollDown() {
-    const { container } = this.refs;
-    container.scrollTop = container.scrollHeight;
-  }
-
   componentDidMount() {
     this.scrollDown();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
+  // componentDidUpdate(prevProps, prevState) {
     this.scrollDown();
+  }
+
+  scrollDown() {
+    const { container } = this.refs;
+    container.scrollTop = container.scrollHeight;
   }
 
   render() {
@@ -28,6 +29,7 @@ export default class Messages extends Component {
       console.log(mes.id);
       console.log(mes.sender);
       console.log(mes.message);
+      return mes; // temporary fix
     });
     return (
       <div ref="container" className="thread-container">

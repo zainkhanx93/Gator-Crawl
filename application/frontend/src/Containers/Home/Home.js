@@ -2,12 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
-import MainNavBar from '../Components/Navigation/MainNavBar';
-import Modal from '../Components/UI/Modal';
-import CreatePostForm from '../Components/Forms/CreatePostForm';
-import * as homeActions from '../Store/Actions/homeActions';
+
+import MainNavBar from '../../Components/Navigation/MainNavBar';
+import Modal from '../../Components/UI/Modal';
+import CreatePostForm from '../../Components/Forms/CreatePostForm';
+import * as homeActions from '../../Store/Actions/homeActions';
+import placeholder from '../../Assets/Images/placeholder.png';
 import './Home.css';
-import placeholder from '../Assets/Images/placeholder.png';
 
 class Home extends React.Component {
   constructor(props) {

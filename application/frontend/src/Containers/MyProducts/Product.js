@@ -2,14 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import productpic from '../Assets/Images/fff.png';
-import * as homeActions from '../Store/Actions/homeActions';
-import MainNavBar from '../Components/Navigation/MainNavBar';
+
+import * as homeActions from '../../Store/Actions/homeActions';
+import MainNavBar from '../../Components/Navigation/MainNavBar';
+import productpic from '../../Assets/Images/fff.png';
 import './product.css';
 
 class Product extends React.Component {
   componentDidMount() {
-    const { setProducts, products, location } = this.props;
+    const {
+      setProducts,
+      products,
+      // location
+    } = this.props;
     // console.log(location.search.substring(11));
     // axios.get(`/api/products/${location.search.substring(11)}`).then((res) => {
     axios.get('/api/products/all').then((res) => {
@@ -74,9 +79,9 @@ class Product extends React.Component {
                     ${product.price}
                   </p>
                   <div style={{ margin: '30px' }}>
-                    <button>Bookmark</button>
-                    <button>Bid</button>
-                    <button>Message Seller</button>
+                    <button type="button">Bookmark</button>
+                    <button type="button">Bid</button>
+                    <button type="button">Message Seller</button>
                   </div>
                   <p style={{ marginLeft: '30px', fontSize: '15px' }}>
                     Description: <br />
