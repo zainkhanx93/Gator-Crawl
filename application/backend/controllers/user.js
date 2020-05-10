@@ -171,3 +171,21 @@ exports.delete = (req, res) => {
         .send({ error: err, message: `Could not delete user with id ${id}` });
     });
 };
+
+// Find User by email
+exports.findByEmail = (req, res) => {
+  User.findAll({
+    where: {
+      email: req.body.email,
+    },
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: err,
+        message: 'Error occurred while retrieving users',
+      });
+    });
+};

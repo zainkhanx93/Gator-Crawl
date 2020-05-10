@@ -23,6 +23,9 @@ router.get('/:id', users.findById);
 // Del request private, giving private user's id
 router.delete('/:id', users.delete);
 
+// Get User by Email
+router.post('/email', users.findByEmail);
+
 // upload profile image
 // Get request to route /api/users/image to upload profile image
 // router.post('/image', users.uploadImage);
