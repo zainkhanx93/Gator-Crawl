@@ -19,7 +19,7 @@ class Register extends React.Component {
   onSubmit = () => {
     const { handleSubmit, formValues, history } = this.props;
     console.log(formValues);
-    axios.post('/api/users', { email: formValues.email, password: formValues.password })
+    axios.post('/api/users', { ...formValues })
       .then((res) => {
         // console.log('got the response');
         console.log(res.data);

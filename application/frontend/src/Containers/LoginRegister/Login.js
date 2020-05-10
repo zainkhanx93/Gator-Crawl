@@ -64,52 +64,52 @@ class Login extends React.Component {
     //     // console.log('whoops error');
     //     console.log(error);
     //   });
-    const george = {
-      id: '1',
-      email: 'gfreedland@mail.sfsu.edu',
-      firstName: 'George',
-      lastName: 'Freedland',
-      major: 'Computer Science',
-      token: 'token',
-    };
+    // const george = {
+    //   id: '1',
+    //   email: 'gfreedland@mail.sfsu.edu',
+    //   firstName: 'George',
+    //   lastName: 'Freedland',
+    //   major: 'Computer Science',
+    //   token: 'token',
+    // };
+    //
+    // const bernie = {
+    //   id: '2',
+    //   email: 'bsanders@mail.sfsu.edu',
+    //   firstName: 'Bernie',
+    //   lastName: 'Sanders',
+    //   major: 'Political Science',
+    //   token: 'token',
+    // };
 
-    const bernie = {
-      id: '2',
-      email: 'bsanders@mail.sfsu.edu',
-      firstName: 'Bernie',
-      lastName: 'Sanders',
-      major: 'Political Science',
-      token: 'token',
-    };
-
-    if (
-      formValues.email === 'gfreedland@mail.sfsu.edu'
-      && formValues.password === '123'
-    ) {
-      console.log('george logging in');
-      setCurrentUser(george);
-
-      // backend code in config/socketManager.js
-
-      this.setUser(george);
-      history.push('/home');
-    } else if (
-      formValues.email === 'bsanders@mail.sfsu.edu'
-      && formValues.password === '123'
-    ) {
-      console.log('bernie logging in');
-      setCurrentUser(bernie);
-
-      this.setUser(bernie);
-      history.push('/home');
-    } else {
-      console.log(formValues.email);
-      // code for message
-      const socketUser = formValues;
-      setCurrentUser(socketUser);
-      this.setUser(socketUser);
-      history.push('/home');
-    }
+    // if (
+    //   formValues.email === 'gfreedland@mail.sfsu.edu'
+    //   && formValues.password === '123'
+    // ) {
+    //   console.log('george logging in');
+    //   setCurrentUser(george);
+    //
+    //   // backend code in config/socketManager.js
+    //
+    //   this.setUser(george);
+    //   history.push('/home');
+    // } else if (
+    //   formValues.email === 'bsanders@mail.sfsu.edu'
+    //   && formValues.password === '123'
+    // ) {
+    //   console.log('bernie logging in');
+    //   setCurrentUser(bernie);
+    //
+    //   this.setUser(bernie);
+    //   history.push('/home');
+    // } else {
+    console.log(formValues.email);
+    // code for message
+    const socketUser = formValues;
+    setCurrentUser(socketUser);
+    this.setUser(socketUser);
+    history.push('/home');
+    // }
     // history.push('/home');
   };
 

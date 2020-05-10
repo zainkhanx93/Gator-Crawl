@@ -56,7 +56,7 @@ class RegisterForm extends React.Component {
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
-            className="Button"
+            className="Login-Button"
             type="submit"
             disabled={pristine || submitting || invalid}
           >

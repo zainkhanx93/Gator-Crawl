@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
     // {...input}
     // console.table(meta);
     return (
-      <div>
+      <div className="field">
         <input
           {...input}
           className="Input-Field"
@@ -67,7 +67,7 @@ class LoginForm extends React.Component {
         <a href="forgotpassword" className="Link">Forgot password?</a>
         {/* error && <strong>{error}</strong> */}
         <button
-          className="Button"
+          className="Login-Button"
           type="submit"
           disabled={pristine || submitting || invalid}
         >
