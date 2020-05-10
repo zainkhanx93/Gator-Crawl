@@ -1,4 +1,4 @@
-.Button {
+.Login-Button {
   background-color: #F3CB0A;
   border: none;
   border-radius: 5px;
@@ -12,13 +12,13 @@
   width: 300px;
 }
 
-.Button:hover, .Button:active {
+.Login-Button:hover, .Button:active {
     background-color: #F3CB0A;
     border: 1px solid #966909;
     color: #966909;
 }
 
-.Button:disabled {
+.Login-Button:disabled {
     background-color: #C7C6C6;
     cursor: not-allowed;
     border: 1px solid #ccc;
@@ -26,7 +26,7 @@
 }
 
 
-.Button:not(:disabled) {
+.Login-Button:not(:disabled) {
     animation: enable 0.3s linear;
 }
 
@@ -50,7 +50,7 @@
   border-radius: 3px;
   color: #662A82;
   padding: 11px 32px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 
   text-decoration: none;
   display: inline-block;
@@ -64,7 +64,7 @@
   border-radius: 3px;
   color: #662A82;
   padding: 11px 32px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   resize: vertical;
   text-decoration: none;
   display: inline-block;
@@ -102,10 +102,16 @@ a:active {
   text-decoration: underline;
 }
 
+.field {
+  padding-bottom: 15px;
+}
+
 .errormessage {
+  color: red;
+  text-align: left;
+  padding-left: 100px;
   font-weight: bold;
   font-size: 12px;
-  padding-bottom: 15px;
 }
 
 .selectfield {

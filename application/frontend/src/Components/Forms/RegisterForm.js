@@ -47,7 +47,7 @@ class RegisterForm extends React.Component {
       invalid
     } = this.props;
     return (
-      <form onSubmit={(e) => this.onSubmit(e)}>
+      <form autoComplete="off" onSubmit={(e) => this.onSubmit(e)}>
         <Field name="firstName" type="text" component={this.renderInputField} label="First Name" />
         <Field name="lastName" type="text" component={this.renderInputField} label="Last Name" />
         <Field name="major" type="text" component={this.renderInputField} label="Major" />
@@ -56,7 +56,7 @@ class RegisterForm extends React.Component {
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
-            className="Button"
+            className="Login-Button"
             type="submit"
             disabled={pristine || submitting || invalid}
           >
