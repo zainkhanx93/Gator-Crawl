@@ -26,13 +26,47 @@ class Team extends React.Component {
           <div className="teamleftside"><ProfileNavBar /></div>
           <div className="teamrightside">
             <p className="Title">About Us </p>
-            <p style={{ textAlign: 'center' }}><i>We are Team 1, a group of students taking CSC648 at SFSU and made this website for our class project.</i></p>
+            <p style={{ textAlign: 'center' }}>
+              <i>We are Team 1, a group of students taking CSC648 at SFSU and made this website for our class project.</i>
+            </p>
             <div className="wholeteam">
-              <div style={{ width: '300px' }} className="Member-Box" onClick={() => handleClick(team.one)}>{team.one.firstname} {team.one.lastname}</div>
-              <div style={{ width: '300px' }} className="Member-Box" onClick={() => handleClick(team.two)}>{team.two.firstname} {team.two.lastname}</div>
-              <div style={{ width: '300px' }} className="Member-Box" onClick={() => handleClick(team.three)}>{team.three.firstname} {team.three.lastname}</div>
-              <div style={{ width: '300px' }} className="Member-Box" onClick={() => handleClick(team.four)}>{team.four.firstname} {team.four.lastname}</div>
-              <div style={{ width: '300px' }} className="Member-Box" onClick={() => handleClick(team.five)}>{team.five.firstname} {team.five.lastname}</div>
+              <div
+                style={{ width: '300px' }}
+                className="Member-Box"
+                onClick={() => handleClick(team.one)}
+              >
+                {team.one.firstname} {team.one.lastname}
+              </div>
+              <div
+                style={{ width: '300px' }}
+                className="Member-Box"
+                onClick={() => handleClick(team.two)}
+              >{team.two.firstname} {team.two.lastname}
+              </div>
+              <div
+                style={{ width: '300px' }}
+                className="Member-Box"
+                onClick={() => handleClick(team.three)}
+              >{team.three.firstname} {team.three.lastname}
+              </div>
+              <div
+                style={{ width: '300px' }}
+                className="Member-Box"
+                onClick={() => handleClick(team.four)}
+              >{team.four.firstname} {team.four.lastname}
+              </div>
+              <div
+                style={{ width: '300px' }}
+                className="Member-Box"
+                onClick={() => handleClick(team.five)}
+              >{team.five.firstname} {team.five.lastname}
+              </div>
+              <div
+                style={{ width: '300px' }} 
+                className="Member-Box"
+                onClick={() => handleClick(team.six)}
+              >{team.six.firstname} {team.six.lastname}
+              </div>
             </div>
           </div>
         </div>
