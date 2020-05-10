@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
-// import axios from 'axios';
+import axios from 'axios';
 import io from 'socket.io-client';
 
 import { USER_CONNECTED } from '../Messages/messageEvent'; // for message
@@ -20,6 +20,13 @@ const localURL = 'http://localhost:8080/';
 const socketURL = localURL || awsURL;
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAuth: null
+    };
+  }
+
   // call initSocket function
   componentDidMount() {
     const cookie = new Cookies();
@@ -55,75 +62,36 @@ class Login extends React.Component {
     // handleSubmit({
     //   ...formValues
     // });
-    console.table(formValues);
-    // axios.post('/api/users/login', { email: formValues.email, password: formValues.password })
-    //   .then((res) => {
-    //     // console.log('got the response');
-    //     console.log(res.data);
-    //   }).catch((error) => {
-    //     // console.log('whoops error');
-    //     console.log(error);
-    //   });
-    const george = {
-      id: '1',
-      email: 'gfreedland@mail.sfsu.edu',
-      firstName: 'George',
-      lastName: 'Freedland',
-      major: 'Computer Science',
-      token: 'token',
-    };
-
-    const bernie = {
-      id: '2',
-      email: 'bsanders@mail.sfsu.edu',
-      firstName: 'Bernie',
-      lastName: 'Sanders',
-      major: 'Political Science',
-      token: 'token',
-    };
-
-    if (
-      formValues.email === 'gfreedland@mail.sfsu.edu'
-      && formValues.password === '123'
-    ) {
-      console.log('george logging in');
-      setCurrentUser(george);
-
-      // backend code in config/socketManager.js
-
-      this.setUser(george);
-      history.push('/home');
-    } else if (
-      formValues.email === 'bsanders@mail.sfsu.edu'
-      && formValues.password === '123'
-    ) {
-      console.log('bernie logging in');
-      setCurrentUser(bernie);
-
-      this.setUser(bernie);
-      history.push('/home');
-    } else {
-      console.log(formValues.email);
-      // code for message
-      const socketUser = formValues;
-      setCurrentUser(socketUser);
-      this.setUser(socketUser);
-      history.push('/home');
-    }
-    // history.push('/home');
+    // console.table(formValues);
+    axios.post('/api/users/login', { ...formValues })
+      .then((res) => {
+        this.setState({ isAuth: true });
+        setCurrentUser({ email: formValues.email, token: res.data.token });
+        this.setUser(formValues);
+        history.push('/home');
+      }).catch((error) => {
+        this.setState({ isAuth: false });
+        console.log(error);
+      });
+    // const george = {
+    //   id: '1',
+    //   email: 'gfreedland@mail.sfsu.edu',
+    //   firstName: 'George',
+    //   lastName: 'Freedland',
+    //   major: 'Computer Science',
+    //   token: 'token',
+    // };
+    // code for message
   };
 
-  // Message front-end code
-
   render() {
-    const { isAuth, socket } = this.props;
+    const { socket } = this.props;
+    const { isAuth } = this.state;
     // const { socket, user } = this.props;
     let failed = null;
     if (isAuth === false) {
-      failed = <p>Login failed, try again</p>;
+      failed = <p style={{ color: 'red' }}>Login failed, please try again</p>;
     }
-
-    // const failed = !isAuth ? <p>Login failed, try again</p> : <p />;
 
     return (
       <div className="Login-Box">
@@ -138,8 +106,8 @@ class Login extends React.Component {
           setUser={this.setUser}
           handleSubmit={this.onSubmit}
         />
-        <br />
         {failed}
+        <br />
         <a className="Link2" href="register">
           <b>Create new account</b>
         </a>
@@ -158,7 +126,7 @@ const mapStateToProps = (state) => {
       email: formSelector(state, 'email'),
       password: formSelector(state, 'password'),
     },
-    isAuth: state.loginReducer.token,
+    // isAuth: state.loginReducer.token,
     socket: state.messageReducer.socket,
     user: state.messageReducer.user,
   };
@@ -181,4 +149,5 @@ const mapDispatchToProps = (dispatch, props) => {
     setSocket: (socket) => dispatch(messageActions.setSocket(socket)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

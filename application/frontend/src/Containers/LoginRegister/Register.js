@@ -17,9 +17,13 @@ class Register extends React.Component {
   }
 
   onSubmit = () => {
-    const { handleSubmit, formValues, history } = this.props;
-    console.log(formValues);
-    axios.post('/api/users', { email: formValues.email, password: formValues.password })
+    const {
+      // handleSubmit,
+      formValues,
+      history
+    } = this.props;
+    // console.log(formValues);
+    axios.post('/api/users', { ...formValues, admin: 0 })
       .then((res) => {
         // console.log('got the response');
         console.log(res.data);
@@ -28,9 +32,9 @@ class Register extends React.Component {
         console.log(error);
       });
 
-    handleSubmit({
-      ...formValues
-    });
+    // handleSubmit({
+    //   ...formValues
+    // });
 
     history.push('/login');
   };

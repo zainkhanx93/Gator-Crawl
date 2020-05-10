@@ -21,6 +21,7 @@ class Home extends React.Component {
   componentDidMount() {
     const { setProducts, setCategories } = this.props;
     axios.get('/api/products/all').then((res) => {
+      console.log(res.data);
       setProducts(res.data);
     });
 
