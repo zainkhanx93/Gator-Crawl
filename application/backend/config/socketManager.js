@@ -10,6 +10,7 @@ const conversation = require('../controllers/conversation.js');
 
 let connectedUser = { };
 let communityChat = createChat({ isCommunity:true });
+let privateRoomName;
 //export
 // module.exports = function(io) {
 //     io.sockets.on('connection', function(socket){
@@ -61,12 +62,28 @@ module.exports = function(socket) {
 	// socket.emit is send event to frontend
 	// Listen for event send back from front-end, get from frontend
 	socket.on(MESSAGE_SENT, function(data) {
-		console.log(data);
+		//console.log(data);
 		sendMessageToChatFromUser(data.chatId, data.message);
 		//console.log(chatId + " " + message);
 		// add message to database
+		
 		addMessageToDB.create(data.chatId, data.message, data.sender, data.roomName);
 		console.log("Inserted new message... " + data.chatId + " " + data.message + " " + data.sender);
+		const chatData = data.chats;
+		chatData.map(chat => {
+			//console.log(chat.messages);
+			//console.log(chat.users);
+			console.log(privateRoomName + " === " + chat.name);
+			match = privateRoomName.localeCompare(chat.name);
+			console.log(match);
+			if (match === 0) {
+				// add messages to conversation database
+				// console.log("<<<I CAN REACH HERE>>>")
+				// console.log(chat.messages)
+				// console.log(privateRoomName)
+				conversation.addMessageToDB(privateRoomName, chat.messages);
+			}
+		})
 	 })
 	//  	({chatId, message})=>{	
 	// }
@@ -82,14 +99,15 @@ module.exports = function(socket) {
 		if(reciever in connectedUser){
 			const recieverSocket = connectedUser[reciever].socketId
 			if(activeChat === null || activeChat.id === communityChat.id){
-				const newChat = createChat({ name:`Private Room of ${reciever} & ${sender}`, users:[reciever, sender] })
+				const newChat = createChat({ name:`${reciever} & ${sender}`, users:[reciever, sender] })
 				console.log(newChat);
 				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
 				socket.emit(PRIVATE_MESSAGE, newChat);
 				//add private chat to db
 				//conversation.findOrCreateConversation(reciever, sender);
 				conversation.findOrCreateConversation(newChat.users[0], newChat.users[1])
-				//conversation.addMessageToDB(newChat.name, message)
+				privateRoomName = newChat.name;
+				console.log("new private message: " + newChat.messages);
 
 			}else{
 				if(!(reciever in activeChat.users)){

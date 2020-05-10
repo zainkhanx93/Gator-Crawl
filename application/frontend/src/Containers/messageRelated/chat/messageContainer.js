@@ -52,6 +52,7 @@ export default class ChatContainer extends Component {
 		socket.on(NEW_CHAT_USER, this.addUserToChat)
 	}
 
+	// Call 1 time to create chat room
 	sendOpenPrivateMessage = (reciever) => {
 		const { socket, user } = this.props
 		const { activeChat } = this.state
@@ -163,13 +164,15 @@ export default class ChatContainer extends Component {
 		const { chats } = this.state;
 		let roomName;
 		chats.map( chat => {
-			let chatName = chat.name;
-			roomName = chatName;
+			roomName = chat.name;
+			// console.log();
+			// console.log(chat);
+			//socket.emit(MESSAGE_SENT, chat);
 		});
 		const sender = user.email;
 		
-		console.log(message);
-		socket.emit(MESSAGE_SENT, {chatId, message, sender, roomName} )
+		//console.log(message);
+		socket.emit(MESSAGE_SENT, {chatId, message, sender, roomName, chats} )
 	}
 
 	/*
@@ -214,6 +217,7 @@ export default class ChatContainer extends Component {
 								<Messages 
 									messages={activeChat.messages}
 									user={user}
+									users={users}
 									typingUsers={activeChat.typingUsers}
 									/>
 								<MessageInput 
