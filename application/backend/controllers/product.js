@@ -18,6 +18,25 @@ exports.create = (req, res) => {
     });
 };
 
+// Find product by id
+exports.findById = (req, res) => {
+  const { id } = req.params;
+  Product.findAll({
+    where: {
+      id: id,
+    },
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: err,
+        message: 'Error occurred while retrieving product',
+      });
+    });
+};
+
 exports.findAllSoldProducts = (req, res) => {
   const { userid } = req.params;
 
@@ -41,6 +60,7 @@ exports.findAllUserProducts = (req, res) => {
   Product.findAll({
     where: {
       sellerId: id,
+      // approved: true,
     },
   })
     .then(data => {

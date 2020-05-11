@@ -9,10 +9,12 @@ import Home from './Containers/Home/Home';
 import Profile from './Containers/Profile/Profile';
 import Cart from './Containers/Cart/Cart';
 import Messages from './Containers/Messages/Messages';
-import Product from './Containers/MyProducts/Product';
+import Product from './Containers/Product/Product';
 import MyProducts from './Containers/MyProducts/MyProducts';
-import FileUpload from './Containers/Test/TestImageUpload';
+import Admin from './Containers/Admin/Admin';
 import noMatch from './Components/Error/noMatch';
+
+import FileUpload from './Containers/Test/TestImageUpload';
 
 import './App.css';
 
@@ -28,6 +30,7 @@ class App extends React.Component {
         </header>
         <Switch>
           <Redirect exact from="/" to="/login" />
+          <Redirect exact from="/logout" to="/login" />
           <Route path="/imageUpload" exact component={FileUpload} />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
@@ -35,10 +38,11 @@ class App extends React.Component {
           <Route path="/home/products" exact component={Product} />
           <Route path="/profile/team" exact component={Team} />
           <Route path="/profile/team/:id" exact component={TeamMember} />
-          <Route path="/profile/me" exact component={Profile} />
+          <Route path="/profile" exact component={Profile} />
           <Route path="/profile/cart" exact component={Cart} />
           <Route path="/profile/myproducts" exact component={MyProducts} />
           <Route path="/messages" exact component={Messages} />
+          <Route path="/admin" exact component={Admin} />
           <Route component={noMatch} />
         </Switch>
       </div>

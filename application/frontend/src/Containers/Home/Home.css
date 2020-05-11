@@ -26,6 +26,7 @@
 
 .home-filters-upload {
   width: 200px;
+  padding-left: 10px;
 }
 
 .home-searchresults {
@@ -34,9 +35,23 @@
 
 .home-title-sort {
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
 }
 
 .home-products {
+  text-align: center;
+}
 
+.create-button {
+  background-color: #F3CB0A;
+  border: none;
+  border-radius: 5px;
+  color: #662A82;
+  /* padding: 10px 10px; */
+  /* margin-left: 10px; */
+  text-align: center;
+  display: inline-block;
+  /* font-size: 20px; */
+  width: 120px;
+  height: 45px;
 }

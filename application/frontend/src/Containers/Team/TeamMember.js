@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import * as userActions from '../Actions/userActions';
+
+import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
 import './TeamMember.css';
@@ -10,14 +11,10 @@ class TeamMember extends React.Component {
   render() {
     const {
       team,
-      // userClicked,
       history
     } = this.props;
 
-    console.log(history);
-    // console.log(history.location.pathname);
     const n = history.location.pathname.slice(14);
-    // console.log(n);
     let user = <div />;
 
     switch (n) {
@@ -116,14 +113,8 @@ class TeamMember extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    // userClicked: state.teamReducer.userClicked,
     team: state.teamReducer.team
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-// return {
-// fetchUser: (id) => dispatch(userActions.fetchUser(id))
-// };
-// };
-export default connect(mapStateToProps)(TeamMember);
+export default connect(mapStateToProps)(LoginChecker(TeamMember));

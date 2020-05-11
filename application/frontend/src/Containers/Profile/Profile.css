@@ -23,10 +23,16 @@
   background-color: white;
   border: 1px solid black;
   border-radius: 0px;
-  width: 500px;
-  height: 210px;
+  width: 400px;
   display: inline-flex;
+  overflow-wrap: break-word;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+@media (min-width: 700px) {
+    .User-Box {
+        width: 500px;
+        left: calc(50% - 100px);
+    }
 }
 
 .Profile-Picture-Window {
@@ -47,9 +53,8 @@
 }
 
 .User-Info {
-  width: 80%;
   margin-top:42px;
-  padding-left: 170px;
+  padding-left: 135px;
 }
 
 .userwindow {

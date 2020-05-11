@@ -1,10 +1,10 @@
-.Button {
+.Login-Button {
   background-color: #F3CB0A;
   border: none;
   border-radius: 5px;
   color: #662A82;
   padding: 11px 32px;
-  margin-top: 20px;
+  margin-top: 40px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -12,13 +12,13 @@
   width: 300px;
 }
 
-.Button:hover, .Button:active {
+.Login-Button:hover, .Button:active {
     background-color: #F3CB0A;
     border: 1px solid #966909;
     color: #966909;
 }
 
-.Button:disabled {
+.Login-Button:disabled {
     background-color: #C7C6C6;
     cursor: not-allowed;
     border: 1px solid #ccc;
@@ -26,7 +26,7 @@
 }
 
 
-.Button:not(:disabled) {
+.Login-Button:not(:disabled) {
     animation: enable 0.3s linear;
 }
 
@@ -42,7 +42,9 @@
     }
 }
 
-
+.pricefield {
+  display:inline-block;
+}
 
 .Input-Field {
   background-color: #white;
@@ -50,7 +52,7 @@
   border-radius: 3px;
   color: #662A82;
   padding: 11px 32px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 
   text-decoration: none;
   display: inline-block;
@@ -63,8 +65,7 @@
   border: 1px solid black;
   border-radius: 3px;
   color: #662A82;
-  padding: 11px 32px;
-  margin-bottom: 20px;
+  padding: 10px 32px;
   resize: vertical;
   text-decoration: none;
   display: inline-block;
@@ -102,10 +103,16 @@ a:active {
   text-decoration: underline;
 }
 
+.field {
+  padding-bottom: 0px;
+}
+
 .errormessage {
+  color: red;
+  text-align: left;
+  padding-left: 100px;
   font-weight: bold;
   font-size: 12px;
-  padding-bottom: 15px;
 }
 
 .selectfield {
@@ -113,11 +120,11 @@ a:active {
   border: 1px solid black;
   border-radius: 3px;
   color: #662A82;
-  padding: 11px 32px;
-  margin-bottom: 20px;
-
+  padding: 11px 40px;
+  margin-bottom: 5px;
+  text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  width: 233px;
+  width: 300px;
 }

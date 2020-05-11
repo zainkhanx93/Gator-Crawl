@@ -17,3 +17,6 @@ export const SET_SELECTED_PRODUCT = 'SET_SELECTED_PRODUCT';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_SOCKET = 'SET_SOCKET';
 export const SET_USER = 'SET_USER';
+
+export const ADD_BOOKMARK = 'ADD_BOOKMARK';
+export const DELETE_BOOKMARK = 'DELETE_BOOKMARK';

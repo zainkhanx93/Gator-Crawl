@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
 
-    //One user can have many message
+    // One user can have many message
     User.hasMany(models.Message, {
       foreignKey: 'senderUsername',
       as: 'message',

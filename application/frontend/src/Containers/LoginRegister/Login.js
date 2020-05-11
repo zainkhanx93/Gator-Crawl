@@ -14,16 +14,22 @@ import gclogo from '../../Assets/Images/gclogo.png';
 import logotitle from '../../Assets/Images/logotitle.png';
 import './LoginRegister.css';
 
-
 const awsURL = '';
 const localURL = 'http://localhost:8080/';
 const socketURL = localURL || awsURL;
+
 
 class Login extends React.Component {
   // call initSocket function
   componentDidMount() {
     const cookie = new Cookies();
     cookie.remove('token');
+    cookie.remove('id');
+    cookie.remove('email');
+    cookie.remove('firstName');
+    cookie.remove('lastName');
+    cookie.remove('major');
+    cookie.remove('admin');
     this.initSocket();
   }
 
@@ -32,7 +38,7 @@ class Login extends React.Component {
     const socket = io(socketURL);
     // when socket connect to server from client do arrow function
     socket.on('connect', () => {
-      console.log('Connected');
+      // console.log('Connected');
     });
     setSocket(socket);
   };
@@ -46,84 +52,19 @@ class Login extends React.Component {
   };
 
   onSubmit = () => {
-    const {
-      // handleSubmit,
-      formValues,
-      history,
-      setCurrentUser,
-    } = this.props;
-    // handleSubmit({
-    //   ...formValues
-    // });
-    console.table(formValues);
-    // axios.post('/api/users/login', { email: formValues.email, password: formValues.password })
-    //   .then((res) => {
-    //     // console.log('got the response');
-    //     console.log(res.data);
-    //   }).catch((error) => {
-    //     // console.log('whoops error');
-    //     console.log(error);
-    //   });
-    const george = {
-      id: '1',
-      email: 'gfreedland@mail.sfsu.edu',
-      firstName: 'George',
-      lastName: 'Freedland',
-      major: 'Computer Science',
-      token: 'token',
-    };
-
-    const bernie = {
-      id: '2',
-      email: 'bsanders@mail.sfsu.edu',
-      firstName: 'Bernie',
-      lastName: 'Sanders',
-      major: 'Political Science',
-      token: 'token',
-    };
-
-    if (
-      formValues.email === 'gfreedland@mail.sfsu.edu'
-      && formValues.password === '123'
-    ) {
-      console.log('george logging in');
-      setCurrentUser(george);
-
-      // backend code in config/socketManager.js
-
-      this.setUser(george);
-      history.push('/home');
-    } else if (
-      formValues.email === 'bsanders@mail.sfsu.edu'
-      && formValues.password === '123'
-    ) {
-      console.log('bernie logging in');
-      setCurrentUser(bernie);
-
-      this.setUser(bernie);
-      history.push('/home');
-    } else {
-      console.log(formValues.email);
-      // code for message
-      const socketUser = formValues;
-      setCurrentUser(socketUser);
-      this.setUser(socketUser);
-      history.push('/home');
-    }
-    // history.push('/home');
+    const { handleSubmit, formValues, setUser } = this.props;
+    setUser(formValues);
+    handleSubmit({
+      ...formValues
+    });
   };
 
-  // Message front-end code
-
   render() {
-    const { isAuth, socket } = this.props;
-    // const { socket, user } = this.props;
+    const { socket, isAuth } = this.props;
     let failed = null;
     if (isAuth === false) {
-      failed = <p>Login failed, try again</p>;
+      failed = <p style={{ color: 'red' }}>Login failed, please try again</p>;
     }
-
-    // const failed = !isAuth ? <p>Login failed, try again</p> : <p />;
 
     return (
       <div className="Login-Box">
@@ -138,8 +79,8 @@ class Login extends React.Component {
           setUser={this.setUser}
           handleSubmit={this.onSubmit}
         />
-        <br />
         {failed}
+        <br />
         <a className="Link2" href="register">
           <b>Create new account</b>
         </a>
@@ -181,4 +122,5 @@ const mapDispatchToProps = (dispatch, props) => {
     setSocket: (socket) => dispatch(messageActions.setSocket(socket)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

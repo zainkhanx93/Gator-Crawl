@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {
     getToken: () => {
       console.log('GET_TOKEN_ACTION');
@@ -35,9 +35,10 @@ export default function (Component) {
 
       if (!token) {
         return (
-          <div>
+          <div style={{ textAlign: 'center' }}>
             <br />
-            <h1>Oops, you do not have access to this.</h1>
+            <h1>Oops, you do not have access to this page.</h1>
+            <hr />
             <Link to="/login">Try to login.</Link>
           </div>
         );

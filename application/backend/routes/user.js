@@ -17,11 +17,18 @@ router.post('/login', passportSignIn, users.login);
 
 // Show all registered User
 // Get request public to route /api/users/
-router.get('/:id', users.findById);
 
 // Delete User
 // Del request private, giving private user's id
 router.delete('/:id', users.delete);
+
+// Get User by Email
+router.post('/email', users.findByEmail);
+
+// Get all users
+router.get('/', users.findAll);
+// Get single user by id
+router.get('/:id', users.findById);
 
 // upload profile image
 // Get request to route /api/users/image to upload profile image

@@ -5,7 +5,6 @@ import { Cookies } from 'react-cookie';
 import axios from 'axios';
 
 import RegisterForm from '../../Components/Forms/RegisterForm';
-import * as registerActions from '../../Store/Actions/registerActions';
 import logotitle from '../../Assets/Images/logotitle.png';
 import gclogo from '../../Assets/Images/gclogo.png';
 import './LoginRegister.css';
@@ -17,22 +16,19 @@ class Register extends React.Component {
   }
 
   onSubmit = () => {
-    const { handleSubmit, formValues, history } = this.props;
-    console.log(formValues);
-    axios.post('/api/users', { email: formValues.email, password: formValues.password })
-      .then((res) => {
-        // console.log('got the response');
-        console.log(res.data);
+    const {
+      formValues,
+      history
+    } = this.props;
+    // Sends a register request.
+    axios.post('/api/users', { ...formValues, admin: 0 })
+      .then(() => {
+        console.log('REGISTER SUCCESS');
+        history.push('/login');
       }).catch((error) => {
-        // console.log('whoops error');
+        console.log('EMAIL ALREADY TAKEN');
         console.log(error);
       });
-
-    handleSubmit({
-      ...formValues
-    });
-
-    history.push('/login');
   };
 
   render() {
@@ -64,16 +60,7 @@ const mapStateToProps = (state) => {
       firstName: formSelector(state, 'firstName'),
       lastName: formSelector(state, 'lastName')
     }
-    // initialValues: state.auth.initialValues
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleSubmit: (values) => dispatch(registerActions.tryRegister(values))
-    // handleSubmit: (values) => dispatch(console.log(values))
-    // loadAlbums: () => dispatch(homeActions.loadAlbums()),
-    // setAlbumTitle: (albumTitle) => dispatch(homeActions.setAlbumTitle(albumTitle))
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps)(Register);

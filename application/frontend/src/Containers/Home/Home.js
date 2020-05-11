@@ -2,10 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
+import { Cookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
+import LoginChecker from '../HOC/LoginChecker';
+import SearchBar from '../../Components/Search/SearchBar';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import Modal from '../../Components/UI/Modal';
 import CreatePostForm from '../../Components/Forms/CreatePostForm';
+
+import * as userActions from '../../Store/Actions/userActions';
 import * as homeActions from '../../Store/Actions/homeActions';
 import placeholder from '../../Assets/Images/placeholder.png';
 import './Home.css';
@@ -14,33 +20,53 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalShowing: false
+      isModalShowing: false,
+      selectedFile: null
     };
   }
 
   componentDidMount() {
-    const { setProducts, setCategories } = this.props;
-    axios.get('/api/products/all').then((res) => {
+    const { setProducts, setCategories, setCurrentUser } = this.props;
+    // Fetches All Products From Backend
+    axios.get('/api/products/').then((res) => {
       setProducts(res.data);
     });
-
+    // Fetches All Categories From Backend
     axios.get('/api/categories').then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setCategories(res.data);
     });
+    // Fetches User From Cookies
+    const cookie = new Cookies();
+    const token = cookie.get('token');
+    if (token) {
+      const user = {
+        id: cookie.get('id'),
+        firstName: cookie.get('firstName'),
+        admin: cookie.get('admin')
+      };
+      setCurrentUser(user);
+    }
   }
 
   onProductCreated = () => {
     const { formValues, setProducts, currentUser } = this.props;
     console.log(formValues);
     axios
-      .post('/api/products/', { ...formValues, sellerId: currentUser.id })
-      .then((res) => {
-        console.log(res.data);
-        this.setState({ isModalShowing: false });
-        axios.get('/api/products/all').then((response) => {
-          setProducts(response.data);
-        });
+      .post('/api/products/',
+        {
+          ...formValues,
+          sellerId: currentUser.id,
+          approved: 0,
+          photo: 'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg'
+        }).then((res) => {
+        // console.log(res.data);
+        if (res) {
+          this.setState({ isModalShowing: false });
+          axios.get('/api/products/').then((response) => {
+            setProducts(response.data);
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -49,7 +75,7 @@ class Home extends React.Component {
 
   productClicked = (product) => {
     const { history } = this.props;
-    console.table(product);
+    // console.table(product);
     history.push(`home/products?productid=${product.id}`);
   };
 
@@ -61,6 +87,13 @@ class Home extends React.Component {
     this.setState({ isModalShowing: false });
   };
 
+  fileSelectedHandler = (event) => {
+    console.log(event.target.files[0]);
+    this.setState({
+      selectedFile: event.target.files[0]
+    });
+  }
+
   render() {
     const {
       products,
@@ -71,6 +104,12 @@ class Home extends React.Component {
       setFilter
     } = this.props;
     const { isModalShowing } = this.state;
+    const cookie = new Cookies();
+
+    let adminLink = null;
+    if (cookie.get('admin') && cookie.get('admin') === 'true') {
+      adminLink = <Link to="/admin">Admin Panel</Link>;
+    }
 
     const filters = (
       <div>
@@ -87,40 +126,15 @@ class Home extends React.Component {
           ))}
         </select>
         <br />
-        {/*
-        Condition:
-        <select name="conditon" id="condition">
-          <option value="All">All</option>
-          <option value="Brand New">Brand New</option>
-          <option value="Good">Good</option>
-          <option value="Used">Used</option>
-          <option value="Poor">Poor</option>
-        </select>
         <br />
-        Price:
-        <select name="price" id="price">
-          <option value="All">All</option>
-          <option value="$100 or more">$100 or more</option>
-          <option value="$50-$100">$50-$100</option>
-          <option value="$0-$50">$0-$50</option>
-          <option value="Free">Free</option>
-        </select>
-        */}
+        <br />
+        {adminLink}
       </div>
     );
 
     const titlesort = (
       <div className="home-title-sort">
-        <p><b>Search Results</b></p>
-        {/*
-        Sort by:
-        <select name="sortby" id="sortby">
-          <option value="Newest">Newest</option>
-          <option value="Oldest">Oldest</option>
-          <option value="Most Expensive">Most Expensive</option>
-          <option value="Least Expensive">Least Expensive</option>
-        </select>
-        */}
+        <h1><b>Search Results</b></h1>
       </div>
     );
 
@@ -128,7 +142,19 @@ class Home extends React.Component {
       <div style={{ textAlign: 'center' }}>No postings available</div>
     );
 
+    const numtocat = (cid) => {
+      switch (cid) {
+        case 1: return 'Clothing';
+        case 2: return 'Electronics';
+        case 3: return 'Collectables & Art';
+        case 4: return 'Home & Garden';
+        case 5: return 'Sporting Goods';
+        case 6: return 'Toys & Hobbies';
+        default: return 'Other';
+      }
+    };
     if (products.length !== 0) {
+      // console.log(products);
       postings = (
         <div className="home-products">
           {products.map((product) => (
@@ -144,12 +170,10 @@ class Home extends React.Component {
                 alt={placeholder}
               />
               <div className="product-info">
-                <strong>{product.productName}</strong>
-                <br />
-                <br />
-                <strong>${product.price}</strong>
-                <br />
-                <p>{product.createdAt.substring(0, 10)}</p>
+                <strong style={{}}>{product.productName}</strong>
+                <p style={{}}>Price: ${product.price}</p>
+                <p>Category: {numtocat(product.categoryId)}</p>
+                <p>Posted on: {product.createdAt.substring(0, 10)}</p>
               </div>
             </div>
           ))}
@@ -160,22 +184,21 @@ class Home extends React.Component {
     return (
       <div>
         <Modal show={isModalShowing} modalClosed={this.hideModal}>
-          <CreatePostForm handleSubmit={this.onProductCreated} />
+          <CreatePostForm categories={categories} handleSubmit={this.onProductCreated} fileSelectedHandler={this.fileSelectedHandler} />
           <br />
-          <button type="button" onClick={this.hideModal}>
-            exit
-          </button>
         </Modal>
         <MainNavBar history={history} />
+
         <div className="home-window">
           <div className="home-filters-upload">
-            <p>Hi {currentUser.firstName}!</p>
-            <button type="button" onClick={this.createPostClicked}>
-              Create Posting
+            <p style={{ paddingLeft: '0px' }}>Hi {currentUser.firstName}!</p>
+            <button type="button" className="create-button" onClick={this.createPostClicked}>
+              <p style={{ fontSize: '15px' }}><b>Post</b></p>
             </button>
             {filters}
           </div>
           <div className="home-searchresults">
+            <SearchBar history={history} className="navbar-searchbar" />
             {titlesort}
             {postings}
           </div>
@@ -197,7 +220,7 @@ const mapStateToProps = (state) => {
       price: formSelector(state, 'price'),
       categoryId: formSelector(state, 'categoryId')
     },
-    currentUser: state.userReducer.currentUser
+    currentUser: state.loginReducer.currentUser
   };
 };
 
@@ -205,8 +228,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setProducts: (products) => dispatch(homeActions.setProducts(products)),
     setCategories: (categories) => dispatch(homeActions.setCategories(categories)),
-    setFilter: (filter) => dispatch(homeActions.setFilter(filter))
+    setFilter: (filter) => dispatch(homeActions.setFilter(filter)),
+    setCurrentUser: (user) => dispatch(userActions.setCurrentUser(user))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(Home));

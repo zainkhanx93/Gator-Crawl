@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import * as homeActions from '../../Store/Actions/homeActions';
+import searchicon from '../../Assets/Images/searchicon.png';
 import './SearchBar.css';
 
 class SearchBar extends React.Component {
@@ -19,27 +20,36 @@ class SearchBar extends React.Component {
 
     const { setProducts } = this.props;
 
-    const handleSearch = () => {
+    const handleSearch = (event) => {
+      event.preventDefault();
       const { history } = this.props;
       if (query) {
         if (filter) {
+          // code for searching with Search and Filter function ( look up prod by name and category)
+          // console.log(filter);
           axios.get(`/api/products/${query}/${filter}`).then((res) => {
             setProducts(res.data);
+            history.push('/home');
           });
-          history.push('/home');
         } else {
+          // code for searching with Search function (Can search for anythig by name)
+          console.log('what i want');
           axios.get(`/api/products/${query}`).then((res) => {
+            console.log(res.data);
             setProducts(res.data);
+            history.push('/home');
           });
-          history.push('/home');
         }
       } else if (filter) {
+        // code for searching with  Filter function ( Eletronics, Apperel, etc)
+        // console.log(filter);
         axios.get(`/api/products/all/${filter}`).then((res) => {
           setProducts(res.data);
+          history.push('/home');
         });
-        history.push('/home');
       } else {
-        axios.get('/api/products/all').then((res) => {
+        // code which will result in displaying all product
+        axios.get('/api/products/').then((res) => {
           setProducts(res.data);
           history.push('/home');
         });
@@ -52,10 +62,12 @@ class SearchBar extends React.Component {
 
     return (
       <div className="searchbar">
-        <input className="input-field" type="search" placeholder="Seach Gator Crawl" onChange={(e) => setQuery(e.target.value)} />
-        <button type="submit" onClick={() => handleSearch()}>
-          Search
-        </button>
+        <form onSubmit={(event) => handleSearch(event)}>
+          <input className="input-field" type="search" placeholder="Seach Gator Crawl" onChange={(e) => setQuery(e.target.value)} />
+          <button className="search-button" type="submit">
+            <img src={searchicon} className="icon" alt="Search" placeholder="Search" />
+          </button>
+        </form>
       </div>
     );
   }

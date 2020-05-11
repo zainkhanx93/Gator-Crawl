@@ -5,35 +5,44 @@ import './LoginForm.css';
 
 class CreatePostForm extends React.Component {
   onSubmit = (e) => {
-    e.preventDefault();
+    e.persist();
     // console.log('onsubmit');
     const { handleSubmit } = this.props;
     handleSubmit();
   };
 
   renderInputField = ({
-    input, label, type, meta 
+    input,
+    label,
+    type,
+    meta,
+    icon
   }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
       <div className={className}>
-        <input
-          {...input}
-          className="Input-Field"
-          type={type}
-          autoComplete="off"
-          placeholder={label}
-        />
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
+        <div className="pricefield">
+          <p style={{ display: 'inline' }}>{icon}</p>
+          <input
+            {...input}
+            className="Input-Field"
+            type={type}
+            autoComplete="off"
+            placeholder={label}
+          />
+        </div>
         {this.renderError(meta)}
       </div>
     );
   };
 
   renderTextArea = ({
-    input, label, type, meta 
+    input, label, type, meta
   }) => {
     return (
-      <div>
+      <div style={{ paddingBottom: '10px' }}>
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
         <textarea
           {...input}
           className="Text-Area-Field"
@@ -47,13 +56,41 @@ class CreatePostForm extends React.Component {
   };
 
   renderSelect = ({
-    input, label, type, meta, children 
+    input,
+    label,
+    // type,
+    meta,
+    children
   }) => {
     return (
       <div>
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
         <select {...input} className="selectfield">
           {children}
         </select>
+        {this.renderError(meta)}
+      </div>
+    );
+  };
+
+  renderFileUpload = ({
+    input,
+    label,
+    type,
+    meta,
+    fileSelectedHandler
+  }) => {
+    return (
+      <div>
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
+        <input
+          // {...input}
+          // className="Input-Field"
+          type={type}
+          // autoComplete="off"
+          // placeholder={label}
+          onChange={fileSelectedHandler}
+        />
         {this.renderError(meta)}
       </div>
     );
@@ -78,13 +115,20 @@ class CreatePostForm extends React.Component {
       // reset,
       submitting,
       invalid,
+      categories,
+      fileSelectedHandler
     } = this.props;
     return (
       <form onSubmit={(e) => this.onSubmit(e)}>
         <br />
-        <strong>Enter Your Item Info</strong>
-        <br />
-        <br />
+        <h1>Enter Your Item Info</h1>
+        <Field
+          name="photo"
+          type="file"
+          component={this.renderFileUpload}
+          label="Photo"
+          fileSelectedHandler={fileSelectedHandler}
+        />
         <Field
           name="productName"
           type="text"
@@ -101,29 +145,20 @@ class CreatePostForm extends React.Component {
           type="text"
           component={this.renderInputField}
           label="Price"
+          icon="$"
         />
         <Field name="categoryId" component={this.renderSelect} label="Category">
           <option name="">Choose A Category</option>
-          <option value="1" name="1">
-            Books
-          </option>
-          <option value="2" name="2">
-            Clothing
-          </option>
-          <option value="3" name="3">
-            Electronics
-          </option>
-          <option value="4" name="4">
-            Furniture
-          </option>
-          <option value="5" name="5">
-            School Supplies
-          </option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </Field>
         {/* error && <strong>{error}</strong> */}
         <div>
           <button
-            className="Button"
+            className="Login-Button"
             type="submit"
             disabled={pristine || submitting || invalid}
           >
@@ -141,6 +176,9 @@ const validate = (formValues) => {
   if (!formValues.productName) {
     errors.productName = 'You must enter a name for your product';
   }
+  if (formValues.productName && formValues.productName.length > 30) {
+    errors.productName = 'Product name is too long';
+  }
 
   if (!formValues.description) {
     errors.description = 'You must enter a description';
@@ -148,6 +186,10 @@ const validate = (formValues) => {
 
   if (!formValues.price) {
     errors.price = 'You must enter a price';
+  } else if (+formValues.price !== parseInt(formValues.price, 10)) {
+    errors.price = 'You must enter a numerical value';
+  } else if (+formValues.price < 0) {
+    errors.price = 'You must enter a positive value';
   }
 
   if (!formValues.categoryId || formValues.categoryId === 'Choose A Category') {
