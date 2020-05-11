@@ -6,6 +6,7 @@ import { Cookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 
 import LoginChecker from '../HOC/LoginChecker';
+import SearchBar from '../../Components/Search/SearchBar';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import Modal from '../../Components/UI/Modal';
 import CreatePostForm from '../../Components/Forms/CreatePostForm';
@@ -26,12 +27,12 @@ class Home extends React.Component {
   componentDidMount() {
     const { setProducts, setCategories, setCurrentUser } = this.props;
     // Fetches All Products From Backend
-    axios.get('/api/products/all').then((res) => {
+    axios.get('/api/products/').then((res) => {
       setProducts(res.data);
     });
     // Fetches All Categories From Backend
     axios.get('/api/categories').then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setCategories(res.data);
     });
     // Fetches User From Cookies
@@ -125,7 +126,7 @@ class Home extends React.Component {
 
     const titlesort = (
       <div className="home-title-sort">
-        <p><b>Search Results</b></p>
+        <h1><b>Search Results</b></h1>
       </div>
     );
 
@@ -174,11 +175,12 @@ class Home extends React.Component {
           <div className="home-filters-upload">
             <p style={{ paddingLeft: '0px' }}>Hi {currentUser.firstName}!</p>
             <button type="button" className="create-button" onClick={this.createPostClicked}>
-              Create Post
+              <p><b>Post</b></p>
             </button>
             {filters}
           </div>
           <div className="home-searchresults">
+            <SearchBar history={history} className="navbar-searchbar" />
             {titlesort}
             {postings}
           </div>

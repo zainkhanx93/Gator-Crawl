@@ -56,7 +56,11 @@ class CreatePostForm extends React.Component {
   };
 
   renderSelect = ({
-    input, label, type, meta, children
+    input,
+    label,
+    // type, 
+    meta,
+    children
   }) => {
     return (
       <div>

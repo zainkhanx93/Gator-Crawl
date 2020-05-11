@@ -5,10 +5,36 @@
 .nav-item{
   color:black;
   padding:10px;
+
+  font-size: 20px;
+}
+
+.profile-nav-item {
+  color:black;
+  font-size: 20px;
+}
+
+.profile-item-active,
+.profile-item:hover {
+  text-decoration: underline;
+  /* border: 1px solid black; */
+  border-bottom: 4px solid #662A82;
+}
+
+.nav-image {
+  height: 30px;
+  width: 30px;
 }
 
 .nav-item:visited{
   color:black;
+}
+
+.nav-item:hover,
+.nav-item-active {
+  text-decoration: underline;
+  /* border: 1px solid black; */
+  border-bottom: 4px solid #662A82;
 }
 
 .navbar-header {
@@ -20,18 +46,21 @@
   min-width: 150px;
   height: 60px;
   width: auto;
-
+  display: inline;
 }
 
 .navbar-items {
   text-align: right;
   width : 40%;
-  margin-top: 25px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   margin-right: 10px;
+  display: inline;
+  width: 100%;
 }
 
 .navbar-line {
   background-color: #662A82;
-  margin-top: 0px;
+  margin-top: 5px;
   padding-top: 10px;
 }

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', products.create);
 
 // Get all products
-router.get('/all', products.findAll);
+router.get('/', products.findAll);
 
 router.get('/all/:categoryId', products.findWithFilter);
 

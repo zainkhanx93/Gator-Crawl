@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 
-import AdminChecker from '../Containers/HOC/AdminChecker';
+import AdminChecker from '../HOC/AdminChecker';
 import './Admin.css';
 
 class Admin extends React.Component {

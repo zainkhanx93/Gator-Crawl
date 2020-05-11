@@ -1,22 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import SearchBar from '../Search/SearchBar';
+// import SearchBar from '../Search/SearchBar';
 import navBarlogo from '../../Assets/Images/NavBarLogo.png';
+import homeimage from '../../Assets/Images/home.png';
+import messagesimage from '../../Assets/Images/messages.png';
+import userimage from '../../Assets/Images/user.png';
+import logoutimage from '../../Assets/Images/logout.png';
+
 
 import './MainNavBar.css';
 
 const navBarItems = (
   <nav className="navbar-items">
-    <Link to="/home" className="nav-item">
-      Home
-    </Link>
-    <Link to="/messages" className="nav-item">
-      Messages
-    </Link>
-    <Link to="/profile/me" className="nav-item">
-      Account
-    </Link>
+    <NavLink to="/home" className="nav-item" activeClassName="nav-item-active">
+      <img src={homeimage} className="nav-image" alt="Home" />
+    </NavLink>
+    <NavLink to="/messages" className="nav-item" activeClassName="nav-item-active">
+      <img src={messagesimage} className="nav-image" alt="Messages" />
+    </NavLink>
+    <NavLink to="/profile" className="nav-item" activeClassName="nav-item-active">
+      <img src={userimage} className="nav-image" alt="User" />
+    </NavLink>
+    <NavLink to="/logout" className="nav-item" activeClassName="nav-item-active">
+      <img src={logoutimage} className="nav-image" alt="Logout" />
+    </NavLink>
 
   </nav>
 );
@@ -31,7 +39,6 @@ class MainNavBar extends React.Component {
           <div onClick={() => history.push('/home')}>
             <img className="navbar-logo" src={navBarlogo} alt="NavBarLogo" />
           </div>
-          <SearchBar history={history} className="navbar-searchbar" />
           {navBarItems}
         </header>
         <hr className="navbar-line" />
