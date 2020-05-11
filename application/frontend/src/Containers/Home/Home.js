@@ -165,7 +165,7 @@ class Home extends React.Component {
     return (
       <div>
         <Modal show={isModalShowing} modalClosed={this.hideModal}>
-          <CreatePostForm handleSubmit={this.onProductCreated} />
+          <CreatePostForm categories={categories} handleSubmit={this.onProductCreated} />
           <br />
         </Modal>
         <MainNavBar history={history} />

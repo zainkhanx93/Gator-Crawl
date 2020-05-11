@@ -88,6 +88,7 @@ class CreatePostForm extends React.Component {
       // reset,
       submitting,
       invalid,
+      categories
     } = this.props;
     return (
       <form onSubmit={(e) => this.onSubmit(e)}>
@@ -114,21 +115,11 @@ class CreatePostForm extends React.Component {
         />
         <Field name="categoryId" component={this.renderSelect} label="Category">
           <option name="">Choose A Category</option>
-          <option value="1" name="1">
-            Books
-          </option>
-          <option value="2" name="2">
-            Clothing
-          </option>
-          <option value="3" name="3">
-            Electronics
-          </option>
-          <option value="4" name="4">
-            Furniture
-          </option>
-          <option value="5" name="5">
-            School Supplies
-          </option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </Field>
         {/* error && <strong>{error}</strong> */}
         <div>
