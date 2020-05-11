@@ -2,24 +2,38 @@ const models = require('../models');
 
 const { Message } = models;
 
-const create = (conversationId, messageContent, author, roomName) => {
+const create = (messageContent, author, roomName) => {
     const newMessage = {
-        conversationId,
         messageContent,
         author,
         roomName,
     }
-    Message.create(newMessage)
-    .then(data => {
-        return data;
-    })
+    Message
+        .create(newMessage)
+        .then(data => {
+            // console.log("DATA ID: ");
+            // console.log(data.id);
+            // // cannot update foreign_key need to find another way
+            // data.update({
+            //     messageContent: "data.id",
+            //     author: "by me",
+            //     roomName: "nowhere",
+            // }, {where: {
+            //     id: data.id,
+            //  }});
+            return data;
+        })
 }
 
-// exports.create = function(messageId, messageContent, sender) {
-//     const newMessage = {
-//         messageId,
-//         messageContent,
-//         sender,
-//     }    
-// }
+const setConversationID = (messageContent) => {
+    return Message.update({
+        conversationID: Message.id
+    }, {
+        where: {
+            messageContent,
+        }
+    }
+    )
+}
 exports.create = create;
+exports.setConversationID = setConversationID;

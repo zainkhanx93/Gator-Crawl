@@ -4,49 +4,55 @@ const { Op } = require('sequelize');
 const { Conversation, Message } = models;
 
 const create = (name, receiverId, senderId) => {
-  const newConversation = {
-    name,
-    receiverId,
-    senderId,
-  }
-  Conversation.create(newConversation)
-    .then(data => { return data })
+  return Conversation.findOrCreate({
+    where: {
+      name,
+      receiverId,
+      senderId,
+    }}).then(data => { return data })
 }
 
-function upsert(values, condition) {
-  return Conversation
-      .findOne({ where: condition })
-      .then(function(obj) {
-          // update
-          if(obj)
-              return obj.update(values);
-          // insert
-          return Conversation.create(values);
-      })
-}
+// function upsert(values, condition) {
+//   return Conversation
+//     .findOne({ where: condition })
+//     .then(function (obj) {
+//       // update
+//       if (obj)
+//         return obj.update(values);
+//       // insert
+//       return Conversation.create(values);
+//     })
+// }
 
 // add message to databse
+// parameter message is JSON object
+// parameter name is room name
 const addMessageToDB = (name, message) => {
-  // Conversation.findOne({
-  //   where: {
-  //     name,
-  //   }
-  // })
-  //   .then(conversation => {
-  //     messages: message;
-  //     console.log(conversation);
-  //     conversation.messages = message;
-  //     console.log("From conversation controler :");
-  //     console.log(conversation.messages);
-  //     // const newConversation = Conversation.create(conversation);
-  //     // newConversation.messages = message;
-  //     // console.log(newConversation.messages);
-  //     // newConversation.save();
-  //   })
-  // update 1 row in database with update , condition
-  upsert({ messages: message,}, { name }).then(function(result){
-    console.log(result);
-});
+
+  // let newMessage = [];
+  // newMessage.push(message);
+  // console.log("New MEssage: ");
+  // console.log(newMessage);
+
+  return Conversation.update({
+    messages: newMessage,
+  }, {
+    where: {
+      name,
+    }
+  })
+
+  // data.update({
+  //     messageContent: "data.id",
+  //     author: "by me",
+  //     roomName: "nowhere",
+  // }, {where: {
+  //     id: data.id,
+  //  }});
+
+  //   upsert({ messages: message,}, { name }).then(function(result){
+  //     console.log(result);
+  // });
 }
 
 //find or create - first find if not found then create message
@@ -63,37 +69,40 @@ const findOrCreateConversation = (receiverId, senderId) => {
     },
     include: [{
       model: Message, // messageContent
-      as: 'message' // specifies how we want to be able to access our joined rows on the returned data
+      // as: 'id' // specifies how we want to be able to access our joined rows on the returned data
     }],
     order: [[{
       model: Message, // messageContent
-      as: 'message' // specifies how we want to be able to access our joined rows on the returned data
+      // as: 'id' // specifies how we want to be able to access our joined rows on the returned data
     }, 'createdAt', 'DESC']]
   })
     .then(conversation => {
-      if (conversation) {
-        console.log(conversation)
-        return conversation;
-      } else {
-        return Conversation.create({
-          name: `${receiverId} & ${senderId}`,
-          senderId: senderId,
-          receiverId: receiverId,
-          //messages: [],
-        }, {
-          include: [{
-            model: Message,
-            as: 'message' // specifies how we want to be able to access our joined rows on the returned data
-          }],
-          order: [[{
-            model: Message, // messageContent
-            as: 'message' // specifies how we want to be able to access our joined rows on the returned data
-          }, 'createdAt', 'DESC']]
-        });
-      }
+      return conversation;
+
+    });
+}
+
+const findAndShow = (name) => {
+  Conversation.findAll({
+    where: {
+      name,
+    },
+    include: [{
+      model: Message, // messageContent
+      // as: 'id' // specifies how we want to be able to access our joined rows on the returned data
+    }],
+    order: [[{
+      model: Message, // messageContent
+      // as: 'id' // specifies how we want to be able to access our joined rows on the returned data
+    }, 'createdAt', 'DESC']]
+  })
+    .then(conversation => {
+      console.log("<><>CONSERVATION FIND HERE<><>")
+      console.log(conversation);
     });
 }
 
 exports.findOrCreateConversation = findOrCreateConversation;
 exports.create = create;
 exports.addMessageToDB = addMessageToDB;
+exports.findAndShow = findAndShow;

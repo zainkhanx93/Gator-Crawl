@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   );
   Conversation.associate = function(models) {
     Conversation.hasMany(models.Message, {
-        foreignKey: 'conversationID',
-        as: 'message',
-        onDelete: 'CASCADE',
+        // foreignKey: 'conversationID',
+        // as: 'message',
+        // onDelete: 'CASCADE',
       });
   };
   return Conversation;

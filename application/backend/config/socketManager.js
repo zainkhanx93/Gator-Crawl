@@ -5,12 +5,12 @@ const { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED,
     NEW_CHAT_USER } = require('../../frontend/src/Containers/messageRelated/messageEvent');
 const { createMessage, createChat } = require('../config/messageFunction')
 
-const addMessageToDB = require('../controllers/message.js');
+const setMessageToDB = require('../controllers/message.js');
 const conversation = require('../controllers/conversation.js');
 
 let connectedUser = { };
 let communityChat = createChat({ isCommunity:true });
-let privateRoomName;
+let privateRoomName = "Public";
 //export
 // module.exports = function(io) {
 //     io.sockets.on('connection', function(socket){
@@ -56,7 +56,8 @@ module.exports = function(socket) {
 
     //Get Public Chat
 	socket.on(PUBLIC_CHAT, (callback)=>{
-		callback(communityChat)
+		callback(communityChat);
+		privateRoomName = "Public"
 	})
 
 	// socket.emit is send event to frontend
@@ -67,23 +68,28 @@ module.exports = function(socket) {
 		//console.log(chatId + " " + message);
 		// add message to database
 		
-		addMessageToDB.create(data.chatId, data.message, data.sender, data.roomName);
+		// addMessageToDB.create(data.message, data.sender, data.roomName);
+		// conversation.addMessageToDB(data.roomName, data.message);
+		// Change message's conversationID(where condition) => cannot update ;
+		// addMessageToDB.setConversationID(data.message);
 		console.log("Inserted new message... " + data.chatId + " " + data.message + " " + data.sender);
-		const chatData = data.chats;
-		chatData.map(chat => {
-			//console.log(chat.messages);
-			//console.log(chat.users);
-			console.log(privateRoomName + " === " + chat.name);
-			match = privateRoomName.localeCompare(chat.name);
-			console.log(match);
-			if (match === 0) {
-				// add messages to conversation database
-				// console.log("<<<I CAN REACH HERE>>>")
-				// console.log(chat.messages)
-				// console.log(privateRoomName)
-				conversation.addMessageToDB(privateRoomName, chat.messages);
-			}
-		})
+		console.log(privateRoomName + " === " + data.roomName);
+		match = privateRoomName.localeCompare(data.roomName);
+		console.log(match);
+		if (match === 0) {
+			// add messages to conversation database
+			console.log("<<<I CAN REACH HERE>>>")
+			console.log(privateRoomName)
+			// let chatLog = [{}];
+			// console.log(chatLog);
+
+			setMessageToDB.create(data.message, data.sender, data.roomName);
+
+			// conversation.addMessageToDB(privateRoomName, {messages: data.message});
+
+			console.log("BEGIN FIND MESSAGE: ")
+			conversation.findAndShow(privateRoomName);
+		}
 	 })
 	//  	({chatId, message})=>{	
 	// }
@@ -102,13 +108,19 @@ module.exports = function(socket) {
 				const newChat = createChat({ name:`${reciever} & ${sender}`, users:[reciever, sender] })
 				console.log(newChat);
 				socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat)
-				socket.emit(PRIVATE_MESSAGE, newChat);
+				// socket.emit(PRIVATE_MESSAGE, newChat);
 				//add private chat to db
-				//conversation.findOrCreateConversation(reciever, sender);
-				conversation.findOrCreateConversation(newChat.users[0], newChat.users[1])
+				console.log("reciever "+reciever);
+				console.log("sender "+sender)
+
+				conversation.create(newChat.name, reciever, sender);
+
+				// history = conversation.findOrCreateConversation(reciever, sender);
+				// console.log("History: ");
+				// console.log(history)
 				privateRoomName = newChat.name;
 				console.log("new private message: " + newChat.messages);
-
+				socket.emit(PRIVATE_MESSAGE, newChat);
 			}else{
 				if(!(reciever in activeChat.users)){
 					activeChat.users

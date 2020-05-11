@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define(
     'Message',
     {
-      conversationID: DataTypes.INTEGER,
       author: DataTypes.STRING,
       messageContent: DataTypes.TEXT,
       roomName: DataTypes.STRING,
@@ -14,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
   Message.associate = function(models) {
     // associations can be defined here
     Message.belongsTo(models.Conversation, {
-      foreignKey: 'conversationID',
-      as: 'message',
-      onDelete: 'CASCADE',
+      // foreignKey: 'conversationID',
+      // as: 'message',
+      // onDelete: 'CASCADE',
     });
   };
   return Message;
