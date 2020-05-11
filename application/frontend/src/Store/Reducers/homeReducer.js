@@ -27,8 +27,8 @@ const setFilter = (state, action) => {
   return {
     ...state,
     filter: action.payload.filter
-  }
-}
+  };
+};
 
 
 const setSelectedProduct = (state, action) => {

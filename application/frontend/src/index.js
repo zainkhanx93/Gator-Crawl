@@ -15,6 +15,7 @@ import teamReducer from './Store/Reducers/teamReducer';
 import loginReducer from './Store/Reducers/loginReducer';
 import registerReducer from './Store/Reducers/registerReducer';
 import homeReducer from './Store/Reducers/homeReducer';
+import cartReducer from './Store/Reducers/cartReducer';
 import messageReducer from './Store/Reducers/messageReducer';
 
 import rootSaga from './Sagas/rootSaga';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   homeReducer,
   userReducer,
   messageReducer,
+  cartReducer,
   form: formReducer
 });
 

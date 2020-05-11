@@ -50,7 +50,7 @@ class Home extends React.Component {
 
   onProductCreated = () => {
     const { formValues, setProducts, currentUser } = this.props;
-    // console.log(formValues);
+    console.log(formValues);
     axios
       .post('/api/products/',
         {
@@ -85,6 +85,10 @@ class Home extends React.Component {
   hideModal = () => {
     this.setState({ isModalShowing: false });
   };
+
+  fileSelectedHandler = (event) => {
+    console.log(event.target.files[0]);
+  }
 
   render() {
     const {
@@ -176,7 +180,7 @@ class Home extends React.Component {
     return (
       <div>
         <Modal show={isModalShowing} modalClosed={this.hideModal}>
-          <CreatePostForm categories={categories} handleSubmit={this.onProductCreated} />
+          <CreatePostForm categories={categories} handleSubmit={this.onProductCreated} fileSelectedHandler={this.fileSelectedHandler} />
           <br />
         </Modal>
         <MainNavBar history={history} />

@@ -6,6 +6,8 @@ import { Cookies } from 'react-cookie';
 
 import LoginChecker from '../HOC/LoginChecker';
 import * as homeActions from '../../Store/Actions/homeActions';
+import * as cartActions from '../../Store/Actions/cartActions';
+
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 // import productpic from '../../Assets/Images/fff.png';
 import './product.css';
@@ -40,11 +42,19 @@ class Product extends React.Component {
     });
   }
 
+  onSave = () => {
+    const { addBookmark } = this.props;
+    const { product, seller } = this.state;
+    const bookmark = {
+      ...product,
+      // category: numtocat(product.categoryId),
+      seller
+    };
+    addBookmark(bookmark);
+  }
+
   render() {
-    const {
-      // location,
-      history
-    } = this.props;
+    const { history } = this.props;
     const { product, seller } = this.state;
     // const pid = location.search.substring(11);
     const cookie = new Cookies();
@@ -59,8 +69,8 @@ class Product extends React.Component {
     } else {
       buttons = (
         <div style={{ margin: '30px' }}>
-          <button className="Product-Button" type="button">Bookmark</button>
-          <button className="Product-Button" type="button">Message Seller</button>
+          <button className="Product-Button" type="button" onClick={this.onSave}>Bookmark</button>
+          <button className="Product-Button" type="button" onClick={() => history.push('/messages')}>Message Seller</button>
         </div>
       );
     }
@@ -82,17 +92,6 @@ class Product extends React.Component {
       }
     };
 
-    // if (product && product.length > 0) {
-    //   axios.get(`/api/users/${product.sellerId}`).then((res) => {
-    //     console.log(res.data);
-    //     this.setState({seller: res.data[0].email});
-    //   });
-    // }
-    //
-    // const idtouser = (sellerid) => {
-    //
-    // };
-
     return (
       <div>
         <MainNavBar history={history} />
@@ -102,7 +101,6 @@ class Product extends React.Component {
             <img className="productpic" src={product.photo} alt="productpic" />
           </div>
           <div className="rightwindow">
-
             <div className="rightbox">
               <p
                 style={{
@@ -152,7 +150,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setProducts: (products) => dispatch(homeActions.setProducts(products))
+    setProducts: (products) => dispatch(homeActions.setProducts(products)),
+    addBookmark: (bookmark) => dispatch(cartActions.addBookmark(bookmark))
   };
 };
 

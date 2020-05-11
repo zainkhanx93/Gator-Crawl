@@ -73,6 +73,29 @@ class CreatePostForm extends React.Component {
     );
   };
 
+  renderFileUpload = ({
+    input,
+    label,
+    type,
+    meta,
+    fileSelectedHandler
+  }) => {
+    return (
+      <div>
+        <p style={{ color: '#662A82', fontWeight: 'bold' }}>{label}: </p>
+        <input
+          // {...input}
+          // className="Input-Field"
+          type={type}
+          // autoComplete="off"
+          // placeholder={label}
+          onChange={fileSelectedHandler}
+        />
+        {this.renderError(meta)}
+      </div>
+    );
+  };
+
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -92,13 +115,20 @@ class CreatePostForm extends React.Component {
       // reset,
       submitting,
       invalid,
-      categories
+      categories,
+      fileSelectedHandler
     } = this.props;
     return (
       <form onSubmit={(e) => this.onSubmit(e)}>
         <br />
         <h1>Enter Your Item Info</h1>
-
+        <Field
+          name="photo"
+          type="file"
+          component={this.renderFileUpload}
+          label="Photo"
+          fileSelectedHandler={fileSelectedHandler}
+        />
         <Field
           name="productName"
           type="text"
