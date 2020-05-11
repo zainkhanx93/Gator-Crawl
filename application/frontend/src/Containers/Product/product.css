@@ -10,6 +10,7 @@
 
 .rightwindow {
   width: 50%;
+  overflow-wrap: break-word;
 }
 
 .rightbox {
@@ -18,10 +19,14 @@
   border: 1px solid black;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   display: inline-block;
-  width: 80%;
+  width: 90%;
+  padding: 10px;
+  margin-left: 10px;
 }
 
 .productpic {
+  width: 100%;
+  height: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -34,8 +39,8 @@
   /* margin-top: 40px; */
   margin: 10px;
   text-align: center;
-  text-decoration: none;
+  font-weight: bold;
   display: inline-block;
   font-size: 14px;
-  width: 100px;
+  width: 180px;
 }

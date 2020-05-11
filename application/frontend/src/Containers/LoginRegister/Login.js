@@ -52,7 +52,8 @@ class Login extends React.Component {
   };
 
   onSubmit = () => {
-    const { handleSubmit, formValues } = this.props;
+    const { handleSubmit, formValues, setUser } = this.props;
+    setUser(formValues);
     handleSubmit({
       ...formValues
     });

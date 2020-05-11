@@ -1,29 +1,35 @@
-import React, { Component } from 'react';
-import SideBar from '../sidebar/SideBar'
-import { PUBLIC_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, 
-				TYPING, PRIVATE_MESSAGE, USER_CONNECTED, USER_DISCONNECTED,
-				NEW_CHAT_USER } from '../messageEvent'
-import ChatHeading from './ChatHeading'
-import Messages from '../message/Message'
-import MessageInput from '../message/MessageInput'
-import { values, difference, differenceBy } from 'lodash'
+import React from 'react';
+import { values, difference, differenceBy } from 'lodash';
+import SideBar from '../sidebar/SideBar';
+import {
+  PUBLIC_CHAT,
+  MESSAGE_SENT,
+  MESSAGE_RECIEVED,
+  TYPING,
+  PRIVATE_MESSAGE,
+  USER_CONNECTED,
+  USER_DISCONNECTED,
+  NEW_CHAT_USER
+} from '../messageEvent';
+import ChatHeading from './ChatHeading';
+import Messages from '../message/Message';
+import MessageInput from '../message/MessageInput';
 
-export default class ChatContainer extends Component {
-	constructor(props) {
-	  super(props);	
-	
+export default class ChatContainer extends React.Component {
+  constructor(props) {
+    super(props);
 	  this.state = {
 		  chats:[],
 		  users:[],
 	  	activeChat:null
-	  }
+	  };
 	}
 
 	componentDidMount() {
 		const { socket } = this.props
 		this.initSocket(socket)
 	}
-	
+
 	componentWillUnmount() {
 		const { socket } = this.props
 		socket.off(PRIVATE_MESSAGE)
@@ -31,7 +37,7 @@ export default class ChatContainer extends Component {
 		socket.off(USER_DISCONNECTED)
 		socket.off(NEW_CHAT_USER)
 	}
-	
+
 	initSocket(socket){
 		socket.emit(PUBLIC_CHAT, this.resetChat)
 		socket.on(PRIVATE_MESSAGE, this.addChat)
@@ -44,7 +50,7 @@ export default class ChatContainer extends Component {
 		socket.on(USER_DISCONNECTED, (users)=>{
 			const removedUsers = differenceBy( this.state.users, values(users), 'id')
 			this.removeUsersFromChat(removedUsers)
-			this.setState({ users: values(users) })			
+			this.setState({ users: values(users) })
 		})
 		socket.on(NEW_CHAT_USER, this.addUserToChat)
 	}
@@ -86,7 +92,7 @@ export default class ChatContainer extends Component {
 	*	Adds chat to the chat container, if reset is true removes all chats
 	*	and sets that chat to the main chat.
 	*	Sets the message and typing socket events for the chat.
-	*	
+	*
 	*	@param chat {Chat} the chat to be added.
 	*	@param reset {boolean} if true will set the chat as the only chat.
 	*/
@@ -105,8 +111,8 @@ export default class ChatContainer extends Component {
 	}
 
 	/*
-	* 	Returns a function that will 
-	*	adds message to chat with the chatId passed in. 
+	* 	Returns a function that will
+	*	adds message to chat with the chatId passed in.
 	*
 	* 	@param chatId {number}
 	*/
@@ -165,13 +171,14 @@ export default class ChatContainer extends Component {
 	*	typing {boolean} If the user is typing still or not.
 	*/
 	sendTyping = (chatId, isTyping)=>{
-		const { socket } = this.props
+		const { socket } = this.props;
 		socket.emit(TYPING, {chatId, isTyping})
 	}
 
 	setActiveChat = (activeChat)=>{
 		this.setState({activeChat})
 	}
+
 	render() {
 		const { user, logout } = this.props
 		const { chats, activeChat, users } = this.state
@@ -195,12 +202,12 @@ export default class ChatContainer extends Component {
 
 							<div className="chat-room">
 								<ChatHeading name={activeChat.email} />
-								<Messages 
+								<Messages
 									messages={activeChat.messages}
 									user={user}
 									typingUsers={activeChat.typingUsers}
 									/>
-								<MessageInput 
+								<MessageInput
 									sendMessage={
 										(message)=>{
 											this.sendMessage(activeChat.id, message)

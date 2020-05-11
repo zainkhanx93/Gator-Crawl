@@ -62,7 +62,7 @@ class Home extends React.Component {
         // console.log(res.data);
         if (res) {
           this.setState({ isModalShowing: false });
-          axios.get('/api/products/all').then((response) => {
+          axios.get('/api/products/').then((response) => {
             setProducts(response.data);
           });
         }
@@ -74,7 +74,7 @@ class Home extends React.Component {
 
   productClicked = (product) => {
     const { history } = this.props;
-    console.table(product);
+    // console.table(product);
     history.push(`home/products?productid=${product.id}`);
   };
 
@@ -134,6 +134,17 @@ class Home extends React.Component {
       <div style={{ textAlign: 'center' }}>No postings available</div>
     );
 
+    const numtocat = (cid) => {
+      switch (cid) {
+        case 1: return 'Clothing';
+        case 2: return 'Electronics';
+        case 3: return 'Collectables & Art';
+        case 4: return 'Home & Garden';
+        case 5: return 'Sporting Goods';
+        case 6: return 'Toys & Hobbies';
+        default: return 'Other';
+      }
+    };
     if (products.length !== 0) {
       // console.log(products);
       postings = (
@@ -153,8 +164,7 @@ class Home extends React.Component {
               <div className="product-info">
                 <strong style={{}}>{product.productName}</strong>
                 <p style={{}}>Price: ${product.price}</p>
-                <p>CategoryId: {product.categoryId}</p>
-                <p>SellerId: {product.sellerId}</p>
+                <p>Category: {numtocat(product.categoryId)}</p>
                 <p>Posted on: {product.createdAt.substring(0, 10)}</p>
               </div>
             </div>
@@ -175,7 +185,7 @@ class Home extends React.Component {
           <div className="home-filters-upload">
             <p style={{ paddingLeft: '0px' }}>Hi {currentUser.firstName}!</p>
             <button type="button" className="create-button" onClick={this.createPostClicked}>
-              <p><b>Post</b></p>
+              <p style={{ fontSize: '15px' }}><b>Post</b></p>
             </button>
             {filters}
           </div>

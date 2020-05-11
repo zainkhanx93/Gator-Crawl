@@ -7,14 +7,15 @@ import { Cookies } from 'react-cookie';
 import LoginChecker from '../HOC/LoginChecker';
 import * as homeActions from '../../Store/Actions/homeActions';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
-import productpic from '../../Assets/Images/fff.png';
+// import productpic from '../../Assets/Images/fff.png';
 import './product.css';
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: []
+      product: [],
+      seller: null
     };
   }
 
@@ -28,7 +29,13 @@ class Product extends React.Component {
       // console.log(res.data);
       if (res) {
         // console.log(res.data);
-        this.setState({ product: res.data[0] });
+        axios.get(`/api/users/${res.data[0].sellerId}`).then((re) => {
+          // console.log(re.data);
+          this.setState({
+            product: res.data[0],
+            seller: re.data[0].email
+          });
+        });
       }
     });
   }
@@ -38,7 +45,7 @@ class Product extends React.Component {
       // location,
       history
     } = this.props;
-    const { product } = this.state;
+    const { product, seller } = this.state;
     // const pid = location.search.substring(11);
     const cookie = new Cookies();
 
@@ -63,15 +70,36 @@ class Product extends React.Component {
       postDate = product.createdAt.substring(0, 10);
     }
 
+    const numtocat = (cid) => {
+      switch (cid) {
+        case 1: return 'Clothing';
+        case 2: return 'Electronics';
+        case 3: return 'Collectables & Art';
+        case 4: return 'Home & Garden';
+        case 5: return 'Sporting Goods';
+        case 6: return 'Toys & Hobbies';
+        default: return 'Other';
+      }
+    };
+
+    // if (product && product.length > 0) {
+    //   axios.get(`/api/users/${product.sellerId}`).then((res) => {
+    //     console.log(res.data);
+    //     this.setState({seller: res.data[0].email});
+    //   });
+    // }
+    //
+    // const idtouser = (sellerid) => {
+    //
+    // };
+
     return (
       <div>
         <MainNavBar history={history} />
-        <Link to="/home">Back</Link>
-        <br />
-        <br />
+        <Link to="/home"><p style={{ color: '#662A82', fontSize: '20px' }}>Back To Home</p></Link>
         <div className="mainwindow">
           <div className="leftwindow">
-            <img className="productpic" src={productpic} alt="productpic" />
+            <img className="productpic" src={product.photo} alt="productpic" />
           </div>
           <div className="rightwindow">
 
@@ -87,13 +115,10 @@ class Product extends React.Component {
                 {product.productName}
               </p>
               <p style={{ marginLeft: '30px', fontSize: '15px' }}>
-                Date Posted: {postDate}
+                Description: {product.description}
               </p>
               <p style={{ marginLeft: '30px', fontSize: '15px' }}>
-                Seller Id: {product.sellerId}
-              </p>
-              <p style={{ marginLeft: '30px', fontSize: '15px' }}>
-                Category: {product.categoryId}
+                Category: {numtocat(product.categoryId)}
               </p>
               <p
                 style={{
@@ -105,8 +130,10 @@ class Product extends React.Component {
                 Price: ${product.price}
               </p>
               <p style={{ marginLeft: '30px', fontSize: '15px' }}>
-                Description: <br />
-                {product.description}
+                Posted By: {seller}
+              </p>
+              <p style={{ marginLeft: '30px', fontSize: '15px' }}>
+                Date Posted: {postDate}
               </p>
               {buttons}
             </div>

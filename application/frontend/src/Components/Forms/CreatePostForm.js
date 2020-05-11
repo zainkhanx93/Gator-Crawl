@@ -5,7 +5,7 @@ import './LoginForm.css';
 
 class CreatePostForm extends React.Component {
   onSubmit = (e) => {
-    e.preventDefault();
+    e.persist();
     // console.log('onsubmit');
     const { handleSubmit } = this.props;
     handleSubmit();
@@ -58,7 +58,7 @@ class CreatePostForm extends React.Component {
   renderSelect = ({
     input,
     label,
-    // type, 
+    // type,
     meta,
     children
   }) => {
@@ -146,6 +146,9 @@ const validate = (formValues) => {
   if (!formValues.productName) {
     errors.productName = 'You must enter a name for your product';
   }
+  if (formValues.productName && formValues.productName.length > 30) {
+    errors.productName = 'Product name is too long';
+  }
 
   if (!formValues.description) {
     errors.description = 'You must enter a description';
@@ -155,6 +158,8 @@ const validate = (formValues) => {
     errors.price = 'You must enter a price';
   } else if (+formValues.price !== parseInt(formValues.price, 10)) {
     errors.price = 'You must enter a numerical value';
+  } else if (+formValues.price < 0) {
+    errors.price = 'You must enter a positive value';
   }
 
   if (!formValues.categoryId || formValues.categoryId === 'Choose A Category') {

@@ -7,6 +7,8 @@ router.post('/', categories.create);
 
 router.get('/', categories.findAll);
 
+router.get('/:id', categories.findById);
+
 router.delete('/:id', categories.delete);
 
 module.exports = router;

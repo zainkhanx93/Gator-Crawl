@@ -11,8 +11,15 @@ import * as homeActions from '../../Store/Actions/homeActions';
 import './MyProducts.css';
 
 class MyProducts extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      products: []
+    };
+  }
+
   componentDidMount() {
-    const { setProducts } = this.props;
+    // const { setProducts } = this.props;
     // Fetches All Products From Backend
     const cookie = new Cookies();
     axios.get(`/api/products/${cookie.get('id')}/all`, {
@@ -20,28 +27,68 @@ class MyProducts extends React.Component {
         Authorization: `Bearer ${cookie.get('token')}`
       }
     }).then((res) => {
-      setProducts(res.data);
+      console.log(res.data);
+      this.setState({ products: res.data });
+    });
+  }
+
+  delete = (event) => {
+    const { products } = this.state;
+    event.persist();
+    const cookie = new Cookies();
+    const token = cookie.get('token');
+    axios.delete(`/api/products/${event.target.value}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((response) => {
+      console.log(response.data);
+      const array = products.filter((item) => {
+        return (+item.id !== +event.target.value);
+      });
+      this.setState({ products: array });
     });
   }
 
   render() {
-    const { history, products } = this.props;
+    const { history } = this.props;
+    const { products } = this.state;
     let myprods = <p>You have no items for sale.</p>;
 
+    const numtocat = (cid) => {
+      switch (cid) {
+        case 1: return 'Clothing';
+        case 2: return 'Electronics';
+        case 3: return 'Collectables & Art';
+        case 4: return 'Home & Garden';
+        case 5: return 'Sporting Goods';
+        case 6: return 'Toys & Hobbies';
+        default: return 'Other';
+      }
+    };
+
+    const getapproval = (approved) => {
+      if (approved) return 'Active';
+      return 'Pending Approval';
+    };
+
     if (products.length !== 0) {
-      console.table(products);
+      // console.table(products);
       myprods = (
         <div className="home-products">
           {products.map((product) => (
-            <div id={product.id} key={product.id} className="product" onClick={() => this.productClicked(product)}>
-              <img className="product-img" src={placeholder} alt={placeholder} />
+            <div id={product.id} key={product.id} className="product">
+              <img className="product-img" src={product.photo} alt={placeholder} />
               <div className="product-info">
                 <strong>{product.productName}</strong>
                 <br />
                 <br />
                 <strong>${product.price}</strong>
                 <br />
-                <p>{product.createdAt.substring(0, 10)}</p>
+                <p>Category: {numtocat(product.categoryId)}</p>
+                <p>Description: {product.description}</p>
+                <p>Status: {getapproval(product.approved)}</p>
+                <button value={product.id} type="submit" onClick={(event) => this.delete(event)}>Delete</button>
               </div>
             </div>
           ))}
@@ -75,7 +122,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      setProducts: (products) => dispatch(homeActions.setProducts(products)),
+    setProducts: (products) => dispatch(homeActions.setProducts(products)),
   };
 };
 
