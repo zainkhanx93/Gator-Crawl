@@ -20,7 +20,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalShowing: false
+      isModalShowing: false,
+      selectedFile: null
     };
   }
 
@@ -88,6 +89,9 @@ class Home extends React.Component {
 
   fileSelectedHandler = (event) => {
     console.log(event.target.files[0]);
+    this.setState({
+      selectedFile: event.target.files[0]
+    });
   }
 
   render() {
