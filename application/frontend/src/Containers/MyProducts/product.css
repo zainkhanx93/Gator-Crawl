@@ -24,3 +24,18 @@
 .productpic {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+.Product-Button {
+  background-color: #F3CB0A;
+  border: none;
+  border-radius: 5px;
+  color: #662A82;
+  padding: 10px;
+  /* margin-top: 40px; */
+  margin: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 100px;
+}

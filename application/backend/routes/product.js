@@ -12,7 +12,7 @@ router.get('/all', products.findAll);
 router.get('/all/:categoryId', products.findWithFilter);
 
 // Get product with specific id
-// router.get('/:id', products.findById);
+router.get('/id/:id', products.findById);
 
 // find all sold products for given user
 router.get('/:userid/all/sold', products.findAllSoldProducts);

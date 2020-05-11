@@ -1,28 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
 import ProfileNavBar from '../../Components/Navigation/ProfileNavBar';
 import placeholder from '../../Assets/Images/placeholder.png';
-
+import * as homeActions from '../../Store/Actions/homeActions';
 import './MyProducts.css';
 
 class MyProducts extends React.Component {
-  render() {
-    const { history, products, currentUser } = this.props;
+  componentDidMount() {
+    const { setProducts } = this.props;
+    // Fetches All Products From Backend
+    const cookie = new Cookies();
+    axios.get(`/api/products/${cookie.get('id')}/all`, {
+      headers: {
+        Authorization: `Bearer ${cookie.get('token')}`
+      }
+    }).then((res) => {
+      setProducts(res.data);
+    });
+  }
 
+  render() {
+    const { history, products } = this.props;
     let myprods = <p>You have no items for sale.</p>;
 
     if (products.length !== 0) {
       console.table(products);
       myprods = (
         <div className="home-products">
-          {products.filter((product) => {
-            // console.log(product.sellerId);
-            // console.log(currentUser.id);
-            return parseInt(product.sellerId, 10) === parseInt(currentUser.id, 10);
-          }).map((product) => (
+          {products.map((product) => (
             <div id={product.id} key={product.id} className="product" onClick={() => this.productClicked(product)}>
               <img className="product-img" src={placeholder} alt={placeholder} />
               <div className="product-info">
@@ -59,8 +69,14 @@ class MyProducts extends React.Component {
 const mapStateToProps = (state) => {
   return {
     products: state.homeReducer.products,
-    currentUser: state.userReducer.currentUser
+    currentUser: state.loginReducer.currentUser
   };
 };
 
-export default connect(mapStateToProps)(LoginChecker(MyProducts));
+const mapDispatchToProps = (dispatch) => {
+  return {
+      setProducts: (products) => dispatch(homeActions.setProducts(products)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(MyProducts));

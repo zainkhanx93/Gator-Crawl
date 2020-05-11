@@ -13,22 +13,27 @@ const SearchResults = () => {
     if (query) {
       if (filter) {
         // code for searching with Search and Filter function ( look up prod by name and category)
+        console.log(filter);
         axios.get(`/api/products/${query}/${filter}`).then((res) => {
           setProducts(res.data);
         });
       } else {
         // code for searching with Search function (Can search for anythig by name)
+        console.log('this is what i need');
+        console.log(query);
         axios.get(`/api/products/${query}`).then((res) => {
           setProducts(res.data);
         });
       }
     } else if (filter) {
       // code for searching with  Filter function ( Eletronics, Apperel, etc)
+      console.log(filter);
       axios.get(`/api/products/all/${filter}`).then((res) => {
         setProducts(res.data);
       });
     } else {
       // code which will result in displaying all product
+      console.log('getting all');
       axios.get('/api/products/all').then((res) => {
         setProducts(res.data);
       });

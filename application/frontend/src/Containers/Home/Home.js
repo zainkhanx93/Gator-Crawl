@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
 import LoginChecker from '../HOC/LoginChecker';
 import MainNavBar from '../../Components/Navigation/MainNavBar';
@@ -30,6 +31,7 @@ class Home extends React.Component {
     });
     // Fetches All Categories From Backend
     axios.get('/api/categories').then((res) => {
+      console.log(res.data);
       setCategories(res.data);
     });
     // Fetches User From Cookies
@@ -38,7 +40,8 @@ class Home extends React.Component {
     if (token) {
       const user = {
         id: cookie.get('id'),
-        firstName: cookie.get('firstName')
+        firstName: cookie.get('firstName'),
+        admin: cookie.get('admin')
       };
       setCurrentUser(user);
     }
@@ -46,15 +49,22 @@ class Home extends React.Component {
 
   onProductCreated = () => {
     const { formValues, setProducts, currentUser } = this.props;
-    console.log(formValues);
+    // console.log(formValues);
     axios
-      .post('/api/products/', { ...formValues, sellerId: currentUser.id })
-      .then((res) => {
-        console.log(res.data);
-        this.setState({ isModalShowing: false });
-        axios.get('/api/products/all').then((response) => {
-          setProducts(response.data);
-        });
+      .post('/api/products/',
+        {
+          ...formValues,
+          sellerId: currentUser.id,
+          approved: 0,
+          photo: 'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg'
+        }).then((res) => {
+        // console.log(res.data);
+        if (res) {
+          this.setState({ isModalShowing: false });
+          axios.get('/api/products/all').then((response) => {
+            setProducts(response.data);
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -85,6 +95,12 @@ class Home extends React.Component {
       setFilter
     } = this.props;
     const { isModalShowing } = this.state;
+    const cookie = new Cookies();
+
+    let adminLink = null;
+    if (cookie.get('admin') && cookie.get('admin') === 'true') {
+      adminLink = <Link to="/admin">Admin Panel</Link>;
+    }
 
     const filters = (
       <div>
@@ -101,40 +117,15 @@ class Home extends React.Component {
           ))}
         </select>
         <br />
-        {/*
-        Condition:
-        <select name="conditon" id="condition">
-          <option value="All">All</option>
-          <option value="Brand New">Brand New</option>
-          <option value="Good">Good</option>
-          <option value="Used">Used</option>
-          <option value="Poor">Poor</option>
-        </select>
         <br />
-        Price:
-        <select name="price" id="price">
-          <option value="All">All</option>
-          <option value="$100 or more">$100 or more</option>
-          <option value="$50-$100">$50-$100</option>
-          <option value="$0-$50">$0-$50</option>
-          <option value="Free">Free</option>
-        </select>
-        */}
+        <br />
+        {adminLink}
       </div>
     );
 
     const titlesort = (
       <div className="home-title-sort">
         <p><b>Search Results</b></p>
-        {/*
-        Sort by:
-        <select name="sortby" id="sortby">
-          <option value="Newest">Newest</option>
-          <option value="Oldest">Oldest</option>
-          <option value="Most Expensive">Most Expensive</option>
-          <option value="Least Expensive">Least Expensive</option>
-        </select>
-        */}
       </div>
     );
 
@@ -143,6 +134,7 @@ class Home extends React.Component {
     );
 
     if (products.length !== 0) {
+      // console.log(products);
       postings = (
         <div className="home-products">
           {products.map((product) => (
@@ -177,12 +169,13 @@ class Home extends React.Component {
           <br />
         </Modal>
         <MainNavBar history={history} />
-        <p style={{ paddingLeft: '10px' }}>Hi {currentUser.firstName}!</p>
-        <button type="button" className="create-button" onClick={this.createPostClicked}>
-          Create Post
-        </button>
+
         <div className="home-window">
           <div className="home-filters-upload">
+            <p style={{ paddingLeft: '0px' }}>Hi {currentUser.firstName}!</p>
+            <button type="button" className="create-button" onClick={this.createPostClicked}>
+              Create Post
+            </button>
             {filters}
           </div>
           <div className="home-searchresults">

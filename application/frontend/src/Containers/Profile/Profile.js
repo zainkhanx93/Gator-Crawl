@@ -45,11 +45,13 @@ class Profile extends React.Component {
             <p>Major: {currentUser.major}</p>
           </div>
         </div>
+        { /*
         <br />
         <button className="Button" type="button">
-          {' '}
-          Edit{' '}
+        {' '}
+        Edit{' '}
         </button>
+        */ }
       </div>
     );
 

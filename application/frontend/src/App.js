@@ -12,6 +12,7 @@ import Messages from './Containers/Messages/Messages';
 import Product from './Containers/MyProducts/Product';
 import MyProducts from './Containers/MyProducts/MyProducts';
 import FileUpload from './Containers/Test/TestImageUpload';
+import Admin from './Admin/Admin';
 import noMatch from './Components/Error/noMatch';
 
 import './App.css';
@@ -39,6 +40,7 @@ class App extends React.Component {
           <Route path="/profile/cart" exact component={Cart} />
           <Route path="/profile/myproducts" exact component={MyProducts} />
           <Route path="/messages" exact component={Messages} />
+          <Route path="/admin" exact component={Admin} />
           <Route component={noMatch} />
         </Switch>
       </div>

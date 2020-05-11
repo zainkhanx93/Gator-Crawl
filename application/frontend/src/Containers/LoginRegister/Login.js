@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { Cookies } from 'react-cookie';
-import axios from 'axios';
+// import axios from 'axios';
 import io from 'socket.io-client';
 
 import { USER_CONNECTED } from '../Messages/messageEvent'; // for message
@@ -20,13 +20,6 @@ const socketURL = localURL || awsURL;
 
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAuth: null
-    };
-  }
-
   // call initSocket function
   componentDidMount() {
     const cookie = new Cookies();
@@ -45,7 +38,7 @@ class Login extends React.Component {
     const socket = io(socketURL);
     // when socket connect to server from client do arrow function
     socket.on('connect', () => {
-      console.log('Connected');
+      // console.log('Connected');
     });
     setSocket(socket);
   };
@@ -59,43 +52,14 @@ class Login extends React.Component {
   };
 
   onSubmit = () => {
-    const {
-      handleSubmit,
-      formValues,
-      history,
-      setCurrentUser,
-    } = this.props;
-
+    const { handleSubmit, formValues } = this.props;
     handleSubmit({
       ...formValues
     });
-
-    // axios.post('/api/users/login', { ...formValues })
-    //   .then((res) => {
-    //     this.setState({ isAuth: true });
-    //     axios.post('api/users/email', { email: formValues.email })
-    //       .then((res2) => {
-    //         setCurrentUser({
-    //           id: res2.data[0].id,
-    //           firstName: res2.data[0].firstName,
-    //           lastName: res2.data[0].lastName,
-    //           major: res2.data[0].major,
-    //           email: res2.data[0].email,
-    //           token: res.data.token,
-    //           admin: res2.data[0].admin
-    //         });
-    //         history.push('/home');
-    //         this.setUser(formValues);
-    //       });
-    //   }).catch((error) => {
-    //     this.setState({ isAuth: false });
-    //     console.log(error);
-    //   });
   };
 
   render() {
     const { socket, isAuth } = this.props;
-    // const { socket, user } = this.props;
     let failed = null;
     if (isAuth === false) {
       failed = <p style={{ color: 'red' }}>Login failed, please try again</p>;

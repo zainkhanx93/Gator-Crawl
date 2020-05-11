@@ -1,4 +1,4 @@
-import * as actionTypes from '../Actions/actionTypes';
+// import * as actionTypes from '../Actions/actionTypes';
 
 const initialState = {
   currentUser: {
@@ -13,14 +13,14 @@ const initialState = {
   }
 };
 
-const setCurrentUser = (state, action) => {
-  console.table(action.payload.currentUser);
-  return {
-    ...state,
-    currentUser: action.payload.currentUser
-
-  };
-};
+// const setCurrentUser = (state, action) => {
+//   console.table(action.payload.currentUser);
+//   return {
+//     ...state,
+//     currentUser: action.payload.currentUser
+//
+//   };
+// };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {

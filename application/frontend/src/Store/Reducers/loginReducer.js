@@ -38,8 +38,8 @@ const loginFail = (state, action) => {
 };
 
 const setCurrentUser = (state, action) => {
-  console.table(action.payload.currentUser);
-  console.log(state.token);
+  // console.table(action.payload.currentUser);
+  // console.log(state.token);
   return {
     ...state,
     currentUser: action.payload.currentUser

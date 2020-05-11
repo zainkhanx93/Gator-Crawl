@@ -23,10 +23,10 @@ function postLoginInfo(values) {
 }
 
 function getByEmail(values) {
-  console.log(values);
+  // console.log(values);
   return axios.post('/api/users/email', { email: values.email })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return { res };
     }).catch((err) => {
       return { err };
@@ -37,10 +37,10 @@ function* login(action) {
   try {
     const { response, error } = yield call(postLoginInfo, action.payload.values);
     if (response) {
-      console.log('token aquired');
+      // console.log('token aquired');
       const { res } = yield call(getByEmail, action.payload.values);
       if (res) {
-        console.log('login and fetch succress');
+        // console.log('login and fetch succress');
         const currentUser = {
           id: res.data[0].id,
           firstName: res.data[0].firstName,
@@ -49,7 +49,7 @@ function* login(action) {
           email: res.data[0].email,
           admin: res.data[0].admin
         };
-        console.table(currentUser);
+        // console.table(currentUser);
         const cookie = new Cookies();
         cookie.set('token', response.data.token);
         cookie.set('email', currentUser.email);
