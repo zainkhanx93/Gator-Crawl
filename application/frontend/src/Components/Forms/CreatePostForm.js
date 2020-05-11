@@ -12,11 +12,7 @@ class CreatePostForm extends React.Component {
   };
 
   renderInputField = ({
-    input,
-    label,
-    type,
-    meta,
-    icon
+    input, label, type, meta, icon 
   }) => {
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
@@ -38,7 +34,7 @@ class CreatePostForm extends React.Component {
   };
 
   renderTextArea = ({
-    input, label, type, meta
+    input, label, type, meta 
   }) => {
     return (
       <div style={{ paddingBottom: '10px' }}>
@@ -60,7 +56,7 @@ class CreatePostForm extends React.Component {
     label,
     // type,
     meta,
-    children
+    children,
   }) => {
     return (
       <div>
@@ -74,11 +70,7 @@ class CreatePostForm extends React.Component {
   };
 
   renderFileUpload = ({
-    input,
-    label,
-    type,
-    meta,
-    fileSelectedHandler
+    input, label, type, meta, fileSelectedHandler 
   }) => {
     return (
       <div>
@@ -116,7 +108,7 @@ class CreatePostForm extends React.Component {
       submitting,
       invalid,
       categories,
-      fileSelectedHandler
+      fileSelectedHandler,
     } = this.props;
     return (
       <form onSubmit={(e) => this.onSubmit(e)}>
@@ -159,7 +151,8 @@ class CreatePostForm extends React.Component {
         <div>
           <button
             className="Login-Button"
-            type="submit"
+            onClick={(e) => this.onSubmit(e)}
+            type="button"
             disabled={pristine || submitting || invalid}
           >
             <b>Create Post</b>
