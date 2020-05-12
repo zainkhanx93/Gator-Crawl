@@ -14,4 +14,6 @@ router.get('/:userId', sales.findUserSales);
 // gets all sales for own user
 router.get('/', sales.findOwnSales);
 
+router.delete('/:id', requireAuth, sales.delete);
+
 module.exports = router;

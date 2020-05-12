@@ -65,3 +65,30 @@ exports.findOwnSales = (req, res) => {
       });
     });
 };
+
+exports.delete = (req, res) => {
+  const { id } = req.params;
+  const sellerId = req.user.id;
+
+  Sale.destroy({
+    where: {
+      [Op.and]: [{ id: id }],
+    },
+  })
+    .then(num => {
+      if (num === 1) {
+        res.send({
+          message: 'Product was deleted successfully!',
+        });
+      } else {
+        res.send({
+          message: `Could not delete product`,
+        });
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ error: err, message: `Could not delete user with id ${id}` });
+    });
+};
