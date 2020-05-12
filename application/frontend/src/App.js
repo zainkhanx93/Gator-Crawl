@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+import ReactGA from 'react-ga';
 import PublicProfile from './Containers/PublicProfile/PublicProfile';
 import Login from './Containers/LoginRegister/Login';
 import Register from './Containers/LoginRegister/Register';
@@ -18,6 +19,15 @@ import noMatch from './Components/Error/noMatch';
 import FileUpload from './Containers/Test/TestImageUpload';
 
 import './App.css';
+// import auth from './auth.ts'; // Sample authentication provider
+
+const trackingId = 'UA-83674682-2'; // Replace with your Google Analytics tracking ID
+ReactGA.initialize(trackingId);
+ReactGA.set({
+  pageview: `${window.location}/login`,
+  // any data that is relevant to the user session
+  // that you would like to track with google analytics
+});
 
 class App extends React.Component {
   render() {
