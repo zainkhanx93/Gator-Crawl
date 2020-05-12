@@ -21,7 +21,8 @@ class Home extends React.Component {
     super(props);
     this.state = {
       isModalShowing: false,
-      selectedFile: null
+      selectedFile: null,
+      photo: null,
     };
   }
 
@@ -43,23 +44,64 @@ class Home extends React.Component {
       const user = {
         id: cookie.get('id'),
         firstName: cookie.get('firstName'),
-        admin: cookie.get('admin')
+        admin: cookie.get('admin'),
       };
       setCurrentUser(user);
     }
   }
 
-  onProductCreated = () => {
-    const { formValues, setProducts, currentUser } = this.props;
-    console.log(formValues);
+  submitFile = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('file', this.state.selectedFile[0]);
     axios
-      .post('/api/products/',
-        {
-          ...formValues,
-          sellerId: currentUser.id,
-          approved: 0,
-          photo: 'https://csc648-team01.s3.us-east-2.amazonaws.com/open_sign.jpg'
-        }).then((res) => {
+      .post('/imageUpload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        // handle your response;
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // handle your error
+        console.log(error);
+      });
+  };
+
+  onProductCreated = async () => {
+    const { formValues, setProducts, currentUser } = this.props;
+    const formData = new FormData();
+    formData.append('file', this.state.selectedFile[0]);
+
+    await axios
+      .post('/imageUpload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        // handle your response;
+        this.setState({
+          photo: response.data.Location,
+        });
+      })
+      .catch((error) => {
+        // handle your error
+        console.log(error);
+      });
+
+    console.log('this.state.photo => ', this.state.photo);
+    axios
+      .post('/api/products/', {
+        ...formValues,
+        sellerId: currentUser.id,
+        approved: 0,
+        photo: this.state.photo,
+      })
+      .then((res) => {
         // console.log(res.data);
         if (res) {
           this.setState({ isModalShowing: false });
@@ -88,11 +130,10 @@ class Home extends React.Component {
   };
 
   fileSelectedHandler = (event) => {
-    console.log(event.target.files[0]);
     this.setState({
-      selectedFile: event.target.files[0]
+      selectedFile: event.target.files,
     });
-  }
+  };
 
   render() {
     const {
@@ -101,7 +142,7 @@ class Home extends React.Component {
       currentUser,
       categories,
       filter,
-      setFilter
+      setFilter,
     } = this.props;
     const { isModalShowing } = this.state;
     const cookie = new Cookies();
@@ -117,8 +158,16 @@ class Home extends React.Component {
           <b>Filters</b>
         </p>
         Categories:
-        <select name="categories" value={filter} onChange={(e) => { setFilter(e.target.value); }}>
-          <option defaultValue value="">All</option>
+        <select
+          name="categories"
+          value={filter}
+          onChange={(e) => {
+            setFilter(e.target.value);
+          }}
+        >
+          <option defaultValue value="">
+            All
+          </option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -134,7 +183,9 @@ class Home extends React.Component {
 
     const titlesort = (
       <div className="home-title-sort">
-        <h1><b>Search Results</b></h1>
+        <h1>
+          <b>Search Results</b>
+        </h1>
       </div>
     );
 
@@ -144,13 +195,20 @@ class Home extends React.Component {
 
     const numtocat = (cid) => {
       switch (cid) {
-        case 1: return 'Clothing';
-        case 2: return 'Electronics';
-        case 3: return 'Collectables & Art';
-        case 4: return 'Home & Garden';
-        case 5: return 'Sporting Goods';
-        case 6: return 'Toys & Hobbies';
-        default: return 'Other';
+        case 1:
+          return 'Clothing';
+        case 2:
+          return 'Electronics';
+        case 3:
+          return 'Collectables & Art';
+        case 4:
+          return 'Home & Garden';
+        case 5:
+          return 'Sporting Goods';
+        case 6:
+          return 'Toys & Hobbies';
+        default:
+          return 'Other';
       }
     };
     if (products.length !== 0) {
@@ -184,7 +242,11 @@ class Home extends React.Component {
     return (
       <div>
         <Modal show={isModalShowing} modalClosed={this.hideModal}>
-          <CreatePostForm categories={categories} handleSubmit={this.onProductCreated} fileSelectedHandler={this.fileSelectedHandler} />
+          <CreatePostForm
+            categories={categories}
+            handleSubmit={this.onProductCreated}
+            fileSelectedHandler={this.fileSelectedHandler}
+          />
           <br />
         </Modal>
         <MainNavBar history={history} />
@@ -192,8 +254,14 @@ class Home extends React.Component {
         <div className="home-window">
           <div className="home-filters-upload">
             <p style={{ paddingLeft: '0px' }}>Hi {currentUser.firstName}!</p>
-            <button type="button" className="create-button" onClick={this.createPostClicked}>
-              <p style={{ fontSize: '15px' }}><b>Post</b></p>
+            <button
+              type="button"
+              className="create-button"
+              onClick={this.createPostClicked}
+            >
+              <p style={{ fontSize: '15px' }}>
+                <b>Post</b>
+              </p>
             </button>
             {filters}
           </div>
@@ -218,9 +286,9 @@ const mapStateToProps = (state) => {
       productName: formSelector(state, 'productName'),
       description: formSelector(state, 'description'),
       price: formSelector(state, 'price'),
-      categoryId: formSelector(state, 'categoryId')
+      categoryId: formSelector(state, 'categoryId'),
     },
-    currentUser: state.loginReducer.currentUser
+    currentUser: state.loginReducer.currentUser,
   };
 };
 
@@ -229,7 +297,7 @@ const mapDispatchToProps = (dispatch) => {
     setProducts: (products) => dispatch(homeActions.setProducts(products)),
     setCategories: (categories) => dispatch(homeActions.setCategories(categories)),
     setFilter: (filter) => dispatch(homeActions.setFilter(filter)),
-    setCurrentUser: (user) => dispatch(userActions.setCurrentUser(user))
+    setCurrentUser: (user) => dispatch(userActions.setCurrentUser(user)),
   };
 };
 

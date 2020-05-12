@@ -54,6 +54,31 @@ exports.findAllSoldProducts = (req, res) => {
   });
 };
 
+exports.findAllPublicUserProducts = (req, res) => {
+  const { userid } = req.params;
+  Product.findAll({
+    where: {
+      [Op.and]: [
+        {
+          sellerId: userid,
+        },
+        {
+          approved: true,
+        },
+      ],
+    },
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: err.message,
+        message: 'Something went wrong getting products',
+      });
+    });
+};
+
 exports.findAllUserProducts = (req, res) => {
   const { id } = req.user;
 

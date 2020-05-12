@@ -17,7 +17,8 @@ class Product extends React.Component {
     super(props);
     this.state = {
       product: [],
-      seller: null
+      seller: null,
+      sellerId: null,
     };
   }
 
@@ -31,11 +32,14 @@ class Product extends React.Component {
       // console.log(res.data);
       if (res) {
         // console.log(res.data);
+        this.setState({
+          sellerId: res.data[0].sellerId,
+        });
         axios.get(`/api/users/${res.data[0].sellerId}`).then((re) => {
           // console.log(re.data);
           this.setState({
             product: res.data[0],
-            seller: re.data[0].email
+            seller: re.data[0].email,
           });
         });
       }
@@ -48,10 +52,10 @@ class Product extends React.Component {
     const bookmark = {
       ...product,
       // category: numtocat(product.categoryId),
-      seller
+      seller,
     };
     addBookmark(bookmark);
-  }
+  };
 
   render() {
     const { history } = this.props;
@@ -69,8 +73,20 @@ class Product extends React.Component {
     } else {
       buttons = (
         <div style={{ margin: '30px' }}>
-          <button className="Product-Button" type="button" onClick={this.onSave}>Bookmark</button>
-          <button className="Product-Button" type="button" onClick={() => history.push('/messages')}>Message Seller</button>
+          <button
+            className="Product-Button"
+            type="button"
+            onClick={this.onSave}
+          >
+            Bookmark
+          </button>
+          <button
+            className="Product-Button"
+            type="button"
+            onClick={() => history.push('/messages')}
+          >
+            Message Seller
+          </button>
         </div>
       );
     }
@@ -82,20 +98,29 @@ class Product extends React.Component {
 
     const numtocat = (cid) => {
       switch (cid) {
-        case 1: return 'Clothing';
-        case 2: return 'Electronics';
-        case 3: return 'Collectables & Art';
-        case 4: return 'Home & Garden';
-        case 5: return 'Sporting Goods';
-        case 6: return 'Toys & Hobbies';
-        default: return 'Other';
+        case 1:
+          return 'Clothing';
+        case 2:
+          return 'Electronics';
+        case 3:
+          return 'Collectables & Art';
+        case 4:
+          return 'Home & Garden';
+        case 5:
+          return 'Sporting Goods';
+        case 6:
+          return 'Toys & Hobbies';
+        default:
+          return 'Other';
       }
     };
 
     return (
       <div>
         <MainNavBar history={history} />
-        <Link to="/home"><p style={{ color: '#662A82', fontSize: '20px' }}>Back To Home</p></Link>
+        <Link to="/home">
+          <p style={{ color: '#662A82', fontSize: '20px' }}>Back To Home</p>
+        </Link>
         <div className="mainwindow">
           <div className="leftwindow">
             <img className="productpic" src={product.photo} alt="productpic" />
@@ -106,7 +131,7 @@ class Product extends React.Component {
                 style={{
                   marginLeft: '30px',
                   fontSize: '30px',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
                 }}
               >
                 {' '}
@@ -127,8 +152,20 @@ class Product extends React.Component {
               >
                 Price: ${product.price}
               </p>
-              <p style={{ marginLeft: '30px', fontSize: '15px' }}>
-                Posted By: {seller}
+              <p
+                style={{
+                  marginLeft: '30px',
+                  fontSize: '15px',
+                  // fontWeight: 'bold'
+                }}
+              >
+                Sold By:
+                <Link
+                  to={`/user/${this.state.sellerId}`}
+                  style={{ fontSize: '15px' }}
+                >
+                  {seller}
+                </Link>
               </p>
               <p style={{ marginLeft: '30px', fontSize: '15px' }}>
                 Date Posted: {postDate}
@@ -144,15 +181,18 @@ class Product extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.homeReducer.products
+    products: state.homeReducer.products,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setProducts: (products) => dispatch(homeActions.setProducts(products)),
-    addBookmark: (bookmark) => dispatch(cartActions.addBookmark(bookmark))
+    addBookmark: (bookmark) => dispatch(cartActions.addBookmark(bookmark)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker(Product));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginChecker(Product));

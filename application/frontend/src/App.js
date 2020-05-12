@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+import PublicProfile from './Containers/PublicProfile/PublicProfile';
 import Login from './Containers/LoginRegister/Login';
 import Register from './Containers/LoginRegister/Register';
 import Team from './Containers/Team/Team';
@@ -38,7 +39,8 @@ class App extends React.Component {
           <Route path="/home/products" exact component={Product} />
           <Route path="/profile/team" exact component={Team} />
           <Route path="/profile/team/:id" exact component={TeamMember} />
-          <Route path="/profile" exact component={Profile} />
+          <Route path="/user/:id" exact component={PublicProfile} />
+          <Route path="/profile/" exact component={Profile} />
           <Route path="/profile/cart" exact component={Cart} />
           <Route path="/profile/myproducts" exact component={MyProducts} />
           <Route path="/messages" exact component={Messages} />

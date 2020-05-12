@@ -20,6 +20,8 @@ router.get('/:userid/all/sold', products.findAllSoldProducts);
 // find all products with userId
 router.get('/:userid/all/', requireAuth, products.findAllUserProducts);
 
+router.get('/:userid/all/public', products.findAllPublicUserProducts);
+
 // Get all products by search term
 router.get('/:query', products.findWithQuery);
 
