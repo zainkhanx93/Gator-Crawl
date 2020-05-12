@@ -21,11 +21,24 @@ class Cart extends React.Component {
    }
    //  product.removeChild(product.childNodes[0]);
 
+   getTotal = () => {
+     const { bookmarks } = this.props;
+     let sum = 0;
+     bookmarks.map((item) => {
+       console.log(item.price);
+       return sum += +item.price;
+     });
+     return sum;
+   }
+
+
    render() {
      const { history, bookmarks } = this.props;
 
      let mycart = <p>You do not have any bookmarks yet.</p>;
-     if (bookmarks.length > 0) {
+     let total = null;
+
+     if (bookmarks && bookmarks.length > 0) {
        mycart = bookmarks.map((entry, index) => (
          <div key={index}>
            <div className="Shopping-Cart-Window">
@@ -50,6 +63,8 @@ class Cart extends React.Component {
            </div>
          </div>
        ));
+
+       total = <h1 style={{ textAlign: 'center' }}>Total: ${this.getTotal()}</h1>;
      }
      // mycart = (
      //   <div>
@@ -104,6 +119,7 @@ class Cart extends React.Component {
            </div>
            <div className="Cart-Right-Side">
              <p className="Title"> My Shopping Cart </p>
+             {total}
              {mycart}
            </div>
          </div>

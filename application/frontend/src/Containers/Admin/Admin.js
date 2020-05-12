@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 
+import MainNavBar from '../../Components/Navigation/MainNavBar';
 import AdminChecker from '../HOC/AdminChecker';
 import './Admin.css';
 
@@ -138,8 +139,10 @@ class Admin extends React.Component {
     const { sales, products } = this.state;
     return (
       <div>
-        <p>Admin Panel</p>
+        <MainNavBar />
+        <h1 style={{ textAlign: 'center' }}>Admin Panel</h1>
         <hr />
+        <Link to="/home"><p style={{ textAlign: 'center' }}>Back to home</p></Link>
         <br />
         <div className="adminPanel">
           <div className="sales">
@@ -206,7 +209,8 @@ class Admin extends React.Component {
         </div>
         <br />
         <hr />
-        <Link to="/home">Back to home</Link>
+        <br />
+        <br />
       </div>
     );
   }
