@@ -136,8 +136,23 @@ class Home extends React.Component {
   // Handles Purchase of Item
   handlePurchase = (product) => {
     const { history } = this.props;
+    const cookie = new Cookies();
+    const buyerId = cookie.get('id');
     console.table(product);
-    history.push('/messages');
+    axios.post('/api/sales/', {
+      buyerId,
+      sellerId: product.sellerId,
+      approved: 0,
+      productId: product.id,
+      price: product.price
+    }).then((res) => {
+      if (res) {
+        console.log(res.data);
+        history.push('/messages');
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {
@@ -213,7 +228,7 @@ class Home extends React.Component {
       postings = (
         <div className="home-products">
           {products.map((product) => (
-            <div className="product">
+            <div key={product.id} className="product">
               <div
                 id={product.id}
                 key={product.id}
@@ -232,7 +247,13 @@ class Home extends React.Component {
                 </div>
               </div>
               <div>
-                <button type="button" className="purchase-button" onClick={() => this.handlePurchase()}>Purchase Now</button>
+                <button
+                  type="button"
+                  className="purchase-button"
+                  onClick={() => this.handlePurchase(product)}
+                >
+                  Purchase Now
+                </button>
               </div>
             </div>
           ))}
