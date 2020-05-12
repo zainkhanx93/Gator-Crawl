@@ -1,7 +1,28 @@
-.adminbox {
+.itembox{
   border: 1px solid black;
-  margin: auto;
   margin: 40px;
   padding: 10px;
   background: white;
+}
+
+.sales{
+  text-align: center;
+  display: flex;
+  margin:0;
+  flex-direction: column;
+  width:50%
+}
+
+.products{
+  text-align:center;
+  display:flex;
+  margin:0;
+  flex-direction:column;
+  width:50%;
+}
+
+
+.adminPanel{
+  display:flex;
+  flex-direction:row;
 }
