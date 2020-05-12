@@ -122,7 +122,7 @@ class PublicProfile extends React.Component {
     return (
       <div>
         <MainNavBar history={history} />
-        <div className="userwindow">{me}</div>
+        <div className="userwindowinfo">{me}</div>
         <div className="forSale">
           <h2 className="title">Items for sale</h2>
           {postings}
