@@ -56,17 +56,20 @@ class Home extends React.Component {
     const { selectedFile } = this.state;
     const formData = new FormData();
     formData.append('file', selectedFile[0]);
-    axios.post('/imageUpload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      }
-    }).then((response) => {
-      // handle your response;
-      console.log(response.data);
-    }).catch((error) => {
-      // handle your error
-      console.log(error);
-    });
+    axios
+      .post('/imageUpload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        // handle your response;
+        console.log('submitFile => ', response.data);
+      })
+      .catch((error) => {
+        // handle your error
+        console.log(error);
+      });
   };
 
   //  Creating a product with photo and formValues.
@@ -76,37 +79,44 @@ class Home extends React.Component {
     const formData = new FormData();
     formData.append('file', selectedFile[0]);
 
-    await axios.post('/imageUpload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      }
-    }).then((response) => {
-      console.log(response);
-      // handle your response;
-      this.setState({
-        photo: response.data.Location,
-      });
-    }).catch((error) => {
-      // handle your error
-      console.log(error);
-    });
-
-    console.log('this.state.photo => ', photo);
-    axios.post('/api/products/', {
-      ...formValues,
-      sellerId: currentUser.id,
-      approved: 0,
-      photo,
-    }).then((res) => {
-      if (res) {
-        this.setState({ isModalShowing: false });
-        axios.get('/api/products/').then((response) => {
-          setProducts(response.data);
+    await axios
+      .post('/imageUpload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        console.log('on product created => ', response);
+        // handle your response;
+        console.log('response.data.Location => ', response.data.Location);
+        this.setState({
+          photo: response.data.Location,
         });
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
+      })
+      .catch((error) => {
+        // handle your error
+        console.log(error);
+      });
+
+    console.log('this.state.photo => ', this.state.photo);
+    axios
+      .post('/api/products/', {
+        ...formValues,
+        sellerId: currentUser.id,
+        approved: 0,
+        photo: this.state.photo,
+      })
+      .then((res) => {
+        if (res) {
+          this.setState({ isModalShowing: false });
+          axios.get('/api/products/').then((response) => {
+            setProducts(response.data);
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Goes to Product Page.
@@ -139,21 +149,24 @@ class Home extends React.Component {
     const cookie = new Cookies();
     const buyerId = cookie.get('id');
     console.table(product);
-    axios.post('/api/sales/', {
-      buyerId,
-      sellerId: product.sellerId,
-      approved: 0,
-      productId: product.id,
-      price: product.price
-    }).then((res) => {
-      if (res) {
-        console.log(res.data);
-        history.push('/messages');
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+    axios
+      .post('/api/sales/', {
+        buyerId,
+        sellerId: product.sellerId,
+        approved: 0,
+        productId: product.id,
+        price: product.price,
+      })
+      .then((res) => {
+        if (res) {
+          console.log(res.data);
+          history.push('/messages');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   render() {
     const {
@@ -187,7 +200,9 @@ class Home extends React.Component {
             setFilter(e.target.value);
           }}
         >
-          <option defaultValue value="">All</option>
+          <option defaultValue value="">
+            All
+          </option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -222,7 +237,9 @@ class Home extends React.Component {
     };
 
     // Post display logic.
-    let postings = (<div style={{ textAlign: 'center' }}>No postings available</div>);
+    let postings = (
+      <div style={{ textAlign: 'center' }}>No postings available</div>
+    );
     if (products.length !== 0) {
       // console.log(products);
       postings = (
@@ -275,8 +292,14 @@ class Home extends React.Component {
         <div className="home-window">
           <div className="home-filters-upload">
             <p style={{ paddingLeft: '0px' }}>Hi {currentUser.firstName}!</p>
-            <button type="button" className="create-button" onClick={this.createPostClicked}>
-              <p style={{ fontSize: '15px' }}><b>Post</b></p>
+            <button
+              type="button"
+              className="create-button"
+              onClick={this.createPostClicked}
+            >
+              <p style={{ fontSize: '15px' }}>
+                <b>Post</b>
+              </p>
             </button>
             {filters}
           </div>
