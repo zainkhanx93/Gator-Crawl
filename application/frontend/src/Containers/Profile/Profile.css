@@ -1,16 +1,14 @@
-.Button {
+.editButton {
   background-color: #F3CB0A;
   border: none;
   border-radius: 5px;
   color: #662A82;
   padding: 11px 32px;
-  margin-top: 20px;
   text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
   width: 100px;
-  margin-left: 40px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 

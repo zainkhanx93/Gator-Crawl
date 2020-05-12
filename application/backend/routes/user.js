@@ -30,6 +30,7 @@ router.get('/', users.findAll);
 // Get single user by id
 router.get('/:id', users.findById);
 
+router.patch('/:userId', requireAuth, users.update);
 // upload profile image
 // Get request to route /api/users/image to upload profile image
 // router.post('/image', users.uploadImage);
