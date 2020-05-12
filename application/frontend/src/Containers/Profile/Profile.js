@@ -24,6 +24,10 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    this.initUser();
+  }
+
+  initUser = () => {
     const { setCurrentUser } = this.props;
     const cookie = new Cookies();
     let id;
@@ -34,24 +38,28 @@ class Profile extends React.Component {
     axios.get(`/api/users/${id}`).then((res) => {
       console.log('res.data => ', res.data);
       setCurrentUser(res.data[0]);
+      cookie.set('firstName', res.data[0].firstName);
+      cookie.set('lastName', res.data[0].lastName);
+      cookie.set('major', res.data[0].major);
     });
-  }
+  };
 
   hideModal = () => {
     this.setState({ isModalShowing: false });
   };
 
   handleSubmit = () => {
-    const { history, currentUser } = this.props;
+    // const { history, currentUser } = this.props;
+    const { major, firstName, lastName } = this.state;
     const cookie = new Cookies();
     const token = cookie.get('token');
+    const id = cookie.get('id');
     axios
-      .patch(
-        `/api/users/${currentUser.id}`,
+      .patch(`/api/users/${id}`,
         {
-          major: this.state.major,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
+          major,
+          firstName,
+          lastName,
         },
         {
           headers: {
@@ -63,7 +71,8 @@ class Profile extends React.Component {
         console.log(res.data);
         if (res) {
           this.setState({ isModalShowing: false });
-          window.location.reload();
+          this.initUser();
+          // window.location.reload();
         }
       });
   };
