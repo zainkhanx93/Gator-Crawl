@@ -202,3 +202,34 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  const { id } = req.user;
+  const { firstName, lastName, major } = req.body;
+  const { userId } = req.params;
+
+  User.update(
+    { firstName, lastName, major },
+    {
+      where: {
+        id: id,
+      },
+    }
+  )
+    .then(data => {
+      if (!data) {
+        return res.status(400).send({ message: 'Could not update user' });
+      }
+      if (data[0] === 1) {
+        res.send({ message: 'User Updated Successfully' });
+      } else {
+        res.status(400).send({ message: 'Could not update user' });
+      }
+    })
+    .catch(err => {
+      return res.status(500).send({
+        error: err.message,
+        message: 'Something went wrong updating user',
+      });
+    });
+};
