@@ -19,6 +19,7 @@
   padding: 12px;
 }
 
+
 .home-window {
   width: 100%;
   display: inline-flex;
@@ -40,6 +41,15 @@
 
 .home-products {
   text-align: center;
+}
+.purchase-button {
+  z-index : 1;
+  background-color: #F3CB0A;
+  border: none;
+  border-radius: 5px;
+  color: #662A82;
+  display: inline;
+  padding: 15px 59px;
 }
 
 .create-button {
