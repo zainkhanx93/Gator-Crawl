@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
         <br />
         <Field name="password" type="password" component={this.renderInputField} label="Password" />
         <br />
-        <a href="forgotpassword" className="Link">Forgot password?</a>
+        <a onClick={() => alert('Sending email to reset password')} href="login" className="Link">Forgot password?</a>
         {/* error && <strong>{error}</strong> */}
         <button
           className="Login-Button"
@@ -78,7 +78,10 @@ const validate = (formValues) => {
     errors.email = 'You must enter an email';
   } else if (formValues.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)) {
     errors.email = 'Not a valid email';
+  } else if (formValues.email && !/^[A-Z0-9._%+-]+@mail.sfsu.edu$/i.test(formValues.email)) {
+    errors.email = 'Must be an SFSU email ending in @mail.sfsu.edu';
   }
+
   if (!formValues.password) {
     errors.password = 'You must enter a password';
   }

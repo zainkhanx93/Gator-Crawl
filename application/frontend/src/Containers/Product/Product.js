@@ -119,7 +119,7 @@ class Product extends React.Component {
       <div>
         <MainNavBar history={history} />
         <Link to="/home">
-          <p style={{ color: '#662A82', fontSize: '20px' }}>Back To Home</p>
+          <p style={{ color: '#662A82', fontSize: '20px', textAlign: 'center' }}>Back To Home</p>
         </Link>
         <div className="mainwindow">
           <div className="leftwindow">
