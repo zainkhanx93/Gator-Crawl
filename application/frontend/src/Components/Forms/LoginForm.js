@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
         <br />
         <Field name="password" type="password" component={this.renderInputField} label="Password" />
         <br />
-        <a href="forgotpassword" className="Link">Forgot password?</a>
+        <a onClick={() => alert('Sending email to reset password')} href="login" className="Link">Forgot password?</a>
         {/* error && <strong>{error}</strong> */}
         <button
           className="Login-Button"
