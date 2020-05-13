@@ -79,6 +79,8 @@ const validate = (formValues) => {
     errors.email = 'You must enter an email';
   } else if (formValues.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)) {
     errors.email = 'Not a valid email';
+  } else if (formValues.email && !/^[A-Z0-9._%+-]+@mail.sfsu.edu$/i.test(formValues.email)) {
+    errors.email = 'Must be an SFSU email ending in @mail.sfsu.edu';
   }
 
   if (!formValues.password) {

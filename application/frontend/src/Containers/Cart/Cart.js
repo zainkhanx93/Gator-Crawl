@@ -11,21 +11,31 @@ import './Cart.css';
 class Cart extends React.Component {
    delete = (index) => {
      const { deleteBookmark } = this.props;
-     // let product = document.getElementById('Cart-Product');
-     // product.removeChild(product.childNodes[0]);
      console.log(index);
      console.log('delete product');
      deleteBookmark(index);
      const { bookmarks } = this.props;
      console.table(bookmarks);
    }
-   //  product.removeChild(product.childNodes[0]);
+
+   getTotal = () => {
+     const { bookmarks } = this.props;
+     let sum = 0;
+     bookmarks.map((item) => {
+       console.log(item.price);
+       return sum += +item.price;
+     });
+     return sum;
+   }
+
 
    render() {
      const { history, bookmarks } = this.props;
 
      let mycart = <p>You do not have any bookmarks yet.</p>;
-     if (bookmarks.length > 0) {
+     let total = null;
+
+     if (bookmarks && bookmarks.length > 0) {
        mycart = bookmarks.map((entry, index) => (
          <div key={index}>
            <div className="Shopping-Cart-Window">
@@ -50,50 +60,9 @@ class Cart extends React.Component {
            </div>
          </div>
        ));
+
+       total = <h1 style={{ textAlign: 'center' }}>Total: ${this.getTotal()}</h1>;
      }
-     // mycart = (
-     //   <div>
-     //     <div className="Shopping-Cart-Window">
-     //       <div className="Product-Window">
-     //
-     //         <div className="Cart-Product">
-     //           <img className="Profile-picture" src={gclogo} alt="Logo" />
-     //           <div className="Cart-Product-Info">
-     //             <p style={{ fontSize: '25px' }}> <b> Nike Shoes </b></p>
-     //             <p> Size 9 Roshis </p>
-     //             <p style={{ fontSize: '25px' }}><b> $ 200.00 </b> </p>
-     //           </div>
-     //           <div className="Cart-Buttons">
-     //             <button className="Button" type="button"> Message  </button>
-     //             <br />
-     //             <br />
-     //             <br />
-     //             <button className="Button" onClick={this.delete} type="button"> Delete </button>
-     //           </div>
-     //         </div>
-     //       </div>
-     //
-     //       <div className="Total-Box">
-     //         <div className="Total-Cart-Info-Left">
-     //           <p style={{ fontSize: '30px', color: '#662A82' }}><b> Summary </b> </p>
-     //           <br />
-     //           <p style={{ fontSize: '25px' }}> <b> Total </b></p>
-     //           <br />
-     //         </div>
-     //         <div className="Total-Cart-Info-Right">
-     //           <br />
-     //           <br />
-     //           <br />
-     //           <br />
-     //           <br />
-     //           <br />
-     //           <p style={{ fontSize: '25px' }}> <b> $200 </b></p>
-     //         </div>
-     //       </div>
-     //     </div>
-     //   </div>
-     // );
-     // }
 
      return (
        <div>
@@ -104,6 +73,7 @@ class Cart extends React.Component {
            </div>
            <div className="Cart-Right-Side">
              <p className="Title"> My Shopping Cart </p>
+             {total}
              {mycart}
            </div>
          </div>
